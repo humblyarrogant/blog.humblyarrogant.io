@@ -129,7 +129,7 @@
 
 &lt;p&gt;So use case, an email sender dependency. It&amp;rsquo;s very unlikely that you&amp;rsquo;re going to want to change how you send emails.&lt;/p&gt;
 
-&lt;p&gt;{% gist fa0cd7160709ac6b6218 Constructor.php %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/fa0cd7160709ac6b6218.js?file=Constructor.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;h1 id=&#34;setter&#34;&gt;Setter&lt;/h1&gt;
 
@@ -139,7 +139,7 @@
 
 &lt;p&gt;Another use case for the setter method is if you want to use interfaces to show that the object has that dependency. For example the ContainerAware interface in the Symfony2. This allows you to give a class multiple dependencies.&lt;/p&gt;
 
-&lt;p&gt;{% gist fa0cd7160709ac6b6218 Setter.php %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/fa0cd7160709ac6b6218.js?file=Setter.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;h1 id=&#34;method&#34;&gt;Method&lt;/h1&gt;
 
@@ -147,13 +147,13 @@
 
 &lt;p&gt;Use case for this would be a date object in a calendar object. Where you would want to use the same object for multiple dates.&lt;/p&gt;
 
-&lt;p&gt;{% gist fa0cd7160709ac6b6218 method.php %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/fa0cd7160709ac6b6218.js?file=method.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;h1 id=&#34;service-container&#34;&gt;Service Container&lt;/h1&gt;
 
 &lt;p&gt;Service container is when you store you dependencies in an object and then pass that around. This allows you to make all your dependencies easily available wihtout having to worry about injecting them individually.&lt;/p&gt;
 
-&lt;p&gt;{% gist fa0cd7160709ac6b6218 container.php %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/fa0cd7160709ac6b6218.js?file=container.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;h1 id=&#34;factory&#34;&gt;Factory&lt;/h1&gt;
 
@@ -163,11 +163,11 @@
 
 &lt;p&gt;Here is a sample of the code without a factory.&lt;/p&gt;
 
-&lt;p&gt;{% gist fa0cd7160709ac6b6218 factory-without.php %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/fa0cd7160709ac6b6218.js?file=factory-wihtout.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;p&gt;With the factory.&lt;/p&gt;
 
-&lt;p&gt;{% gist fa0cd7160709ac6b6218 factory-with.php %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/fa0cd7160709ac6b6218.js?file=factory-with.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
 

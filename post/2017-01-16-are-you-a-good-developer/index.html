@@ -1,0 +1,322 @@
+
+  <!DOCTYPE html>
+<html lang="en-gb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>A Humbly Arrogant Blog</title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.19-DEV" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="shortcut icon" href="http://blog.humblyarrogant.io/img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/styles.css">
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/sp-minimal.css">
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+</head>
+
+
+  <body><div class="wrapper">
+  <header class="text-center">
+   <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
+
+  
+    <h1 class="border-bottom add-padding-bottom"><a href="http://blog.humblyarrogant.io/">A Humbly Arrogant Blog</a></h1>
+  
+	
+  
+    <h2 class="text-right add-padding-right">Posts about software development</h2>
+  
+
+  
+</header>
+
+
+
+
+  <section>
+    <p class="remove-margin-bottom">
+      <time datetime="16 January 2017">16 January 2017</time>
+    </p>
+
+    <h1>Are you a good developer</h1>
+    
+
+<p>In development we constantly bemoan bad developers. But what I&rsquo;ve noticed is everyone generally thinks they&rsquo;re doing a good job and the other developers are bad. I don&rsquo;t think you can exactly define what is  a good developer down to a tee but I think you can have rough benchmarks for whether or not you&rsquo;re good. These generally are if you follow well defined practices. There are levels of development practices ranging from the basics (DRY) to advance (CQRS).</p>
+
+<!-- more -->
+
+<p>It&rsquo;s my opinion that you&rsquo;re only as good as the level of practices that you are able to follow well. So if you&rsquo;re only able to do intermediate practices, then you&rsquo;re an intermediate developer. If you do intermediate practices well but can&rsquo;t implement advance practices properly you&rsquo;re still an intermediate developer.</p>
+
+<p>I think it&rsquo;s important to say that my definition of well, is applying them in the majority of cases. No one is perfect, we obviously make mistakes and write poor code from time to time for various reasons. Also it&rsquo;s important to state this isn&rsquo;t a 100% guide as there are most likely hundreds of things I&rsquo;m not thinking of or probably even know of. I&rsquo;m also an OO PHP developer so a lot these may be related to OO. However I suspect majority of them can also be applied to other programming paradigms.</p>
+
+<p>I&rsquo;m also not saying I do all of these things. I&rsquo;m just aware they exist and I rank them at a certain level. Some times I don&rsquo;t even think I have a full grasp of the concept. Nor am I making any claims that I&rsquo;m any good. Like everyone I am still learning and trying to be a good developer. I think understanding our flaws helps with this.</p>
+
+<h1 id="basics">Basics</h1>
+
+<p>The fundamentals every programmer should have.</p>
+
+<h2 id="dry-don-t-repeat-yourself">DRY - Don&rsquo;t repeat yourself</h2>
+
+<p>I consider this programming 101. It&rsquo;s a fundamental practice which nearly all good development practices are built upon. It&rsquo;s very simple, the aim is to never repeat yourself. Easiest time to know if you&rsquo;re breaching this is if you literally copying and pasting code from one place to another.</p>
+
+<p>However sometimes the repetition can be more subtle. Such an example is you could end up having to transform data from one format to another repeatedly throughout your system. Like the example below. Every time you want to use the data from getData you have to call unserialize.</p>
+
+<p><code>$data = unserialize(getData());</code></p>
+
+<h2 id="encapsulation">Encapsulation</h2>
+
+<p>Encapsulation is when you round up stuff that are related and put them together. I feel this is very important thing to do.</p>
+
+<p>On a simple case, say you want to do create an invoice. You wouldn&rsquo;t want to have use an object to add items to the invoice and then you use a different object to get the total for the invoice. You would want to use one object to add lines and when you added the lines and then use the same object to get the total value of the invoice.</p>
+
+<p>Another example is the the example of breaching DRY. The data was stored in a specific format however as far as the rest of the system is concerned it needs to be another format. Therefore you should encapsulate the logic of how it&rsquo;s stored to the storage layer.</p>
+
+<p>Encapsulation doesn&rsquo;t mean it&rsquo;s all in one class. But in the same place, be that module, class, namespace. For example you wouldn&rsquo;t want to be doing Delivery logic in your Invoice module.</p>
+
+<p>The benefits are very simple if you want to know how something works you just look in one place. If you want to change how something works you just make the change in one place.</p>
+
+<h1 id="intermediate">Intermediate</h1>
+
+<p>These are the things you&rsquo;re generally asked/asking about in interviews for experienced developers.</p>
+
+<h2 id="single-responsibility">Single responsibility</h2>
+
+<p>The basics of Single responsibility is that each object so only be responsible for one thing.</p>
+
+<p>For example you should never have a class that is responsible for inserting data in to the database and for making HTTP requests to AWS to create new server instances. So you would have a class that would do the insertion into the database and then another class to create new AWS instances.</p>
+
+<p>Another thing about Single responsibility is that all things that change for the same reason should be grouped together. So if you&rsquo;re writing and reading from the database these will always change at the same time, so you wouldn&rsquo;t have a class for writing and one for reading.</p>
+
+<p>A quick guide to know if you&rsquo;re breaching Single responsibility, you ask yourself what does this class do and if you use the word &ldquo;and&rdquo; you&rsquo;re probably breaching single responsibility.</p>
+
+<h2 id="open-close-principal">Open/close principal</h2>
+
+<p>The open/close principal means your class is open to extension but closed to modification. The basics of it is I should be able to extend a class to add extra functionality. I however should not be able to change how it works.</p>
+
+<p>For example an Order entity class. I should be able to extend it so I can describe specific kinds of Orders such as PrePaidOrder and CreditOrder. But I should not be able to change it to say remove a field within the order entity.</p>
+
+<p>Another example I should be able to extend a sorting class so it can sort other kinds of things but I shouldn&rsquo;t be able to change it from a sorting class to first item found class.</p>
+
+<h2 id="liskov-s-object-replacement">Liskov&rsquo;s object replacement</h2>
+
+<p>The object replacement principal is that I should be able to replace any object with one of the same type and not change the behavior of the application.</p>
+
+<p>For example if I change the database class for another the application should not go from saving data about servers to managing the AWS instances.</p>
+
+<h2 id="interface-segregation">Interface segregation</h2>
+
+<p>Interface segregation is simply just Single responsibility but for interfaces. The basics of it is no object should be forced to implement a method that it doesn&rsquo;t need.</p>
+
+<p>For example a translator class can implement a catalog interface and a translation interface. However you can build translation classes that don&rsquo;t need to provide the translation catalog to others.</p>
+
+<p>Some quick ways to know it&rsquo;s being breached, if classes implementing it have empty methods. As well as if you&rsquo;re creating new interfaces that merge two other interfaces into one.</p>
+
+<h2 id="dependency-inversion">Dependency Inversion</h2>
+
+<p>Not to be confused with Dependency injection, which Dependency Inversion helps with.</p>
+
+<p>Dependency Inversion is when you make your class coupled to an abstract/composite instead of the concrete version. So your class never knows about the existence of the actual implement that it&rsquo;ll use. While the implementation class never knows about the existence of anything that uses it.</p>
+
+<p>This makes Dependency injecting and object replacement really simple.</p>
+
+<h2 id="automated-testing">Automated Testing</h2>
+
+<p>This is where you use write unit/integration/system tests so you can test you entire code easily.</p>
+
+<p>It&rsquo;s important to note this isn&rsquo;t just doing TDD, but any testing. While I fully believe that TDD is the best way to test and write code. I don&rsquo;t believe it&rsquo;s the only way or that by writing tests after you wrote the code makes you any less of a developer.</p>
+
+<p>If you don&rsquo;t have tests and you change something, how can you be sure it works? Simply you don&rsquo;t. Even when you don&rsquo;t have tests you still test your code, you just do it by hand. Which isn&rsquo;t as anywhere near efficient as having it done by code.</p>
+
+<h2 id="correct-tool-for-correct-job">Correct tool for correct job</h2>
+
+<p>This isn&rsquo;t exactly an official practice per say. But it seems like such an obvious thing. Using the correct tool for the correct job seems obvious, but it&rsquo;s quite often breached. How often have you used something other than a bottle opener to open a bottle of beer. This is not just a software developer problem, but I believe to be a really good developer then consistently you will use the correct tool for the correct job.</p>
+
+<p>Some examples of not using the correct tool for the correct job. Putting functions in a class then just calling those functions procedurally. Using automated testing tools to monitor your production web application. Using static code analysers to run your CI. Using MongoDB to store relational and transactional data.</p>
+
+<h1 id="advance">Advance</h1>
+
+<p>At this level a lot of these things seem to go hand in hand in my opinion.</p>
+
+<h2 id="law-of-demeter">Law of Demeter</h2>
+
+<p>This is very simple your code only ever talks to/uses objects it knows exists directly.</p>
+
+<p>For example if you inject a request object into a method that method should then never access the request object to get to a parameter bag object. Instead what you do is create a method on the request object that calls the parameter bag object and returns the data you want. The benefits of this means you can refactor easier since you can clearly see where code is used and where it isn&rsquo;t. So if you were to change how the parameter bag works you only have to change it in the request class and not in every place the request class is used to pass the parameter bag.</p>
+
+<p>This also makes unit testing a lot easier since you don&rsquo;t need to mock the request class and then mock the parameter bag. You just mock the request class.</p>
+
+<h2 id="cqrs-command-query-responsibility-segregation">CQRS - Command query responsibility segregation</h2>
+
+<p>Command query read segregation is a principal at the heart of is about separating your reads from your writes. In my opinion you can apply this on several levels. For almost everything I think a on method level applies. But there is also on class level. And then there is system/service level which is actually the proper CQRS.</p>
+
+<p>On the method level no method that does a read should also be doing a write. But on an class level you no class that does reads should be doing writes.</p>
+
+<p>But for the proper definition of CQRS, a command is something that does a write. A query is something that does a read. When doing commands to the system you should use a different pathway/service than if you were just querying it.</p>
+
+<h2 id="domain-modeling">Domain modeling</h2>
+
+<p>In simplest form this is separating the Domain/business logic away from the rest of the code and understanding what is part of the domain and what is actual implementation.</p>
+
+<h2 id="domain-driven-design">Domain Driven Design</h2>
+
+<p>This is a rather complex topic and this little section will not give it any justice.</p>
+
+<p>Doing DDD involves a lot more than just domain modeling. It means communicating with the business team to find the correct model for the domain and applying it. In my opinion the key to DDD is ubiquitous language. In which you use the same terminology as the the business people and then use that terminology in the code.</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Domain-driven_design">For more info see</a></p>
+
+<h2 id="hexagonal-architecture">Hexagonal Architecture</h2>
+
+<p>Hexagonal Architecture is simply isolating your domain model from your application layer and separating your application layer from third party items.</p>
+
+<p>So you have your domain model. Which should remain separate from everything and coupled to nothing. Next you have your application layer which is coupled to your domain model. At which point you have your outer layer which uses the application layer and third party items. Such as databases and APIs.</p>
+
+<p>This allows you to change third party items without having to worry about your domain model or your how your application works.</p>
+
+<h2 id="bdd">BDD</h2>
+
+<p>Behavior driven development is in it&rsquo;s simplest form talking with the business team in a language they understand to workout what actually needs built.</p>
+
+<p>This again can get really complex and there are many different ways of doing BDD and many different practices.</p>
+
+<p><a href="https://dannorth.net/introducing-bdd/">For more info see</a></p>
+
+<h2 id="yagni-you-aren-t-gonna-need-it">YAGNI - You aren&rsquo;t gonna need it</h2>
+
+<p>YAGNI comes originally from Xtreme Programming and it&rsquo;s a concept of don&rsquo;t build something until you need it. As developers we look at our road map and see that in 6 months we&rsquo;ll be building some feature that is semi related to what we&rsquo;re currently working on. So we decide to implement the stuff that feature will need now while we&rsquo;re in that area anyway. However the thing is roadmaps generally change and in 6 months that feature you have half implemented is no longer required and now you&rsquo;re left with a bunch of useless code floating around your system.</p>
+
+<p>This while it seems like a simple concept I think this is more about realising that YAGNI which I think can be quite hard to do at times.</p>
+
+<h2 id="tier-architecture">Tier Architecture</h2>
+
+<p>Tier Architecture is simply splitting out the responsibility of system responsibility on different layers of systems. So you start off with a web system layer which has no access to the database. Any time it needs to fetch something from the database it then makes a request to the database level which has the ability to do reads. Any time it needs to do a write it then makes a request to the write layer which then does writes.</p>
+
+<h2 id="service-oriented-architecture">Service Oriented Architecture</h2>
+
+<p>This is when you build applications to handle specific jobs. Each service only knows about what it needs to do and is decoupled from other services.</p>
+
+<p>So for example if your application needs to send communication you could have a communication service that all it did was send communications. It doesn&rsquo;t know about any of the logic about why the communication needs to be sent just that it needs to be send and does the sending. While the application doesn&rsquo;t need to know about how the communication is being sent, just that it will be sent.</p>
+
+<p>Also if you use queues this can allow for services to go down and come back up while not affecting the speed of the web site. It also allows for you to scale out services as needed, so if you start out small you may only need to send a few communications but as you grow larger the number of communications goes up. This may not grow as much as your web traffic so you don&rsquo;t need to scale it at the same pace.</p>
+
+<h2 id="correct-terminology">Correct Terminology</h2>
+
+<p>While this may sound a bit snobby we generally have a habit of using the wrong terminology when talking about thinks. While you may think what does it matter what it&rsquo;s called? Well it doesn&rsquo;t but it does matter if you&rsquo;re able to correctly define to others what you&rsquo;re doing or thinking about doing. For example if you say blackbox testing sucks when what you mean is System level testing sucks, it can lead to people like me pointing out that block box testing is very efficient way of testing.</p>
+
+<p>One way I think of it is, if you don&rsquo;t know what you&rsquo;re doing what are you doing?</p>
+
+<h1 id="not-included">Not included</h1>
+
+<p>I also think it should be noted things that are not listed here and to understand why I haven&rsquo;t listed them. Personally I think you should probably do them all but I don&rsquo;t think they necessary make you a better developer.</p>
+
+<h2 id="programming-outside-of-work-hours">Programming outside of work hours</h2>
+
+<p>A lot of people seem to think to be a good developer you must spend all your time Programming. I personally don&rsquo;t think this is the case. One of the reasons is I think your brain needs time to rest. Also spending all your free time playing music doesn&rsquo;t affect the quality of work you do during office hours.</p>
+
+<h2 id="contributing-to-open-source">Contributing to open source</h2>
+
+<p>While contributing to open source is great and will most likely help your fundamental software development skills. In my opinion it will also teach you some bad such as not fixing bugs because they&rsquo;ve existed for so long people expect it to work like that. While I think that&rsquo;s the correct thing to do with an open source project which other people rely on. Not fixing bugs in a private company because some people may expect it to work the broken way isn&rsquo;t really good. I think all bugs should be fixed.</p>
+
+<h2 id="programming-in-more-than-one-language">Programming in more than one language</h2>
+
+<p>While I think it&rsquo;s a good idea to play with other programming languages and you will improve your development skills. I don&rsquo;t think being able to code in C and Perl will make you a better PHP developer. Just because you know how to do terrible things in multiple languages doesn&rsquo;t make you a better developer than one who knows how to do good things in only one language.</p>
+
+<h2 id="use-of-specific-tools">Use of specific tools</h2>
+
+<p>For example I am not going to say to be a good developer you have to use Jenkins, a fully featured IDE, a good debugger tool, etc. While I would say you should use them, not using them doesn&rsquo;t affect your ability to write high quality code. I just think they&rsquo;ll make your life easier.</p>
+
+<h2 id="design-patterns">Design patterns</h2>
+
+<p>Design patterns are most certainly part of writing good clean high quality code. However I feel to often people ask &ldquo;Do you use design patterns?&rdquo;. Well the answer to that is generally always yes. Knowing the code you write is a design pattern doesn&rsquo;t make you good. What makes you good is that you automatically wrote good code.</p>
+
+<p>I also think people try to jam design patterns into problems than solving the problem the design pattern solves. We seem to obsessed with design patterns.</p>
+
+<p>I also don&rsquo;t think your code is any less of if you solve a problem that has a design pattern with another method that is also clean and follows good development guidelines.</p>
+
+<h2 id="pair-programming">Pair Programming</h2>
+
+<p>I know some people who assume if you don&rsquo;t pair program you&rsquo;re not as good as the people who do. Some people just don&rsquo;t like pair programming (myself included). While I think pair programming is smart and extremely useful in many situations I don&rsquo;t think it should be defined as the only way to go in those situations.</p>
+
+<h2 id="code-kata">Code Kata</h2>
+
+<p>While I think doing code katas is a lot of fun and a wise move. I just don&rsquo;t think that not doing it removes you understanding and ability to implement any of the best practices in development.</p>
+
+<h2 id="continuous-integration">Continuous Integration</h2>
+
+<p>Many people think Continuous integration is simply running all your tests after each commit. Or even just using Jenkins before you merge so &ldquo;master&rdquo; is deployable. However Continuous integration is a practice of everyone working on the same branch and all committing to the same branch. So everyones work is integrated continuously. With the minimum of if you&rsquo;re using branches that it&rsquo;s merged into master at the end of the day. This in my opinion makes this a team discipline and not a single developers discipline.</p>
+
+<h2 id="agile">Agile</h2>
+
+<p>Agile in it&rsquo;s many forms it a method of managing the project. You can be a good developer producing good work without doing Agile.</p>
+
+<h1 id="round-up">Round up</h1>
+
+<p>So this is where it gets kinda complex and it&rsquo;s mainly just my opinion. However I believe your ability to implement the above techniques, practice, patterns determine how good you actually are.</p>
+
+<h2 id="junior">Junior</h2>
+
+<p>It&rsquo;s my personal opinion that if you don&rsquo;t implement the basics consistently then you are by definition not a good developer. There is one exception to this and that would be junior developers. Since these are things that you have to learn and get used to doing. But if you&rsquo;ve been developing for any serious amount of time and you&rsquo;re still not doing these things properly then no matter how advance the other techniques you use I still wouldn&rsquo;t class you as a good developer.</p>
+
+<h2 id="middleweight">Middleweight</h2>
+
+<p>So if you look at the Intermediate skills and if you do say 3 out of the 6 there consistently and well. Then I would rank you as a middleweight developer.</p>
+
+<p>If you&rsquo;re a junior developer and are doing these things then I would class you as a good developer.</p>
+
+<p>If you&rsquo;re a senior developer or above and this is where you&rsquo;re at I would consider you a poor developer.</p>
+
+<h2 id="senior">Senior</h2>
+
+<p>So if you do 5 out of the 6 of the intermediate skills well and consistently then I would consider you as a senior developer.</p>
+
+<p>If you&rsquo;re a junior developer and you were doing these I would consider you an amazing developer.</p>
+
+<p>If you&rsquo;re a middleweight developer and you are doing these I would consider you a good developer.</p>
+
+<p>If you&rsquo;re a team lead or above and you weren&rsquo;t doing these I would consider you poor.</p>
+
+<h2 id="team-lead">Team lead</h2>
+
+<p>While I understand team leading is a lot to do with soft skills I still think their should be a high level of technical knowledge in the basic technical team lead position. A technical team lead in my opinion should be able to do 6 out of the 7 intermediate skills while doing 1-2 of the advance skills.</p>
+
+<p>If you&rsquo;re a senior and below and you reach this then I would consider you a good developer.</p>
+
+<h2 id="higher">Higher</h2>
+
+<p>If you&rsquo;re good at all of the intermediate skills then I would consider you a good developer.</p>
+
+<p>If you&rsquo;re also good at multiple advance skills then I would consider you a great developer.</p>
+
+
+    
+
+    
+  </section> 
+
+  <footer>
+  <p class="remove-margin-bottom add-padding-right">
+    &copy; 2017 
+    <a href="http://blog.humblyarrogant.io/"></a>
+  </p>
+
+  <p class="remove-margin-bottom add-padding-right"><small>
+    <a href="https://github.com/eueung/hugo-sp-minimal">Hugo SP-Minimal</a> Theme | 
+    Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
+  </small></p>    
+</footer>
+
+
+  </div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body></html>
+

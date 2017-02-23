@@ -1,0 +1,119 @@
+
+  <!DOCTYPE html>
+<html lang="en-gb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>A Humbly Arrogant Blog</title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.19-DEV" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="shortcut icon" href="http://blog.humblyarrogant.io/img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/styles.css">
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/sp-minimal.css">
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+</head>
+
+
+  <body><div class="wrapper">
+  <header class="text-center">
+   <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
+
+  
+    <h1 class="border-bottom add-padding-bottom"><a href="http://blog.humblyarrogant.io/">A Humbly Arrogant Blog</a></h1>
+  
+	
+  
+    <h2 class="text-right add-padding-right">Posts about software development</h2>
+  
+
+  
+</header>
+
+
+
+
+  <section>
+    <p class="remove-margin-bottom">
+      <time datetime="20 March 2014">20 March 2014</time>
+    </p>
+
+    <h1>The git-flow branch model is waterfall?</h1>
+    
+
+<p>For those not in the know, git-flow is technically a tool for git which allows for the easy use of a specific branch model. Which is most commonly referred to as git-flow.  This blog post isn&rsquo;t about that tool which is super useful. But is about the branch model. Which is also super useful in my opinion if you&rsquo;re implementing the waterfall development process.</p>
+
+<p><strong>Disclaimer</strong>: <em>This isn&rsquo;t meant to be a criticism of either the branching model or the waterfall process. It&rsquo;s more me pointing out that it doesn&rsquo;t really fit in with what I consider to be an agile development process if used fully as described. Not to say that implementing some of it can&rsquo;t fit in with an agile development process. Basically I&rsquo;m trying not to be offensive to anyone. (Also it should be noted that listening to me may result in you looking stupid. You have been warned.)</em></p>
+
+<!-- more -->
+
+<h2 id="git-flow-summary">Git flow summary</h2>
+
+<p>So a quick run through of the branch model if you haven&rsquo;t read <a href="http://nvie.com/posts/a-successful-git-branching-model/">the blog post about it</a>. You basically branch each feature off into it&rsquo;s own <strong>feature branch</strong> and develop that separately from other features. When a feature is finished you then merge it into the <strong>develop</strong> branch. Once you feel you have enough features in <strong>develop</strong> you then merge it in to a <strong>release branch</strong>. At which point you only test and apply bug fixes to that branch and once you&rsquo;re ready to deploy it you then merge it to <strong>master</strong>. Which is to be an exact copy of production. You then tag it once it goes into <strong>master</strong>. Once it&rsquo;s in <strong>master</strong>, and you need to fix some urgent bug in production you would create a <strong>hotfix branch</strong>. Any non urgent bug would be fixed in a <strong>bug branch</strong> that is branched off from <strong>develop</strong>.</p>
+
+<p>So over all you have:</p>
+
+<ul>
+<li><strong>feature branch</strong> - Features get developed in these. In isolation so that you can release only fully finished features. Branch name example feature/comments</li>
+<li><strong>develop</strong> - The main development branch, where all completed features are merged into and feature and bug branches are branched off from.</li>
+<li><strong>release branch</strong> - A branch that is suggested to go to production at which point you test and then bug fix before going live. Branch name example release/0.1</li>
+<li><strong>master</strong> - A carbon copy of production, that tags are created from.</li>
+<li><strong>hotfix branch</strong> - An urgent bug fix branch, that is branched off from <strong>master</strong>.  Branch name example hotfix/dataleakage</li>
+<li><strong>bug branch</strong> - A non urgent bug fix, that is branched off from <strong>develop</strong>. Branch name example bug/invalid-email</li>
+</ul>
+
+<h2 id="things-i-like-about-this-branch-model">Things I like about this branch model</h2>
+
+<p>That you develop features off in their own branch. This makes it super simple to keep unready features away from production. Bugs are developed in their own branch allows you to change stuff that may break other things and have the safety you&rsquo;re not breaking everyone else&rsquo;s working environment.</p>
+
+<p>The fact that branches are named so you know the purpose of the branch, if it&rsquo;s a bug, a feature, or the development mainline.</p>
+
+<h2 id="what-i-don-t-like-about-this-branch-model">What I don&rsquo;t like about this branch model</h2>
+
+<p>The <strong>release branch</strong>. Its whole purpose is to implement the testing &amp; bug fixing phase of waterfall. For anyone who has worked on a largish project using waterfall, will know this phase sucks. It just feels like a constant battle. You spend ages testing everywhere by hand, then fix everything you find, then spend more time testing everything by hand. By the end of it,  it feels like you&rsquo;ve tested a section 100 times. You get that feeling deep down that you never want to see that section again. This in my opinion is the main problem, if you&rsquo;re like me and get bored silly testing something by hand 100 times you&rsquo;ll want to make it go as quickly as possible. This results in poor testing, which results in a product with more bugs. Since you&rsquo;re holding up all your features on testing in one go, you end up with more spending what seems like more time testing, get bored quicker, and get sloppier. I just can&rsquo;t see an upside to this method of testing by hand.</p>
+
+<p>Also another downside of the release branch and its waterfall feel is that you&rsquo;re not getting feedback quick enough. Say for example you have a financial statement and you only have a single column showing the amount of the transaction. Yet it doesn&rsquo;t tell you if it&rsquo;s crediting the account or debiting the account to the extent the product owner would like. Then say you&rsquo;ve then added onto the statement UI to make it load in via AJAX. You then have to change the UI and the AJAX endpoint to return the new data. If you were told when the UI was developed you wouldn&rsquo;t have to go back and change the AJAX endpoint.</p>
+
+<p>Tagging on <strong>master</strong> every time you merge to it. It just seems like you&rsquo;re not very trusting of the whole version control system. I agree that if you&rsquo;re deploying to production you should creating a release a tag should be created, but if every time you commit to <strong>master</strong> seems a bit much. I just feel it&rsquo;s a bit much. Also I think that you should keep your development mainline so stable that it can be deployed at any point without any issue.</p>
+
+<h2 id="how-i-feel-this-branch-model-should-be-used">How I feel this branch model should be used</h2>
+
+<p><strong>Feature branches</strong> are used to develop features independently of one another. When the feature is finished the feature is then tested and one agreed to the level of stability that it can be deployed. At which point it is then merged into <strong>develop</strong>. This allows it to be tested and accepted quickly and allow for changes to be made as soon as possible and not result in cascading changes due to requirement changes. It also keeps your development mainline stable enough that you can deploy at any point.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>While I don&rsquo;t think my suggested branch model is anywhere near perfect. It doesn&rsquo;t have that waterfall feel to it. I feel code should be tested as soon as it&rsquo;s written and finished and in small chunks. Yes there should be automated tests, however these don&rsquo;t replace an actual user testing it nor do they replace the product owner looking at it and agreeing that&rsquo;s what they want. The git flow branch model is clearly a successful one since so many people implement it, I just feel it&rsquo;s not for me.</p>
+
+
+    
+
+    
+  </section> 
+
+  <footer>
+  <p class="remove-margin-bottom add-padding-right">
+    &copy; 2017 
+    <a href="http://blog.humblyarrogant.io/"></a>
+  </p>
+
+  <p class="remove-margin-bottom add-padding-right"><small>
+    <a href="https://github.com/eueung/hugo-sp-minimal">Hugo SP-Minimal</a> Theme | 
+    Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
+  </small></p>    
+</footer>
+
+
+  </div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body></html>
+

@@ -1,0 +1,158 @@
+
+  <!DOCTYPE html>
+<html lang="en-gb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>A Humbly Arrogant Blog</title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.19-DEV" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="shortcut icon" href="http://blog.humblyarrogant.io/img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/styles.css">
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/sp-minimal.css">
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+</head>
+
+
+  <body><div class="wrapper">
+  <header class="text-center">
+   <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
+
+  
+    <h1 class="border-bottom add-padding-bottom"><a href="http://blog.humblyarrogant.io/">A Humbly Arrogant Blog</a></h1>
+  
+	
+  
+    <h2 class="text-right add-padding-right">Posts about software development</h2>
+  
+
+  
+</header>
+
+
+
+
+  <section>
+    <p class="remove-margin-bottom">
+      <time datetime="23 November 2014">23 November 2014</time>
+    </p>
+
+    <h1>Hack: Types</h1>
+    
+
+<p>Facebook&rsquo;s Hack bring lots of features that a lot of other programming languages get to take advantage of. One of major advantages of Hack over PHP is a typing system. So here&rsquo;s a quick run over of the typing system as I understand it.</p>
+
+<!-- more -->
+
+<h2 id="annotate">Annotate</h2>
+
+<p>Annotating is when you define which type is going to be used. You can type the following:</p>
+
+<ul>
+<li>function arguments</li>
+<li>function return</li>
+<li>class variable</li>
+<li>constants</li>
+</ul>
+
+<p>For function arguments you just put the type before the variable name for the argument.</p>
+
+<div><script src='https://gist.github.com/26159043a232e7206b40.js?file=function.hh'></script></div>
+
+<p>For the return type you just put <code>: type</code> in between the function definition and the function body.</p>
+
+<div><script src='https://gist.github.com/26159043a232e7206b40.js?file=return.hh'></script></div>
+
+<p>For constants you just put the type in between the <code>const</code> keyword and the constant name.</p>
+
+<div><script src='https://gist.github.com/26159043a232e7206b40.js?file=dd.hh'></script></div>
+
+<p>For class variables you just put the type in between the scope keyword and the variable name.</p>
+
+<div><script src='https://gist.github.com/26159043a232e7206b40.js?file=class.hh'></script></div>
+
+<h2 id="list-of-basic-types">List of basic types</h2>
+
+<p>Primitive are one most basic types that are used in most programming languages.</p>
+
+<ul>
+<li><code>string</code></li>
+<li><code>int</code> - Integer</li>
+<li><code>float</code> - Floating point</li>
+<li><code>bool</code> - Boolean (True or False)</li>
+<li><code>array</code></li>
+</ul>
+
+<p>Primitive Unions are types that can be used to describe other Primitive types that go together.
+* <code>num</code> - integer or float
+* <code>arraykey</code> - string or integer</p>
+
+<p>Arrays while being a primitive type can be expanded to show what type of data they hold. You can also define the array key type. Instead of typing arrays like this you may want to look at using collections.</p>
+
+<ul>
+<li><code>array&lt;string&gt;</code> - An array of strings</li>
+<li><code>array&lt;string,int&gt;</code>  - An array of integers indexed by a string</li>
+</ul>
+
+<p>Classes and interfaces, if a class or interface exists in the code that&rsquo;s being executed then it&rsquo;s a type that you can use for type annotations.</p>
+
+<p>Other basic types</p>
+
+<ul>
+<li><code>mixed</code> - Will take anything</li>
+<li><code>void</code> - Nothing it means there is no type, this is generally used</li>
+<li><code>resource</code> - A resource such as filepointer, curl resources, etc.</li>
+<li><code>(function(typeOne, typeTwo, ...): returnType)</code> - closure</li>
+<li><code>tuple(typeOne, typeTwo)</code> - tuples</li>
+</ul>
+
+<p>A full list can be found in <a href="http://docs.hhvm.com/manual/en/hack.annotations.usingtypes.php">hack annotations docs</a>.</p>
+
+<h2 id="generics">Generics</h2>
+
+<p>Sometimes you want your code to work with any type. In those cases we can use type generics. Generics can be defined on a class or on a method. To define a generic you wrap the name of the generic with less than and greater than in either the class definition or the method definition.</p>
+
+<p>When naming it you should remember can&rsquo;t use the name of a type that already exists. It&rsquo;s a general rule of thumb that you start your generic type with <code>T</code> and for real simple use cases <code>T</code> alone is fine. With collections it&rsquo;s advised to use <code>Tk</code> for the key and <code>Tv</code> for the value.</p>
+
+<div><script src='https://gist.github.com/26159043a232e7206b40.js?file=generics.hh'></script></div>
+
+<h2 id="overriding-return-type-signature">Overriding return type signature</h2>
+
+<p>When you extend a class you are able to override the return type for methods you override. However the new type must be compatible with the original type. So in other word the type must be a child type of the original type.</p>
+
+<p>So say you originally typed it <code>Foo</code> you couldn&rsquo;t then change the type to <code>bool</code>. As that&rsquo;s not a compatible type of <code>Foo</code>. However if you created a child class of <code>Foo</code> called <code>Fooable</code> you would be able to use that as a type. So your code still actually follows the orignal return signature it&rsquo;s just more detailed.</p>
+
+
+    
+
+    
+  </section> 
+
+  <footer>
+  <p class="remove-margin-bottom add-padding-right">
+    &copy; 2017 
+    <a href="http://blog.humblyarrogant.io/"></a>
+  </p>
+
+  <p class="remove-margin-bottom add-padding-right"><small>
+    <a href="https://github.com/eueung/hugo-sp-minimal">Hugo SP-Minimal</a> Theme | 
+    Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
+  </small></p>    
+</footer>
+
+
+  </div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body></html>
+

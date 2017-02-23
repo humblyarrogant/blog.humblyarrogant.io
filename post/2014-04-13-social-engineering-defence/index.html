@@ -1,0 +1,94 @@
+
+  <!DOCTYPE html>
+<html lang="en-gb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>A Humbly Arrogant Blog</title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.19-DEV" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="shortcut icon" href="http://blog.humblyarrogant.io/img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/styles.css">
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/sp-minimal.css">
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+</head>
+
+
+  <body><div class="wrapper">
+  <header class="text-center">
+   <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
+
+  
+    <h1 class="border-bottom add-padding-bottom"><a href="http://blog.humblyarrogant.io/">A Humbly Arrogant Blog</a></h1>
+  
+	
+  
+    <h2 class="text-right add-padding-right">Posts about software development</h2>
+  
+
+  
+</header>
+
+
+
+
+  <section>
+    <p class="remove-margin-bottom">
+      <time datetime="13 April 2014">13 April 2014</time>
+    </p>
+
+    <h1>Social Engineering defence</h1>
+    <p>So a while back I read a blog post by <a href="http://www.chunkhost.com/blog/15/huge_security_hole_in_sendgrid">ChunkHost</a> about a &ldquo;Huge security hole in Sendgrid&rdquo;. And instantly I thought why isn&rsquo;t there a protection against something which is so obviously dodgy. After a few seconds I thought of an easy protection against such an attack, I&rsquo;ve now found time to write about it so here it is.</p>
+
+<!-- more -->
+
+<p>#The attack</p>
+
+<p>The attack was simple, someone phoned up Sendgrid&rsquo;s customer support and talked them into changing the email for the ChunkHost account from support@chunkhost.com to support@chunkhost.info. Once they did that they then did a forgotten password request. Once they had access they then add their email as a BCC to all emails going out. At this point they then targeted chunkhost customers with forgotten password requests. The attack on the end targets failed as they used two factor authentication.</p>
+
+<p>#Review</p>
+
+<p>First major &ldquo;WHAT?&rdquo; is that Sendgrid allowed the email to be changed over the phone, but hey that&rsquo;s what this attack is about tricking someone into doing something for you. So lets get on two the other things. One of the things I would consider blatantly off, is changing an email from a .com to a .info for your login. I can see this happening in the sending of emails but why would anyone move from the arguably best TLD to one that is one of the least favourable? I can&rsquo;t see that happening that often. Next is that straight after the email is changed there is a forgotten password request. That to me would ring alarm bells. Then there is the fact you can BCC transactions email in the first place.</p>
+
+<p>#Conclusion</p>
+
+<p>It seems to me all of this could be easily stopped by preventing people from doing forgot password requests within 24 hours of changing their email. While this may be really annoying from a UX point of view, in 99% of cases people can wait 24 hours to log in to something. Also when they do a forgot password within 24 hours of changing their email, send an email to the old email account that there is a forgot password request and ask them to contact customer support. That would allow people a change to quickly react if there is an attack on their accounts.</p>
+
+<p>Also obviously using two factor authentication on your logins will also prevent social engineering attacks like this. Since even if they can do a forgot password request and get the login details they won&rsquo;t get the other authentication factor. This one wins out overall. But if you&rsquo;re unable or unwilling to implement two factor authentication you can at least apply the 24 hour delay on password changes with ease.</p>
+
+<p><em>TL;DR Stop people from doing forgot password for 24 hours after changing emails. Or just use two factor authentication.</em></p>
+
+
+    
+
+    
+  </section> 
+
+  <footer>
+  <p class="remove-margin-bottom add-padding-right">
+    &copy; 2017 
+    <a href="http://blog.humblyarrogant.io/"></a>
+  </p>
+
+  <p class="remove-margin-bottom add-padding-right"><small>
+    <a href="https://github.com/eueung/hugo-sp-minimal">Hugo SP-Minimal</a> Theme | 
+    Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
+  </small></p>    
+</footer>
+
+
+  </div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body></html>
+

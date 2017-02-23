@@ -22,7 +22,6 @@
 
 
   <body><div class="wrapper">
-
   <header class="text-center">
    <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
 
@@ -41,69 +40,28 @@
 
 
   <section>
-  
+    <p class="remove-margin-bottom">
+      <time datetime="26 April 2014">26 April 2014</time>
+    </p>
 
-  <p class="remove-margin-bottom"><small>
-    <time datetime="14 March 2014">14 March 2014</time>
-  </small></p>
+    <h1>Revel : Force template format</h1>
+    <p>So in Revel you can have your template in several different formats: html, json, xml, or txt. This is super awesome. As it allows you to send the same data and display different formats - Obivously. It also determines what template to use based on the http request headers that have been sent. So if your request sends that it accepts application/xml it&rsquo;ll use xml and if you request says application/json it uses json.</p>
 
-  <h2><a href="http://blog.humblyarrogant.io/post/2014-03-14-100-days-of-github/">100 days of github</a></h2>
+<!-- more -->
 
-  <p>
+<p>All awesome. But what if I want to debug something that should only ever be json. Or even more interesting what if I sent that I accept html and json but with json second in the list. AngularJS seems to do this by default, took me a while to figure out what was going on. So I need a way of forcing revel to just use one file format no matter what the http headers are. Thankfully it&rsquo;s super simple, one line in your controller action to set the Request member&rsquo;s Format member to the desired format and it&rsquo;ll use that.</p>
+
+<div><script src='https://gist.github.com/11321687.js?file=snippet.go'></script></div>
+
+<p>So in full example.</p>
+
+<div><script src='https://gist.github.com/11321687.js?file=test.go'></script></div>
+
+
     
-      So I&rsquo;ve decided to I need to get back to programming more things in my spare time. One way to kinda force this on myself is to attempt to do 100 days of github contributions.
-My first aim is to write an actual project to do something I need. Currently one of the things I need is something to give me better overview of the status of builds on Jenkins. Currently I just know if the builds are passing or failing.
-      
-      ...
-      <a href="http://blog.humblyarrogant.io/post/2014-03-14-100-days-of-github/" style="height:28px">
-      Read more <i class="fa fa-angle-double-right"></i></a>
-      
+
     
-  </p>
-
-
-
-
-    <div class="pagination"> 
-    
-    <ul class="pagination">
-        
-        <li>
-            <a href="/post/" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
-        </li>
-        
-        <li
-        >
-        <a href="/post/page/4/" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-        </li>
-        
-        <li
-        ><a href="/post/">1</a></li>
-        
-        <li
-        ><a href="/post/page/2/">2</a></li>
-        
-        <li
-        ><a href="/post/page/3/">3</a></li>
-        
-        <li
-        ><a href="/post/page/4/">4</a></li>
-        
-        <li
-        class="active"><a href="/post/page/5/">5</a></li>
-        
-        <li
-        class="disabled">
-        <a href="" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-        </li>
-        
-        <li>
-            <a href="/post/page/5/" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
-        </li>
-        
-    </ul>
-     </div>
-  </section>
+  </section> 
 
   <footer>
   <p class="remove-margin-bottom add-padding-right">
@@ -116,7 +74,6 @@ My first aim is to write an actual project to do something I need. Currently one
     Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
   </small></p>    
 </footer>
-
 
 
   </div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>

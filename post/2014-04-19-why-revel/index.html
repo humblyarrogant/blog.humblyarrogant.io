@@ -1,0 +1,92 @@
+
+  <!DOCTYPE html>
+<html lang="en-gb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>A Humbly Arrogant Blog</title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.19-DEV" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="shortcut icon" href="http://blog.humblyarrogant.io/img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/styles.css">
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/sp-minimal.css">
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+</head>
+
+
+  <body><div class="wrapper">
+  <header class="text-center">
+   <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
+
+  
+    <h1 class="border-bottom add-padding-bottom"><a href="http://blog.humblyarrogant.io/">A Humbly Arrogant Blog</a></h1>
+  
+	
+  
+    <h2 class="text-right add-padding-right">Posts about software development</h2>
+  
+
+  
+</header>
+
+
+
+
+  <section>
+    <p class="remove-margin-bottom">
+      <time datetime="19 April 2014">19 April 2014</time>
+    </p>
+
+    <h1>Why Revel?</h1>
+    
+
+<p>So lately I&rsquo;ve been working on a project to increase productivity when dealing with Bitbucket and Jenkins. As I am a web developer, it&rsquo;s a web app. So one of the first questions when building an application these days seems to be what framework? This for me has taken a month to really decide. In the end I choose Revel.</p>
+
+<!-- more -->
+
+<h1 id="at-first">At first</h1>
+
+<p>At first I decided to use Gorilla Web Toolkit. Which is a very minimalist framework(ish). It&rsquo;s really just a bunch of components that you can use together to create web applications. I have no complaints about it. It all works very nicely. It just wasn&rsquo;t how I wanted to develop. I&rsquo;m too used to controllers, I like the structure they provide. Gorilla&rsquo;s muxer was pretty much a more powerful version of the default one that comes with Go. Where you either pass a function or you pass a struct that handles the request. It just wasn&rsquo;t what I wanted.</p>
+
+<h1 id="my-own-framework">My own framework</h1>
+
+<p>Next thing I decided was I would built my own simple framework. It would do exactly what I wanted. I worked on it for two weeks in my spare time. As I am just learning Go, this provided a perfect chance to get to know it better. I learnt about reflection and the basics of how it works. Increased my understanding of structs and inheritance. As well as a bunch of other stuff. However I realised I was spending all my time writing a framework and that&rsquo;s not what I want to build.</p>
+
+<h1 id="revel">Revel</h1>
+
+<p>I originally didn&rsquo;t want to use Revel because it&rsquo;s pretty bloated, it&rsquo;s a full on framework. Based on Play! which I had played with before in Scala. But I realised it&rsquo;s pretty much the only web framework that provides anywhere near what I am wanting in regards to routing and MVC. It&rsquo;s also got the ability to recompile code on change so you don&rsquo;t have to constant restart the application. So I decided to just rewrite everything over to Revel. Hopefully this will be a good decision.</p>
+
+
+    
+
+    
+  </section> 
+
+  <footer>
+  <p class="remove-margin-bottom add-padding-right">
+    &copy; 2017 
+    <a href="http://blog.humblyarrogant.io/"></a>
+  </p>
+
+  <p class="remove-margin-bottom add-padding-right"><small>
+    <a href="https://github.com/eueung/hugo-sp-minimal">Hugo SP-Minimal</a> Theme | 
+    Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
+  </small></p>    
+</footer>
+
+
+  </div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body></html>
+

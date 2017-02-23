@@ -49,7 +49,7 @@ The solution is upgrade linux kernel.
 
 &lt;p&gt;An example &lt;code&gt;Dockerfile&lt;/code&gt; can be found below.&lt;/p&gt;
 
-&lt;p&gt;{% gist 163763cd1017d8a5319c0c48ec697969 Dockerfile %}&lt;/p&gt;</description>
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/163763cd1017d8a5319c0c48ec697969.js?file=Dockerfile&#39;&gt;&lt;/script&gt;&lt;/div&gt;</description>
     </item>
     
     <item>

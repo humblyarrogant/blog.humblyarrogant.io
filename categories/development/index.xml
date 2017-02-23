@@ -327,9 +327,9 @@
 
 &lt;p&gt;When fetching an encoder you can either pass in a User entity or you can pass in the string of the class you want to find the encoder for. This behavior can be leaveraged so you define encoders with ids that aren&amp;rsquo;t class named and then just pass in the name of the encoder you want.&lt;/p&gt;
 
-&lt;p&gt;{% gist 5300b2a609a80492b657 one.yml %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/5300b2a609a80492b657.js?file=one.yml&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
-&lt;p&gt;{% gist 5300b2a609a80492b657 two.php %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/5300b2a609a80492b657.js?file=two.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;h2 id=&#34;creating-your-own-password-encoder&#34;&gt;Creating your own Password Encoder&lt;/h2&gt;
 
@@ -337,25 +337,25 @@
 
 &lt;p&gt;Here&amp;rsquo;s an example Encoder class.&lt;/p&gt;
 
-&lt;p&gt;{% gist 5300b2a609a80492b657 three.php %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/5300b2a609a80492b657.js?file=three.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;p&gt;Once you have created the class you have to define it in your services container configuration.&lt;/p&gt;
 
-&lt;p&gt;{% gist 5300b2a609a80492b657 four.xml %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/5300b2a609a80492b657.js?file=four.xml&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;p&gt;Then to have it loaded into the Encoder factory you need to assign it to a user entity in your security.yml file like so.&lt;/p&gt;
 
-&lt;p&gt;{% gist 5300b2a609a80492b657 five.yml %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/5300b2a609a80492b657.js?file=five.yml&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;h2 id=&#34;password-encoder-based-on-the-user-entity&#34;&gt;Password encoder based on the User entity&lt;/h2&gt;
 
 &lt;p&gt;The EncoderAwareInterface allows you to return the key for the encoder you want for that user.&lt;/p&gt;
 
-&lt;p&gt;{% gist 5300b2a609a80492b657 six.php %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/5300b2a609a80492b657.js?file=six.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;p&gt;The key for the encoder is key that was put into your security.yml config. In the below example we have bcrypt available as a key as well as &amp;ldquo;Icambridge\Entity\InsecureUser&amp;rdquo;.&lt;/p&gt;
 
-&lt;p&gt;{% gist 5300b2a609a80492b657 seven.yml %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/5300b2a609a80492b657.js?file=seven.yml&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;h2 id=&#34;userpasswordencoder&#34;&gt;UserPasswordEncoder&lt;/h2&gt;
 
@@ -388,19 +388,19 @@
 
 &lt;p&gt;For function arguments you just put the type before the variable name for the argument.&lt;/p&gt;
 
-&lt;p&gt;{% gist 26159043a232e7206b40 function.hh %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/26159043a232e7206b40.js?file=function.hh&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;p&gt;For the return type you just put &lt;code&gt;: type&lt;/code&gt; in between the function definition and the function body.&lt;/p&gt;
 
-&lt;p&gt;{% gist 26159043a232e7206b40 return.hh %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/26159043a232e7206b40.js?file=return.hh&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;p&gt;For constants you just put the type in between the &lt;code&gt;const&lt;/code&gt; keyword and the constant name.&lt;/p&gt;
 
-&lt;p&gt;{% gist 26159043a232e7206b40 dd.hh %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/26159043a232e7206b40.js?file=dd.hh&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;p&gt;For class variables you just put the type in between the scope keyword and the variable name.&lt;/p&gt;
 
-&lt;p&gt;{% gist 26159043a232e7206b40 class.hh %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/26159043a232e7206b40.js?file=class.hh&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;h2 id=&#34;list-of-basic-types&#34;&gt;List of basic types&lt;/h2&gt;
 
@@ -445,7 +445,7 @@
 
 &lt;p&gt;When naming it you should remember can&amp;rsquo;t use the name of a type that already exists. It&amp;rsquo;s a general rule of thumb that you start your generic type with &lt;code&gt;T&lt;/code&gt; and for real simple use cases &lt;code&gt;T&lt;/code&gt; alone is fine. With collections it&amp;rsquo;s advised to use &lt;code&gt;Tk&lt;/code&gt; for the key and &lt;code&gt;Tv&lt;/code&gt; for the value.&lt;/p&gt;
 
-&lt;p&gt;{% gist 26159043a232e7206b40 generics.hh %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/26159043a232e7206b40.js?file=generics.hh&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;h2 id=&#34;overriding-return-type-signature&#34;&gt;Overriding return type signature&lt;/h2&gt;
 
@@ -575,7 +575,7 @@
 
 &lt;p&gt;So use case, an email sender dependency. It&amp;rsquo;s very unlikely that you&amp;rsquo;re going to want to change how you send emails.&lt;/p&gt;
 
-&lt;p&gt;{% gist fa0cd7160709ac6b6218 Constructor.php %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/fa0cd7160709ac6b6218.js?file=Constructor.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;h1 id=&#34;setter&#34;&gt;Setter&lt;/h1&gt;
 
@@ -585,7 +585,7 @@
 
 &lt;p&gt;Another use case for the setter method is if you want to use interfaces to show that the object has that dependency. For example the ContainerAware interface in the Symfony2. This allows you to give a class multiple dependencies.&lt;/p&gt;
 
-&lt;p&gt;{% gist fa0cd7160709ac6b6218 Setter.php %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/fa0cd7160709ac6b6218.js?file=Setter.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;h1 id=&#34;method&#34;&gt;Method&lt;/h1&gt;
 
@@ -593,13 +593,13 @@
 
 &lt;p&gt;Use case for this would be a date object in a calendar object. Where you would want to use the same object for multiple dates.&lt;/p&gt;
 
-&lt;p&gt;{% gist fa0cd7160709ac6b6218 method.php %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/fa0cd7160709ac6b6218.js?file=method.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;h1 id=&#34;service-container&#34;&gt;Service Container&lt;/h1&gt;
 
 &lt;p&gt;Service container is when you store you dependencies in an object and then pass that around. This allows you to make all your dependencies easily available wihtout having to worry about injecting them individually.&lt;/p&gt;
 
-&lt;p&gt;{% gist fa0cd7160709ac6b6218 container.php %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/fa0cd7160709ac6b6218.js?file=container.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;h1 id=&#34;factory&#34;&gt;Factory&lt;/h1&gt;
 
@@ -609,11 +609,11 @@
 
 &lt;p&gt;Here is a sample of the code without a factory.&lt;/p&gt;
 
-&lt;p&gt;{% gist fa0cd7160709ac6b6218 factory-without.php %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/fa0cd7160709ac6b6218.js?file=factory-wihtout.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;p&gt;With the factory.&lt;/p&gt;
 
-&lt;p&gt;{% gist fa0cd7160709ac6b6218 factory-with.php %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/fa0cd7160709ac6b6218.js?file=factory-with.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
 
@@ -637,7 +637,7 @@
 
 &lt;p&gt;A quick breakdown of what is going on. First you install the revel framework, then you install the revel command. Then you call the revel command with the test command using import directory that will be used by go when it grabs your code. So in my case it was &amp;ldquo;&lt;strong&gt;revel test github.com/icambridge/sitrep&lt;/strong&gt;&amp;rdquo;.&lt;/p&gt;
 
-&lt;p&gt;{% gist 11329286 gistfile1.txt %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/11329286.js?file=gistfile1.txt&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 </description>
     </item>
     
@@ -653,11 +653,11 @@
 
 &lt;p&gt;All awesome. But what if I want to debug something that should only ever be json. Or even more interesting what if I sent that I accept html and json but with json second in the list. AngularJS seems to do this by default, took me a while to figure out what was going on. So I need a way of forcing revel to just use one file format no matter what the http headers are. Thankfully it&amp;rsquo;s super simple, one line in your controller action to set the Request member&amp;rsquo;s Format member to the desired format and it&amp;rsquo;ll use that.&lt;/p&gt;
 
-&lt;p&gt;{% gist 11321687 snippet.go %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/11321687.js?file=snippet.go&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;p&gt;So in full example.&lt;/p&gt;
 
-&lt;p&gt;{% gist 11321687 test.go %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/11321687.js?file=test.go&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 </description>
     </item>
     
@@ -732,11 +732,13 @@ other language.&lt;/p&gt;
 
 &lt;p&gt;Created an interface to allow for more flexible typing later on.&lt;/p&gt;
 
-&lt;p&gt;{% gist 9708081 interface.go %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/9708081.js?file=interface.go&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;h1 id=&#34;observer-notifier&#34;&gt;Observer Notifier&lt;/h1&gt;
 
 &lt;p&gt;The main part of the logic, simply have an add observer and then have a process function that loops through and calls them all.&lt;/p&gt;
+
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/9708081.js?file=observer.go&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;p&gt;{% gist 9708081 observer.go %}&lt;/p&gt;
 
@@ -744,7 +746,7 @@ other language.&lt;/p&gt;
 
 &lt;p&gt;Here is a copy of it all together. As you can see it&amp;rsquo;s really simple to whack together once you have a half decent understanding of Go.&lt;/p&gt;
 
-&lt;p&gt;{% gist 9708081 main.go %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/9708081.js?file=main.go&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 </description>
     </item>
     

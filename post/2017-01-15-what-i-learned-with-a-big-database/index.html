@@ -1,0 +1,110 @@
+
+  <!DOCTYPE html>
+<html lang="en-gb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>A Humbly Arrogant Blog</title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.19-DEV" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="shortcut icon" href="http://blog.humblyarrogant.io/img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/styles.css">
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/sp-minimal.css">
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+</head>
+
+
+  <body><div class="wrapper">
+  <header class="text-center">
+   <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
+
+  
+    <h1 class="border-bottom add-padding-bottom"><a href="http://blog.humblyarrogant.io/">A Humbly Arrogant Blog</a></h1>
+  
+	
+  
+    <h2 class="text-right add-padding-right">Posts about software development</h2>
+  
+
+  
+</header>
+
+
+
+
+  <section>
+    <p class="remove-margin-bottom">
+      <time datetime="15 January 2017">15 January 2017</time>
+    </p>
+
+    <h1>What I learned with a big database</h1>
+    
+
+<p>So I recently started a new side project that involves data mining. While working on this project I&rsquo;ve learned a little bit about how to manage a larger than usual database. At the point of writing this the database is approximately 50GB and growing daily. So here are a few things I&rsquo;ve learned.</p>
+
+<!-- more -->
+
+<h1 id="backups">Backups</h1>
+
+<p>This is probably the main area where I learned a bunch of stuff. Usually when you&rsquo;re dealing with a database of approximately 1GB in size, backups at midnight are rather routine. You run mysqldump and you&rsquo;re done. However when your database gets larger and is constantly being used this suddenly becomes an actual task.</p>
+
+<h2 id="table-locks">Table locks</h2>
+
+<p>My original attempts to do mysqldump resulted in all my miners being unable to insert into the database. It turns out by default mysqldump locks all the tables. This becomes an issue when mysqldump takes 1+ hours to run. However you can use the <code>--single-transaction</code> flag to make the mysqldump to start a transaction and use this for all the reads. That means the writes can continue while you&rsquo;re doing a mysqldump.</p>
+
+<h2 id="compression">Compression</h2>
+
+<p>When running mysqldump I was creating the SQL file and then after that compressing it before transferring it to S3 for storage. This turns out isn&rsquo;t the best approach as the reading and writing to the same disk can cause a slow down in the speed of the dump. You can reduce this by piping mysqldump&rsquo;s output into a compression application directly. That way you&rsquo;re writing less data to disk so your mysqldump isn&rsquo;t waiting for disk io.</p>
+
+<p>I also found out that gzip still only uses one core by default. However someone nicely wrote an upgraded version that uses all cores, it&rsquo;s called pigz. You can also use this with tar.</p>
+
+<h2 id="xtrabackup">Xtrabackup</h2>
+
+<p>After a while I realised that mysqldump wasn&rsquo;t the best choice for a backup when dealing with a 50+GB database. So I started looking into other methods. I ended up using Percona XtraBackup. This works by copying the innodb files instead of creating a sql file. You also need to use it to restore your backups. This performed almost 4 times faster than mysqldump.</p>
+
+<p>One of the parts of the backup process is applying the innodb logs that haven&rsquo;t been executed yet. By default this took 12+ hours before I killed it. It turns out that it has a <code>--use-memory</code> flag. By default it only uses very little memory. I&rsquo;ve upped this to 7GB and it flew by in comparison.</p>
+
+<h1 id="tuning">Tuning</h1>
+
+<p>Considering my database is extremely write heavy at the moment (99% writes 1% reads). It turned out I need to improve the performance of my writes. I did this by tuning the MySQL settings.</p>
+
+<p>The two main settings I changed were: innodb_buffer_pool_size and innodb_log_file_size. This resulted in skyrocketing my write performance in comparison to what I was getting.</p>
+
+<h1 id="replication">Replication</h1>
+
+<p>I found out that if I want to do any actual work on the data I&rsquo;ve mined that I would have to create a master-slave replication setup. To avoid locking the tables and slowing down/killing my crawlers.</p>
+
+
+    
+
+    
+  </section> 
+
+  <footer>
+  <p class="remove-margin-bottom add-padding-right">
+    &copy; 2017 
+    <a href="http://blog.humblyarrogant.io/"></a>
+  </p>
+
+  <p class="remove-margin-bottom add-padding-right"><small>
+    <a href="https://github.com/eueung/hugo-sp-minimal">Hugo SP-Minimal</a> Theme | 
+    Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
+  </small></p>    
+</footer>
+
+
+  </div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body></html>
+

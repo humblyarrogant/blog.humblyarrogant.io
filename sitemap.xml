@@ -2,11 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://blog.humblyarrogant.io/about/</loc>
-    <lastmod>2017-02-21T15:12:23+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>http://blog.humblyarrogant.io/post/2017-02-21-code-review-single-responsibility-principle/</loc>
     <lastmod>2017-02-21T15:12:23+01:00</lastmod>
   </url>
@@ -87,11 +82,6 @@
   </url>
   
   <url>
-    <loc>http://blog.humblyarrogant.io/post/2014-03-31-quick-rundown-on-bcaas/</loc>
-    <lastmod>2014-03-31T21:08:14-04:00</lastmod>
-  </url>
-  
-  <url>
     <loc>http://blog.humblyarrogant.io/post/2014-03-28-xvfb-run-wont-run-in-jenkins-apache/</loc>
     <lastmod>2014-03-28T22:26:14-04:00</lastmod>
   </url>
@@ -117,14 +107,12 @@
   </url>
   
   <url>
-    <loc>http://blog.humblyarrogant.io/</loc>
-    <lastmod>2017-02-21T15:12:23+01:00</lastmod>
-    <priority>0</priority>
+    <loc>http://blog.humblyarrogant.io/about/</loc>
   </url>
   
   <url>
-    <loc>http://blog.humblyarrogant.io/categories/bcaa/</loc>
-    <lastmod>2014-03-31T21:08:14-04:00</lastmod>
+    <loc>http://blog.humblyarrogant.io/</loc>
+    <lastmod>2017-02-21T15:12:23+01:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -164,12 +152,6 @@
   </url>
   
   <url>
-    <loc>http://blog.humblyarrogant.io/categories/fitness/</loc>
-    <lastmod>2014-03-31T21:08:14-04:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://blog.humblyarrogant.io/categories/godep/</loc>
     <lastmod>2017-02-04T15:12:23+01:00</lastmod>
     <priority>0</priority>
@@ -202,12 +184,6 @@
   <url>
     <loc>http://blog.humblyarrogant.io/categories/kubernetes/</loc>
     <lastmod>2017-01-31T15:12:23+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.humblyarrogant.io/categories/nutrition/</loc>
-    <lastmod>2014-03-31T21:08:14-04:00</lastmod>
     <priority>0</priority>
   </url>
   

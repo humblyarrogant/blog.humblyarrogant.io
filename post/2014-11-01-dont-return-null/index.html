@@ -1,0 +1,90 @@
+
+  <!DOCTYPE html>
+<html lang="en-gb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>A Humbly Arrogant Blog</title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.19-DEV" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="shortcut icon" href="http://blog.humblyarrogant.io/img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/styles.css">
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/sp-minimal.css">
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+</head>
+
+
+  <body><div class="wrapper">
+  <header class="text-center">
+   <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
+
+  
+    <h1 class="border-bottom add-padding-bottom"><a href="http://blog.humblyarrogant.io/">A Humbly Arrogant Blog</a></h1>
+  
+	
+  
+    <h2 class="text-right add-padding-right">Posts about software development</h2>
+  
+
+  
+</header>
+
+
+
+
+  <section>
+    <p class="remove-margin-bottom">
+      <time datetime="01 November 2014">01 November 2014</time>
+    </p>
+
+    <h1>Don&#39;t return null</h1>
+    <p>If you&rsquo;re programming in an object orientated language that supports exceptions you should never return null in a method that returns an object.</p>
+
+<!-- more -->
+
+<p>Most object orientated languages support exceptions. Exceptions give us an extremely expressive way to represent error conditions. We throw an exception and the program bails out of where it is and then goes to the error handling section. We can create custom exceptions to express exactly what sort of error occured. This is how error handling in object orientated programming languages is meant to be done</p>
+
+<p>Returning null on error comes procedural programming. In procedural programming it makes a lot of sense. In most procedural programming languages there is no other way to represent an error condition. The problem here is the user of the method has to do the error checking and manually handle the error.</p>
+
+<p>Generally in the method where an error condition has occurred, there has been sort of logic check to see if everything is ok or if it&rsquo;s an error condition. If we&rsquo;re returning null then we have to do this logic again every time we use this method. Where as with an exception there is only the logic check in the method and then all the error handling is handled by try/catch switches.</p>
+
+<p>When a method is meant to return an object developers naturally want to chain method calls on this. It just feels very natural and generally looks a lot cleaner. When we do this and an exception is flung our code just jumps to the exception handling. If we return null we end up with an error for calling a member method on a non object. In PHP a fatal error.</p>
+
+<p>Throwing an exception instead of returning null, allows you to keep your code more consistent. You can make sure that methods always return a value of the same type. Removing the need for repeating the same sanity checks all over your code.</p>
+
+<p>So in overview we have more valid object orientated code, less repeating yourself, more consistent code, more expressive code, and cleaner code. Those all sound like pretty good reasons to stop returning null.</p>
+
+
+    
+
+    
+  </section> 
+
+  <footer>
+  <p class="remove-margin-bottom add-padding-right">
+    &copy; 2017 
+    <a href="http://blog.humblyarrogant.io/"></a>
+  </p>
+
+  <p class="remove-margin-bottom add-padding-right"><small>
+    <a href="https://github.com/eueung/hugo-sp-minimal">Hugo SP-Minimal</a> Theme | 
+    Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
+  </small></p>    
+</footer>
+
+
+  </div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body></html>
+

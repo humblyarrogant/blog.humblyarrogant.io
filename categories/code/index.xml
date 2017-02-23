@@ -21,11 +21,11 @@
 
 &lt;p&gt;All awesome. But what if I want to debug something that should only ever be json. Or even more interesting what if I sent that I accept html and json but with json second in the list. AngularJS seems to do this by default, took me a while to figure out what was going on. So I need a way of forcing revel to just use one file format no matter what the http headers are. Thankfully it&amp;rsquo;s super simple, one line in your controller action to set the Request member&amp;rsquo;s Format member to the desired format and it&amp;rsquo;ll use that.&lt;/p&gt;
 
-&lt;p&gt;{% gist 11321687 snippet.go %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/11321687.js?file=snippet.go&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;p&gt;So in full example.&lt;/p&gt;
 
-&lt;p&gt;{% gist 11321687 test.go %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/11321687.js?file=test.go&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 </description>
     </item>
     
@@ -48,11 +48,13 @@ other language.&lt;/p&gt;
 
 &lt;p&gt;Created an interface to allow for more flexible typing later on.&lt;/p&gt;
 
-&lt;p&gt;{% gist 9708081 interface.go %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/9708081.js?file=interface.go&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;h1 id=&#34;observer-notifier&#34;&gt;Observer Notifier&lt;/h1&gt;
 
 &lt;p&gt;The main part of the logic, simply have an add observer and then have a process function that loops through and calls them all.&lt;/p&gt;
+
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/9708081.js?file=observer.go&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 
 &lt;p&gt;{% gist 9708081 observer.go %}&lt;/p&gt;
 
@@ -60,7 +62,7 @@ other language.&lt;/p&gt;
 
 &lt;p&gt;Here is a copy of it all together. As you can see it&amp;rsquo;s really simple to whack together once you have a half decent understanding of Go.&lt;/p&gt;
 
-&lt;p&gt;{% gist 9708081 main.go %}&lt;/p&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/9708081.js?file=main.go&#39;&gt;&lt;/script&gt;&lt;/div&gt;
 </description>
     </item>
     

@@ -23,9 +23,8 @@
 
 &lt;p&gt;How I set the prefetch configuration using the Qos command. In Go and in PHP (since I had a PHP version to see if it was just the library in Go I was using.)&lt;/p&gt;
 
-&lt;p&gt;{% gist bd7334304dabc1fac3c6a1441a96a561 main.go %}&lt;/p&gt;
-
-&lt;p&gt;{% gist bd7334304dabc1fac3c6a1441a96a561 main.php %}&lt;/p&gt;</description>
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/bd7334304dabc1fac3c6a1441a96a561.js?file=main.go&#39;&gt;&lt;/script&gt;&lt;/div&gt;
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/bd7334304dabc1fac3c6a1441a96a561.js?file=main.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;</description>
     </item>
     
   </channel>

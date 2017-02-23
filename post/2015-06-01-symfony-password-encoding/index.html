@@ -1,0 +1,120 @@
+
+  <!DOCTYPE html>
+<html lang="en-gb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>A Humbly Arrogant Blog</title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.19-DEV" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="shortcut icon" href="http://blog.humblyarrogant.io/img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/styles.css">
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/sp-minimal.css">
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+</head>
+
+
+  <body><div class="wrapper">
+  <header class="text-center">
+   <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
+
+  
+    <h1 class="border-bottom add-padding-bottom"><a href="http://blog.humblyarrogant.io/">A Humbly Arrogant Blog</a></h1>
+  
+	
+  
+    <h2 class="text-right add-padding-right">Posts about software development</h2>
+  
+
+  
+</header>
+
+
+
+
+  <section>
+    <p class="remove-margin-bottom">
+      <time datetime="01 June 2015">01 June 2015</time>
+    </p>
+
+    <h1>Symfony Password encoding</h1>
+    
+
+<p>A very simple breakdown of how the password encoding works with Symfony 2.</p>
+
+<!-- more -->
+
+<h2 id="encoder-factory">Encoder factory</h2>
+
+<p>The encoder factory is where you get your password encoders from. You pass in a User entity and it returns an Encoder. Encoders are created from the encoder configs and stored within the factory, there is only a single instance of the encoder unless you clone it outside of the factory. The encoder configs are passed to the factory upon creation. Once a factory is created there is no way of adding new encoders as there is no add method and the internal class variable holding these is private. The encoder config array is generated from the encoders assigned to a user entity. If the encoder is not used by anything then Symfony just doesn&rsquo;t load it. The config array is built using the key defined in the security.yml file as the key for the config array. So if you just define them by entity then your array config will just be class names. Once the encoder has been called that config is overridden by the encoder instance.</p>
+
+<p>When fetching an encoder you can either pass in a User entity or you can pass in the string of the class you want to find the encoder for. This behavior can be leaveraged so you define encoders with ids that aren&rsquo;t class named and then just pass in the name of the encoder you want.</p>
+
+<div><script src='https://gist.github.com/5300b2a609a80492b657.js?file=one.yml'></script></div>
+
+<div><script src='https://gist.github.com/5300b2a609a80492b657.js?file=two.php'></script></div>
+
+<h2 id="creating-your-own-password-encoder">Creating your own Password Encoder</h2>
+
+<p>To create your own password encoder you have to create your own encoder class implementing <code>Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface</code> interface. You can extend the <code>Symfony\Component\Security\Core\Encoder\BasePasswordEncoder</code> class which has several helper functions which you may want to use in your own Encoder.</p>
+
+<p>Here&rsquo;s an example Encoder class.</p>
+
+<div><script src='https://gist.github.com/5300b2a609a80492b657.js?file=three.php'></script></div>
+
+<p>Once you have created the class you have to define it in your services container configuration.</p>
+
+<div><script src='https://gist.github.com/5300b2a609a80492b657.js?file=four.xml'></script></div>
+
+<p>Then to have it loaded into the Encoder factory you need to assign it to a user entity in your security.yml file like so.</p>
+
+<div><script src='https://gist.github.com/5300b2a609a80492b657.js?file=five.yml'></script></div>
+
+<h2 id="password-encoder-based-on-the-user-entity">Password encoder based on the User entity</h2>
+
+<p>The EncoderAwareInterface allows you to return the key for the encoder you want for that user.</p>
+
+<div><script src='https://gist.github.com/5300b2a609a80492b657.js?file=six.php'></script></div>
+
+<p>The key for the encoder is key that was put into your security.yml config. In the below example we have bcrypt available as a key as well as &ldquo;Icambridge\Entity\InsecureUser&rdquo;.</p>
+
+<div><script src='https://gist.github.com/5300b2a609a80492b657.js?file=seven.yml'></script></div>
+
+<h2 id="userpasswordencoder">UserPasswordEncoder</h2>
+
+<p>The Symfony\Component\Security\Core\Encoder\UserPasswordEncoder is a class in the encoder namespace which doesn&rsquo;t encode passwords and return them. Instead it takes a user entity and a string and fetches the password encoder for that user entity and then encodes the string using the encoder and sets the password on the user entity. It also has a isPasswordValid functionality to wrap the encoders you pass an User entity and a string and it fetches the encoder and details from the usesr entity and returns if the password given is valid for that user entity.</p>
+
+
+    
+
+    
+  </section> 
+
+  <footer>
+  <p class="remove-margin-bottom add-padding-right">
+    &copy; 2017 
+    <a href="http://blog.humblyarrogant.io/"></a>
+  </p>
+
+  <p class="remove-margin-bottom add-padding-right"><small>
+    <a href="https://github.com/eueung/hugo-sp-minimal">Hugo SP-Minimal</a> Theme | 
+    Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
+  </small></p>    
+</footer>
+
+
+  </div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body></html>
+

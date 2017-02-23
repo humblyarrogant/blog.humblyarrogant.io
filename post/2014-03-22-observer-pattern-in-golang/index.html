@@ -22,7 +22,6 @@
 
 
   <body><div class="wrapper">
-
   <header class="text-center">
    <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
 
@@ -41,69 +40,45 @@
 
 
   <section>
-  
+    <p class="remove-margin-bottom">
+      <time datetime="22 March 2014">22 March 2014</time>
+    </p>
 
-  <p class="remove-margin-bottom"><small>
-    <time datetime="14 March 2014">14 March 2014</time>
-  </small></p>
-
-  <h2><a href="http://blog.humblyarrogant.io/post/2014-03-14-100-days-of-github/">100 days of github</a></h2>
-
-  <p>
+    <h1>Observer pattern in golang</h1>
     
-      So I&rsquo;ve decided to I need to get back to programming more things in my spare time. One way to kinda force this on myself is to attempt to do 100 days of github contributions.
-My first aim is to write an actual project to do something I need. Currently one of the things I need is something to give me better overview of the status of builds on Jenkins. Currently I just know if the builds are passing or failing.
-      
-      ...
-      <a href="http://blog.humblyarrogant.io/post/2014-03-14-100-days-of-github/" style="height:28px">
-      Read more <i class="fa fa-angle-double-right"></i></a>
-      
+
+<p>For some reason at some point, I thought it would be hard to implement the observer pattern in Go. Then I made an issue for me to blog about it. Well it&rsquo;s not hard. It&rsquo;s as easy as it is in every
+other language.</p>
+
+<!-- more -->
+
+<h1 id="observers">Observers</h1>
+
+<p>First part of the observer pattern is you need the actual observers. The logic that you want executed whenever something happens. Here I&rsquo;ve just put a simple log print statement that will print out the name of the hook to the log.</p>
+
+<p>Created an interface to allow for more flexible typing later on.</p>
+
+<div><script src='https://gist.github.com/9708081.js?file=interface.go'></script></div>
+
+<h1 id="observer-notifier">Observer Notifier</h1>
+
+<p>The main part of the logic, simply have an add observer and then have a process function that loops through and calls them all.</p>
+
+<div><script src='https://gist.github.com/9708081.js?file=observer.go'></script></div>
+
+<p>{% gist 9708081 observer.go %}</p>
+
+<h1 id="full">Full</h1>
+
+<p>Here is a copy of it all together. As you can see it&rsquo;s really simple to whack together once you have a half decent understanding of Go.</p>
+
+<div><script src='https://gist.github.com/9708081.js?file=main.go'></script></div>
+
+
     
-  </p>
 
-
-
-
-    <div class="pagination"> 
     
-    <ul class="pagination">
-        
-        <li>
-            <a href="/post/" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
-        </li>
-        
-        <li
-        >
-        <a href="/post/page/4/" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-        </li>
-        
-        <li
-        ><a href="/post/">1</a></li>
-        
-        <li
-        ><a href="/post/page/2/">2</a></li>
-        
-        <li
-        ><a href="/post/page/3/">3</a></li>
-        
-        <li
-        ><a href="/post/page/4/">4</a></li>
-        
-        <li
-        class="active"><a href="/post/page/5/">5</a></li>
-        
-        <li
-        class="disabled">
-        <a href="" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-        </li>
-        
-        <li>
-            <a href="/post/page/5/" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
-        </li>
-        
-    </ul>
-     </div>
-  </section>
+  </section> 
 
   <footer>
   <p class="remove-margin-bottom add-padding-right">
@@ -116,7 +91,6 @@ My first aim is to write an actual project to do something I need. Currently one
     Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
   </small></p>    
 </footer>
-
 
 
   </div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>

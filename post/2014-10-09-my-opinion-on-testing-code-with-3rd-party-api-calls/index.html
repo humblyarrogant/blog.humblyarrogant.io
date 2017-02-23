@@ -1,0 +1,127 @@
+
+  <!DOCTYPE html>
+<html lang="en-gb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>A Humbly Arrogant Blog</title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.19-DEV" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="shortcut icon" href="http://blog.humblyarrogant.io/img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/styles.css">
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/sp-minimal.css">
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+</head>
+
+
+  <body><div class="wrapper">
+  <header class="text-center">
+   <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
+
+  
+    <h1 class="border-bottom add-padding-bottom"><a href="http://blog.humblyarrogant.io/">A Humbly Arrogant Blog</a></h1>
+  
+	
+  
+    <h2 class="text-right add-padding-right">Posts about software development</h2>
+  
+
+  
+</header>
+
+
+
+
+  <section>
+    <p class="remove-margin-bottom">
+      <time datetime="09 October 2014">09 October 2014</time>
+    </p>
+
+    <h1>My Opinion on testing code with 3rd party API calls</h1>
+    
+
+<p>I&rsquo;ve recently had a discussion about how I would go about testing code that makes calls to a remote third party API. It seems my way of thinking isn&rsquo;t the same as most others. So I figured I would write out my thoughts and explanation behind why I would go for this route.</p>
+
+<!-- more -->
+
+<h1 id="others-peoples-approach">Others peoples approach</h1>
+
+<p>So first I want to explain other peoples thought patterns seem to be. It goes like:</p>
+
+<ul>
+<li>Write a wrapper around the API requesting code</li>
+<li>Write unit tests and mock the wrapper</li>
+<li>Write functional tests that include hitting the API</li>
+</ul>
+
+<p>The idea behind this is to make sure your code still works with the API such as it hasn&rsquo;t changed with the functional test. While allowing yourself to just test your code on the unit level. Overall it gets the job done, I just think it&rsquo;s slightly flawed.</p>
+
+<h1 id="my-approach">My approach</h1>
+
+<p>So here is my plan of action:</p>
+
+<ul>
+<li>Write a wrapper around the API requesting code</li>
+<li>Write unit tests and mock the wrapper</li>
+<li>Write integration tests that mocks the API</li>
+<li>Write smoke test the API</li>
+</ul>
+
+<p>The idea here is again we allow unit testing by wrapping and mocking. Then with the integration tests we ensure all the code within our application, even 3rd party code all integrate together and that everything goes well when the API returns what we expect. Then we smoke test the API to ensure it hasn&rsquo;t changed and all works the way we expect it to.</p>
+
+<h1 id="reason-behind-my-approach">Reason behind my approach</h1>
+
+<p>Mocking and wrapping the API requesting code seems like a no brainer that everyone agrees with. We want to own the code we&rsquo;re testing on a unit level. While decoupling ourselves to a certain extent from the third party API.</p>
+
+<p>Mocking the API is where most people think I&rsquo;m being a bit crazy. I think the fact there is extremely good tools out there to do this such as robohyrda say I&rsquo;m not that crazy.</p>
+
+<p>The reason I would go down this route is you&rsquo;re decoupling your test suite from the third party API. When you couple your test suite a third party I&rsquo;ve found you end up with the following issues.</p>
+
+<ul>
+<li>Failed builds due to timeout issues</li>
+<li>Failed builds due to API being unreachable completely</li>
+<li>Other people running their tests at the same time and it creates conflicting states on the API</li>
+<li>You spend a bunch of money paying for API calls for your tests</li>
+<li>Your test suite time starts to increase more rapidly</li>
+</ul>
+
+<p>So for these reasons I would want to keep away from hitting third party APIs in my test suite. But yes you still want to test the API works the way you expect, which is why you run a smoke test which isn&rsquo;t an isn&rsquo;t build failure. But something you run on a regular basis to say that you&rsquo;re code will still work or if you need to change out the API requesting code.</p>
+
+<h1 id="open-to-ideas">Open to ideas</h1>
+
+<p>If you&rsquo;ve got another way of thinking I would really interested in hearing it.</p>
+
+
+    
+
+    
+  </section> 
+
+  <footer>
+  <p class="remove-margin-bottom add-padding-right">
+    &copy; 2017 
+    <a href="http://blog.humblyarrogant.io/"></a>
+  </p>
+
+  <p class="remove-margin-bottom add-padding-right"><small>
+    <a href="https://github.com/eueung/hugo-sp-minimal">Hugo SP-Minimal</a> Theme | 
+    Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
+  </small></p>    
+</footer>
+
+
+  </div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body></html>
+

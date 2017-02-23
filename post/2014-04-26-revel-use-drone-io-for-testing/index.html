@@ -22,7 +22,6 @@
 
 
   <body><div class="wrapper">
-
   <header class="text-center">
    <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
 
@@ -41,69 +40,28 @@
 
 
   <section>
-  
+    <p class="remove-margin-bottom">
+      <time datetime="26 April 2014">26 April 2014</time>
+    </p>
 
-  <p class="remove-margin-bottom"><small>
-    <time datetime="14 March 2014">14 March 2014</time>
-  </small></p>
-
-  <h2><a href="http://blog.humblyarrogant.io/post/2014-03-14-100-days-of-github/">100 days of github</a></h2>
-
-  <p>
+    <h1>Revel : How to use Drone.io for testing</h1>
     
-      So I&rsquo;ve decided to I need to get back to programming more things in my spare time. One way to kinda force this on myself is to attempt to do 100 days of github contributions.
-My first aim is to write an actual project to do something I need. Currently one of the things I need is something to give me better overview of the status of builds on Jenkins. Currently I just know if the builds are passing or failing.
-      
-      ...
-      <a href="http://blog.humblyarrogant.io/post/2014-03-14-100-days-of-github/" style="height:28px">
-      Read more <i class="fa fa-angle-double-right"></i></a>
-      
+
+<p>Being a lover of testing, continuous intergration, and cloud services. I wanted to be able to get a build of status of a Revel framework app I&rsquo;m working on. Since Revel uses it&rsquo;s own command to run and build applications the standard way of doing a build for Golang are out. I wanted to use <a href="http://drone.io">Drone.io</a> instead of travis so if I wanted to make it private I could without paying a lot. So taking the .travis.yml wasn&rsquo;t an option either. It was shockingly simple to set up. It took 3 lines.</p>
+
+<!-- more -->
+
+<h1 id="the-3-lines">The 3 lines</h1>
+
+<p>A quick breakdown of what is going on. First you install the revel framework, then you install the revel command. Then you call the revel command with the test command using import directory that will be used by go when it grabs your code. So in my case it was &ldquo;<strong>revel test github.com/icambridge/sitrep</strong>&rdquo;.</p>
+
+<div><script src='https://gist.github.com/11329286.js?file=gistfile1.txt'></script></div>
+
+
     
-  </p>
 
-
-
-
-    <div class="pagination"> 
     
-    <ul class="pagination">
-        
-        <li>
-            <a href="/post/" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
-        </li>
-        
-        <li
-        >
-        <a href="/post/page/4/" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-        </li>
-        
-        <li
-        ><a href="/post/">1</a></li>
-        
-        <li
-        ><a href="/post/page/2/">2</a></li>
-        
-        <li
-        ><a href="/post/page/3/">3</a></li>
-        
-        <li
-        ><a href="/post/page/4/">4</a></li>
-        
-        <li
-        class="active"><a href="/post/page/5/">5</a></li>
-        
-        <li
-        class="disabled">
-        <a href="" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-        </li>
-        
-        <li>
-            <a href="/post/page/5/" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
-        </li>
-        
-    </ul>
-     </div>
-  </section>
+  </section> 
 
   <footer>
   <p class="remove-margin-bottom add-padding-right">
@@ -116,7 +74,6 @@ My first aim is to write an actual project to do something I need. Currently one
     Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
   </small></p>    
 </footer>
-
 
 
   </div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>

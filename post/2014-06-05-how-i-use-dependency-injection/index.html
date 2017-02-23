@@ -1,0 +1,147 @@
+
+  <!DOCTYPE html>
+<html lang="en-gb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>A Humbly Arrogant Blog</title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.19-DEV" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="shortcut icon" href="http://blog.humblyarrogant.io/img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/styles.css">
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/sp-minimal.css">
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+</head>
+
+
+  <body><div class="wrapper">
+  <header class="text-center">
+   <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
+
+  
+    <h1 class="border-bottom add-padding-bottom"><a href="http://blog.humblyarrogant.io/">A Humbly Arrogant Blog</a></h1>
+  
+	
+  
+    <h2 class="text-right add-padding-right">Posts about software development</h2>
+  
+
+  
+</header>
+
+
+
+
+  <section>
+    <p class="remove-margin-bottom">
+      <time datetime="05 June 2014">05 June 2014</time>
+    </p>
+
+    <h1>How I use Dependency Injection</h1>
+    
+
+<p>I&rsquo;ve been thinking about dependency injection a lot recently and the best way to do it in a clean manner. I recently changed how I was injecting some dependencies, at code review I was asked why. So I figured I would write a blog post fully stating my current views on how to implement Dependency Injection.</p>
+
+<!-- more -->
+
+<p>There are three main ways of injecting a single dependency, as well as what I would consider two ways of injecting multiple dependencies these are also known as patterns. Each with their own use cases.</p>
+
+<h1 id="single-dependency">Single Dependency</h1>
+
+<ul>
+<li>Constructor</li>
+<li>Setter</li>
+<li>Method</li>
+</ul>
+
+<h1 id="multiple-dependencies">Multiple Dependencies</h1>
+
+<ul>
+<li>Service Container</li>
+<li>Factory</li>
+</ul>
+
+<h1 id="constructor">Constructor</h1>
+
+<p>The constructor method of injecting dependencies is when you pass the dependency in via the constructor when you&rsquo;re creating the object. This is to be used when the dependency is a required dependency that isn&rsquo;t going to change during the lifecycle of the object.</p>
+
+<p>So use case, an email sender dependency. It&rsquo;s very unlikely that you&rsquo;re going to want to change how you send emails.</p>
+
+<div><script src='https://gist.github.com/fa0cd7160709ac6b6218.js?file=Constructor.php'></script></div>
+
+<h1 id="setter">Setter</h1>
+
+<p>The setter method is when you use a setter to set the dependency after the object has been initiated. You would use this if the dependency isn&rsquo;t a required dependency or if it changes during the life cycle of the object.</p>
+
+<p>Use case for this a dependency on a database connection object in a model. You may want to change databases on a multi tennent application depending on what tennet you&rsquo;re using.</p>
+
+<p>Another use case for the setter method is if you want to use interfaces to show that the object has that dependency. For example the ContainerAware interface in the Symfony2. This allows you to give a class multiple dependencies.</p>
+
+<div><script src='https://gist.github.com/fa0cd7160709ac6b6218.js?file=Setter.php'></script></div>
+
+<h1 id="method">Method</h1>
+
+<p>The method injection is when you injected it into the method you want to use it in. You would use this when you only need that dependency for that method.</p>
+
+<p>Use case for this would be a date object in a calendar object. Where you would want to use the same object for multiple dates.</p>
+
+<div><script src='https://gist.github.com/fa0cd7160709ac6b6218.js?file=method.php'></script></div>
+
+<h1 id="service-container">Service Container</h1>
+
+<p>Service container is when you store you dependencies in an object and then pass that around. This allows you to make all your dependencies easily available wihtout having to worry about injecting them individually.</p>
+
+<div><script src='https://gist.github.com/fa0cd7160709ac6b6218.js?file=container.php'></script></div>
+
+<h1 id="factory">Factory</h1>
+
+<p>Factory pattern is an oldie but a goodie. Here you just create the object you require and return it.</p>
+
+<p>This is good when you need to build up a dependency. For example using an entity with the service container. So you have to clone the entity once it&rsquo;s originally been injected and then you have to clone it each time you want to use it. Using the factory pattern you can hardcode the dependency within that class and then inject the factory.</p>
+
+<p>Here is a sample of the code without a factory.</p>
+
+<div><script src='https://gist.github.com/fa0cd7160709ac6b6218.js?file=factory-wihtout.php'></script></div>
+
+<p>With the factory.</p>
+
+<div><script src='https://gist.github.com/fa0cd7160709ac6b6218.js?file=factory-with.php'></script></div>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>So this is my current opinion on how to implement dependency injection and the different use cases. This will most likely evolve over time as I learn new things.</p>
+
+
+    
+
+    
+  </section> 
+
+  <footer>
+  <p class="remove-margin-bottom add-padding-right">
+    &copy; 2017 
+    <a href="http://blog.humblyarrogant.io/"></a>
+  </p>
+
+  <p class="remove-margin-bottom add-padding-right"><small>
+    <a href="https://github.com/eueung/hugo-sp-minimal">Hugo SP-Minimal</a> Theme | 
+    Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
+  </small></p>    
+</footer>
+
+
+  </div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body></html>
+
