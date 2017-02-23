@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>A Humbly Arrogant Blog</title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.19-DEV" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="shortcut icon" href="http://blog.humblyarrogant.io/img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/styles.css">
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/sp-minimal.css">
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+</head>
+
+<body><div class="wrapper">
+
+<header class="text-center">
+   <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
+
+  
+    <h1 class="border-bottom add-padding-bottom"><a href="http://blog.humblyarrogant.io/">A Humbly Arrogant Blog</a></h1>
+  
+	
+  
+    <h2 class="text-right add-padding-right">Posts about software development</h2>
+  
+
+  
+</header>
+
+
+
+
+
+  <section>
+    
+
+  <p class="remove-margin-bottom"><small>
+    <time datetime="21 February 2017">21 February 2017</time>
+  </small></p>
+
+  <h2><a href="http://blog.humblyarrogant.io/post/2017-02-21-code-review-single-responsibility-principle/">Code Review: Single Responsibility Principle</a></h2>
+
+  <p>
+    
+      Single Responsibility Principle (SRP) is probably one of the most well-known principles from SOLID. At its core is a desire to prevent classes from becoming overwhelming and bloated. While enabling the ability to change how a single thing works by only changing a single class. So the benefits of SRP are that you have an easier codebase to maintain since classes are less complex and when you wish to change something you only have to change a single class. In this blog, I will go through some ways to try and help avoid breaching SRP while doing code review. 
+      
+      ...
+      <a href="http://blog.humblyarrogant.io/post/2017-02-21-code-review-single-responsibility-principle/" style="height:28px">
+      Read more <i class="fa fa-angle-double-right"></i></a>
+      
+    
+  </p>
+
+  <p class="remove-margin-bottom"><small>
+    <time datetime="06 February 2017">06 February 2017</time>
+  </small></p>
+
+  <h2><a href="http://blog.humblyarrogant.io/post/2017-02-06-failed-to-register-ovh/">OVH &amp; Docker - Failed to register layer: devmapper</a></h2>
+
+  <p>
+    
+      I&rsquo;ve been using OVH&rsquo;s dedicated server range recently. When ever I tried to use docker with the Ubuntu latest LTS I ended up with an error failed to register layer: devmapper:. The solution is rather simple, OVH dedicated servers use rather old and unsupported kernel versions. The solution is upgrade linux kernel. 
+      
+      ...
+      <a href="http://blog.humblyarrogant.io/post/2017-02-06-failed-to-register-ovh/" style="height:28px">
+      Read more <i class="fa fa-angle-double-right"></i></a>
+      
+    
+  </p>
+
+  <p class="remove-margin-bottom"><small>
+    <time datetime="04 February 2017">04 February 2017</time>
+  </small></p>
+
+  <h2><a href="http://blog.humblyarrogant.io/post/2017-02-04-Go-dep-in-docker/">Go dep in Docker</a></h2>
+
+  <p>
+    
+      Go&rsquo;s dependency handling has been an area which has been needing unification, over the years. Multiple package managers have been created. The Go community has been working on creating a dependency manager recently, which they plan on getting added to the official toolchain. I&rsquo;ve decided to jump on the bandwagon and start using this tool. Here&rsquo;s how I&rsquo;ve been using it in docker.
+
+
+      
+      ...
+      <a href="http://blog.humblyarrogant.io/post/2017-02-04-Go-dep-in-docker/" style="height:28px">
+      Read more <i class="fa fa-angle-double-right"></i></a>
+      
+    
+  </p>
+
+  <p class="remove-margin-bottom"><small>
+    <time datetime="01 February 2017">01 February 2017</time>
+  </small></p>
+
+  <h2><a href="http://blog.humblyarrogant.io/post/2017-02-01-RabbitMQ-multiple-consumers/">RabbitMQ One consumer blocking others</a></h2>
+
+  <p>
+    
+      I&rsquo;ve been working on a distributed application that requires multiple workers to process items from a queue. I decided to use RabbitMQ as the queue. However I noticed that there was a 10 minute pause or whenever the consumer started up. After looking into it further I noticed that it appeared that only one consumer could run at any given time.
+
+
+      
+      ...
+      <a href="http://blog.humblyarrogant.io/post/2017-02-01-RabbitMQ-multiple-consumers/" style="height:28px">
+      Read more <i class="fa fa-angle-double-right"></i></a>
+      
+    
+  </p>
+
+  <p class="remove-margin-bottom"><small>
+    <time datetime="31 January 2017">31 January 2017</time>
+  </small></p>
+
+  <h2><a href="http://blog.humblyarrogant.io/post/2017-01-31-Increase-docker-device-size/">Increase docker device size on Ubuntu</a></h2>
+
+  <p>
+    
+      So I&rsquo;ve got an application that I&rsquo;m running via and Docker. That requires a certain amount of disk space and would run out of space very quickly with the default 10G limit that Docker comes with.
+
+
+      
+      ...
+      <a href="http://blog.humblyarrogant.io/post/2017-01-31-Increase-docker-device-size/" style="height:28px">
+      Read more <i class="fa fa-angle-double-right"></i></a>
+      
+    
+  </p>
+
+
+
+
+    <div class="pagination"> 
+    
+    <ul class="pagination">
+        
+        <li>
+            <a href="/" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
+        </li>
+        
+        <li
+        class="disabled">
+        <a href="" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+        </li>
+        
+        <li
+        class="active"><a href="/">1</a></li>
+        
+        <li
+        ><a href="/page/2/">2</a></li>
+        
+        <li
+        ><a href="/page/3/">3</a></li>
+        
+        <li
+        ><a href="/page/4/">4</a></li>
+        
+        <li
+        ><a href="/page/5/">5</a></li>
+        
+        <li
+        >
+        <a href="/page/2/" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+        </li>
+        
+        <li>
+            <a href="/page/5/" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        </li>
+        
+    </ul>
+     </div>
+  </section>
+
+
+<footer>
+  <p class="remove-margin-bottom add-padding-right">
+    &copy; 2017 
+    <a href="http://blog.humblyarrogant.io/"></a>
+  </p>
+
+  <p class="remove-margin-bottom add-padding-right"><small>
+    <a href="https://github.com/eueung/hugo-sp-minimal">Hugo SP-Minimal</a> Theme | 
+    Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
+  </small></p>    
+</footer>
+
+
+</div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body></html>

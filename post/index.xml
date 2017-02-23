@@ -1,0 +1,846 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on A Humbly Arrogant Blog</title>
+    <link>http://blog.humblyarrogant.io/post/index.xml</link>
+    <description>Recent content in Posts on A Humbly Arrogant Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <copyright>Iain Cambridge, all rights reserved.</copyright>
+    <lastBuildDate>Tue, 21 Feb 2017 15:12:23 +0100</lastBuildDate>
+    <atom:link href="http://blog.humblyarrogant.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Code Review: Single Responsibility Principle</title>
+      <link>http://blog.humblyarrogant.io/post/2017-02-21-code-review-single-responsibility-principle/</link>
+      <pubDate>Tue, 21 Feb 2017 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2017-02-21-code-review-single-responsibility-principle/</guid>
+      <description>&lt;p&gt;Single Responsibility Principle (SRP) is probably one of the most well-known principles from SOLID. At its core is a desire to prevent classes from becoming overwhelming and bloated. While enabling the ability to change how a single thing works by only changing a single class. So the benefits of SRP are that you have an easier codebase to maintain since classes are less complex and when you wish to change something you only have to change a single class. In this blog, I will go through some ways to try and help avoid breaching SRP while doing code review.
+&lt;/p&gt;
+
+&lt;h2 id=&#34;the-manager-service&#34;&gt;The Manager/Service&lt;/h2&gt;
+
+&lt;p&gt;A manager or service is a class which has been created to deal with everything related to a certain thing. Generally these are created to enable SRP, however, in the majority of cases they generally end up being the main source of non-compliance of SRP.&lt;/p&gt;
+
+&lt;p&gt;In discussion with other developers about a newly created&lt;/p&gt;
+
+&lt;p&gt;As an example I will create an InterviewManager:&lt;/p&gt;
+
+&lt;p&gt;{% gist 68a3a7ccd3739f566b108be76a4831e2 InterviewManager.php %}&lt;/p&gt;
+
+&lt;p&gt;In the above class there are quite a few methods, while they all relate to interviews there are many responsibilities being held within this class. The following responsibilities can be found within this class:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Data Storage&lt;/li&gt;
+&lt;li&gt;Validation&lt;/li&gt;
+&lt;li&gt;Scheduling&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;data-storage&#34;&gt;Data Storage&lt;/h3&gt;
+
+&lt;p&gt;So within this class, we have three methods are for just storing data. This is when we create, delete, or read data. This responsibility could change and all the other logic within this class would not have to change.&lt;/p&gt;
+
+&lt;h3 id=&#34;validation&#34;&gt;Validation&lt;/h3&gt;
+
+&lt;p&gt;We have a method isInterviewValid, again this isn&amp;rsquo;t related to any other method in this class other than they all work on Interview.&lt;/p&gt;
+
+&lt;h3 id=&#34;scheduling&#34;&gt;Scheduling&lt;/h3&gt;
+
+&lt;p&gt;We have three methods that relate to scheduling interviews, those being scheduleInterview, postponeAllInterviewsForPerson, and automaticallyAssignInterview. With automaticallyAssignInterview arguably being another responsibility since I could schedule an appointment without it being assigned to anyone, however, it could also be considered scheduling since it schedules it for the other party.&lt;/p&gt;
+
+&lt;h3 id=&#34;solution&#34;&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;{% gist 68a3a7ccd3739f566b108be76a4831e2 InterviewManager.solution.php %}&lt;/p&gt;
+
+&lt;p&gt;In this solution, I&amp;rsquo;ve just split the Manager class into three separate classes: InterviewRepository, InterviewScheduler, InterviewValidator. Thus allowing for the proper encapsulation of the responsibilities in each class.&lt;/p&gt;
+
+&lt;h2 id=&#34;from-usage&#34;&gt;From Usage&lt;/h2&gt;
+
+&lt;p&gt;Sometimes we can spot SRP isn&amp;rsquo;t being adhered to by the usage of the code. One of the ways to identify these cases is when a return value from one method is being used as a parameter for another method in the class.&lt;/p&gt;
+
+&lt;h3 id=&#34;example-code&#34;&gt;Example code:&lt;/h3&gt;
+
+&lt;p&gt;{% gist 68a3a7ccd3739f566b108be76a4831e2 InterviewController.php %}&lt;/p&gt;
+
+&lt;p&gt;Like in the previous scenario, we&amp;rsquo;ve got an overloaded Manager class, however, this can happen with many types of classes. So the responsibilities of the lines of code are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Data storage&lt;/li&gt;
+&lt;li&gt;Interview Assignment&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The responsibility overload of data storage and interview assignment in the same class is quite clear, however, what I think isn&amp;rsquo;t so clear is that there is also a responsibility of saving the data. Somehow automaticallyAssignInterview has to save the data since we&amp;rsquo;re not seeing any call to a save method. Which means the automaticallyAssignInterview somehow has to save it. Which means that method even if just moved to another class would be helping breach SRP.&lt;/p&gt;
+
+&lt;h3 id=&#34;solution-1&#34;&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;{% gist 68a3a7ccd3739f566b108be76a4831e2 InterviewController.solution.php %}&lt;/p&gt;
+
+&lt;p&gt;In this solution, we create two classes and call the repository to fetch the data and then assign the interview and then save the data. While this does increase the number of lines within the controller this allows for a more clear understanding of what is happening within the method, as before it wasn&amp;rsquo;t explicit that the data was being saved.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Hopefully, these examples will help you to better understand methods of detecting and correcting SRP infractions during code review.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>OVH &amp; Docker - Failed to register layer: devmapper</title>
+      <link>http://blog.humblyarrogant.io/post/2017-02-06-failed-to-register-ovh/</link>
+      <pubDate>Mon, 06 Feb 2017 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2017-02-06-failed-to-register-ovh/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve been using OVH&amp;rsquo;s dedicated server range recently. When ever I tried to use docker with the Ubuntu latest LTS I ended up with an error &lt;code&gt;failed to register layer: devmapper:&lt;/code&gt;. The solution is rather simple, OVH dedicated servers use rather old and unsupported kernel versions.
+The solution is upgrade linux kernel.
+&lt;/p&gt;
+
+&lt;p&gt;Step 1. Install the latest kernel, tools, and extra stuff.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;apt-get install linux-image-4.8.0-34-generic linux-tools-4.8.0-34-generic linux-image-extra-4.8.0-34-generic&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Step 2. Move the old kernel out of the /boot directory.
+&lt;code&gt;mv bzImage-3.14.32-xxxx-grs-ipv6-64 /root/&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Step 3. Run grub update so it boots into the new kernel.
+&lt;code&gt;update-grub&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Step 4. Reboot so it uses the new kernel.
+&lt;code&gt;reboot&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Go dep in Docker</title>
+      <link>http://blog.humblyarrogant.io/post/2017-02-04-Go-dep-in-docker/</link>
+      <pubDate>Sat, 04 Feb 2017 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2017-02-04-Go-dep-in-docker/</guid>
+      <description>&lt;p&gt;Go&amp;rsquo;s dependency handling has been an area which has been needing unification, over the years. Multiple package managers have been created. The Go community has been working on creating a dependency manager recently, which they plan on getting added to the official toolchain. I&amp;rsquo;ve decided to jump on the bandwagon and start using this tool. Here&amp;rsquo;s how I&amp;rsquo;ve been using it in docker.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;The first issue I encountered was the command &lt;code&gt;dep&lt;/code&gt; not being found. It turned out my original docker build file had &lt;code&gt;GOBIN&lt;/code&gt; pointed to somewhere that was not in the &lt;code&gt;PATH&lt;/code&gt; env for some reason. Looking at the original &lt;code&gt;Dockerfile&lt;/code&gt; for golang it &lt;code&gt;GOBIN&lt;/code&gt; doesn&amp;rsquo;t appear to be set at all. So I&amp;rsquo;ve set it to &lt;code&gt;/go/bin&lt;/code&gt; which has already been added to the path.&lt;/p&gt;
+
+&lt;p&gt;The next issue was, I was storing and building my code outside of the &lt;code&gt;GOPATH&lt;/code&gt;. So I moved where I was storing my code to inside the &lt;code&gt;GOPATH&lt;/code&gt;. With that done it was just a case of running the &lt;code&gt;dep&lt;/code&gt; commands.&lt;/p&gt;
+
+&lt;p&gt;An example &lt;code&gt;Dockerfile&lt;/code&gt; can be found below.&lt;/p&gt;
+
+&lt;p&gt;{% gist 163763cd1017d8a5319c0c48ec697969 Dockerfile %}&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>RabbitMQ One consumer blocking others</title>
+      <link>http://blog.humblyarrogant.io/post/2017-02-01-RabbitMQ-multiple-consumers/</link>
+      <pubDate>Wed, 01 Feb 2017 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2017-02-01-RabbitMQ-multiple-consumers/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve been working on a distributed application that requires multiple workers to process items from a queue. I decided to use RabbitMQ as the queue. However I noticed that there was a 10 minute pause or whenever the consumer started up. After looking into it further I noticed that it appeared that only one consumer could run at any given time.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;After doing a lot of searching and looking at various documents and trying to see if it was the library I was using. I discovered that I had to set the number of items prefetched. Once I did this my consumers were able to start almost instantly consuming.&lt;/p&gt;
+
+&lt;p&gt;How I set the prefetch configuration using the Qos command. In Go and in PHP (since I had a PHP version to see if it was just the library in Go I was using.)&lt;/p&gt;
+
+&lt;p&gt;{% gist bd7334304dabc1fac3c6a1441a96a561 main.go %}&lt;/p&gt;
+
+&lt;p&gt;{% gist bd7334304dabc1fac3c6a1441a96a561 main.php %}&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Increase docker device size on Ubuntu</title>
+      <link>http://blog.humblyarrogant.io/post/2017-01-31-Increase-docker-device-size/</link>
+      <pubDate>Tue, 31 Jan 2017 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2017-01-31-Increase-docker-device-size/</guid>
+      <description>&lt;p&gt;So I&amp;rsquo;ve got an application that I&amp;rsquo;m running via  and Docker. That requires a certain amount of disk space and would run out of space very quickly with the default 10G limit that Docker comes with.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;I figured the easiest way to move forward with this would be too look into if I was able to increase the size of device. It turns out you can. You can pass an option when you&amp;rsquo;re starting docker. The flag is &lt;code&gt;--storage-opt dm.basesize=15G&lt;/code&gt;. So to run it it would be the below command.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;/usr/bin/docker daemon --storage-opt dm.basesize=15G&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;However I wanted to be able to do this while still using the Ubuntu daemon management. To do this I had to edit &lt;code&gt;/etc/default/docker&lt;/code&gt; and add the line &lt;code&gt;DOCKER_OPTS=&amp;quot;--storage-opt dm.basesize=15G&amp;quot;&lt;/code&gt; and then restart my docker daemon.&lt;/p&gt;
+
+&lt;p&gt;Once I did this I noticed new containers weren&amp;rsquo;t being started with the new device size. It turned out that to get docker to use the new device base size I had to delete all my containers and images and pull the images again.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Are you a good developer</title>
+      <link>http://blog.humblyarrogant.io/post/2017-01-16-are-you-a-good-developer/</link>
+      <pubDate>Mon, 16 Jan 2017 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2017-01-16-are-you-a-good-developer/</guid>
+      <description>
+
+&lt;p&gt;In development we constantly bemoan bad developers. But what I&amp;rsquo;ve noticed is everyone generally thinks they&amp;rsquo;re doing a good job and the other developers are bad. I don&amp;rsquo;t think you can exactly define what is  a good developer down to a tee but I think you can have rough benchmarks for whether or not you&amp;rsquo;re good. These generally are if you follow well defined practices. There are levels of development practices ranging from the basics (DRY) to advance (CQRS).&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;It&amp;rsquo;s my opinion that you&amp;rsquo;re only as good as the level of practices that you are able to follow well. So if you&amp;rsquo;re only able to do intermediate practices, then you&amp;rsquo;re an intermediate developer. If you do intermediate practices well but can&amp;rsquo;t implement advance practices properly you&amp;rsquo;re still an intermediate developer.&lt;/p&gt;
+
+&lt;p&gt;I think it&amp;rsquo;s important to say that my definition of well, is applying them in the majority of cases. No one is perfect, we obviously make mistakes and write poor code from time to time for various reasons. Also it&amp;rsquo;s important to state this isn&amp;rsquo;t a 100% guide as there are most likely hundreds of things I&amp;rsquo;m not thinking of or probably even know of. I&amp;rsquo;m also an OO PHP developer so a lot these may be related to OO. However I suspect majority of them can also be applied to other programming paradigms.&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;m also not saying I do all of these things. I&amp;rsquo;m just aware they exist and I rank them at a certain level. Some times I don&amp;rsquo;t even think I have a full grasp of the concept. Nor am I making any claims that I&amp;rsquo;m any good. Like everyone I am still learning and trying to be a good developer. I think understanding our flaws helps with this.&lt;/p&gt;
+
+&lt;h1 id=&#34;basics&#34;&gt;Basics&lt;/h1&gt;
+
+&lt;p&gt;The fundamentals every programmer should have.&lt;/p&gt;
+
+&lt;h2 id=&#34;dry-don-t-repeat-yourself&#34;&gt;DRY - Don&amp;rsquo;t repeat yourself&lt;/h2&gt;
+
+&lt;p&gt;I consider this programming 101. It&amp;rsquo;s a fundamental practice which nearly all good development practices are built upon. It&amp;rsquo;s very simple, the aim is to never repeat yourself. Easiest time to know if you&amp;rsquo;re breaching this is if you literally copying and pasting code from one place to another.&lt;/p&gt;
+
+&lt;p&gt;However sometimes the repetition can be more subtle. Such an example is you could end up having to transform data from one format to another repeatedly throughout your system. Like the example below. Every time you want to use the data from getData you have to call unserialize.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;$data = unserialize(getData());&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;encapsulation&#34;&gt;Encapsulation&lt;/h2&gt;
+
+&lt;p&gt;Encapsulation is when you round up stuff that are related and put them together. I feel this is very important thing to do.&lt;/p&gt;
+
+&lt;p&gt;On a simple case, say you want to do create an invoice. You wouldn&amp;rsquo;t want to have use an object to add items to the invoice and then you use a different object to get the total for the invoice. You would want to use one object to add lines and when you added the lines and then use the same object to get the total value of the invoice.&lt;/p&gt;
+
+&lt;p&gt;Another example is the the example of breaching DRY. The data was stored in a specific format however as far as the rest of the system is concerned it needs to be another format. Therefore you should encapsulate the logic of how it&amp;rsquo;s stored to the storage layer.&lt;/p&gt;
+
+&lt;p&gt;Encapsulation doesn&amp;rsquo;t mean it&amp;rsquo;s all in one class. But in the same place, be that module, class, namespace. For example you wouldn&amp;rsquo;t want to be doing Delivery logic in your Invoice module.&lt;/p&gt;
+
+&lt;p&gt;The benefits are very simple if you want to know how something works you just look in one place. If you want to change how something works you just make the change in one place.&lt;/p&gt;
+
+&lt;h1 id=&#34;intermediate&#34;&gt;Intermediate&lt;/h1&gt;
+
+&lt;p&gt;These are the things you&amp;rsquo;re generally asked/asking about in interviews for experienced developers.&lt;/p&gt;
+
+&lt;h2 id=&#34;single-responsibility&#34;&gt;Single responsibility&lt;/h2&gt;
+
+&lt;p&gt;The basics of Single responsibility is that each object so only be responsible for one thing.&lt;/p&gt;
+
+&lt;p&gt;For example you should never have a class that is responsible for inserting data in to the database and for making HTTP requests to AWS to create new server instances. So you would have a class that would do the insertion into the database and then another class to create new AWS instances.&lt;/p&gt;
+
+&lt;p&gt;Another thing about Single responsibility is that all things that change for the same reason should be grouped together. So if you&amp;rsquo;re writing and reading from the database these will always change at the same time, so you wouldn&amp;rsquo;t have a class for writing and one for reading.&lt;/p&gt;
+
+&lt;p&gt;A quick guide to know if you&amp;rsquo;re breaching Single responsibility, you ask yourself what does this class do and if you use the word &amp;ldquo;and&amp;rdquo; you&amp;rsquo;re probably breaching single responsibility.&lt;/p&gt;
+
+&lt;h2 id=&#34;open-close-principal&#34;&gt;Open/close principal&lt;/h2&gt;
+
+&lt;p&gt;The open/close principal means your class is open to extension but closed to modification. The basics of it is I should be able to extend a class to add extra functionality. I however should not be able to change how it works.&lt;/p&gt;
+
+&lt;p&gt;For example an Order entity class. I should be able to extend it so I can describe specific kinds of Orders such as PrePaidOrder and CreditOrder. But I should not be able to change it to say remove a field within the order entity.&lt;/p&gt;
+
+&lt;p&gt;Another example I should be able to extend a sorting class so it can sort other kinds of things but I shouldn&amp;rsquo;t be able to change it from a sorting class to first item found class.&lt;/p&gt;
+
+&lt;h2 id=&#34;liskov-s-object-replacement&#34;&gt;Liskov&amp;rsquo;s object replacement&lt;/h2&gt;
+
+&lt;p&gt;The object replacement principal is that I should be able to replace any object with one of the same type and not change the behavior of the application.&lt;/p&gt;
+
+&lt;p&gt;For example if I change the database class for another the application should not go from saving data about servers to managing the AWS instances.&lt;/p&gt;
+
+&lt;h2 id=&#34;interface-segregation&#34;&gt;Interface segregation&lt;/h2&gt;
+
+&lt;p&gt;Interface segregation is simply just Single responsibility but for interfaces. The basics of it is no object should be forced to implement a method that it doesn&amp;rsquo;t need.&lt;/p&gt;
+
+&lt;p&gt;For example a translator class can implement a catalog interface and a translation interface. However you can build translation classes that don&amp;rsquo;t need to provide the translation catalog to others.&lt;/p&gt;
+
+&lt;p&gt;Some quick ways to know it&amp;rsquo;s being breached, if classes implementing it have empty methods. As well as if you&amp;rsquo;re creating new interfaces that merge two other interfaces into one.&lt;/p&gt;
+
+&lt;h2 id=&#34;dependency-inversion&#34;&gt;Dependency Inversion&lt;/h2&gt;
+
+&lt;p&gt;Not to be confused with Dependency injection, which Dependency Inversion helps with.&lt;/p&gt;
+
+&lt;p&gt;Dependency Inversion is when you make your class coupled to an abstract/composite instead of the concrete version. So your class never knows about the existence of the actual implement that it&amp;rsquo;ll use. While the implementation class never knows about the existence of anything that uses it.&lt;/p&gt;
+
+&lt;p&gt;This makes Dependency injecting and object replacement really simple.&lt;/p&gt;
+
+&lt;h2 id=&#34;automated-testing&#34;&gt;Automated Testing&lt;/h2&gt;
+
+&lt;p&gt;This is where you use write unit/integration/system tests so you can test you entire code easily.&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s important to note this isn&amp;rsquo;t just doing TDD, but any testing. While I fully believe that TDD is the best way to test and write code. I don&amp;rsquo;t believe it&amp;rsquo;s the only way or that by writing tests after you wrote the code makes you any less of a developer.&lt;/p&gt;
+
+&lt;p&gt;If you don&amp;rsquo;t have tests and you change something, how can you be sure it works? Simply you don&amp;rsquo;t. Even when you don&amp;rsquo;t have tests you still test your code, you just do it by hand. Which isn&amp;rsquo;t as anywhere near efficient as having it done by code.&lt;/p&gt;
+
+&lt;h2 id=&#34;correct-tool-for-correct-job&#34;&gt;Correct tool for correct job&lt;/h2&gt;
+
+&lt;p&gt;This isn&amp;rsquo;t exactly an official practice per say. But it seems like such an obvious thing. Using the correct tool for the correct job seems obvious, but it&amp;rsquo;s quite often breached. How often have you used something other than a bottle opener to open a bottle of beer. This is not just a software developer problem, but I believe to be a really good developer then consistently you will use the correct tool for the correct job.&lt;/p&gt;
+
+&lt;p&gt;Some examples of not using the correct tool for the correct job. Putting functions in a class then just calling those functions procedurally. Using automated testing tools to monitor your production web application. Using static code analysers to run your CI. Using MongoDB to store relational and transactional data.&lt;/p&gt;
+
+&lt;h1 id=&#34;advance&#34;&gt;Advance&lt;/h1&gt;
+
+&lt;p&gt;At this level a lot of these things seem to go hand in hand in my opinion.&lt;/p&gt;
+
+&lt;h2 id=&#34;law-of-demeter&#34;&gt;Law of Demeter&lt;/h2&gt;
+
+&lt;p&gt;This is very simple your code only ever talks to/uses objects it knows exists directly.&lt;/p&gt;
+
+&lt;p&gt;For example if you inject a request object into a method that method should then never access the request object to get to a parameter bag object. Instead what you do is create a method on the request object that calls the parameter bag object and returns the data you want. The benefits of this means you can refactor easier since you can clearly see where code is used and where it isn&amp;rsquo;t. So if you were to change how the parameter bag works you only have to change it in the request class and not in every place the request class is used to pass the parameter bag.&lt;/p&gt;
+
+&lt;p&gt;This also makes unit testing a lot easier since you don&amp;rsquo;t need to mock the request class and then mock the parameter bag. You just mock the request class.&lt;/p&gt;
+
+&lt;h2 id=&#34;cqrs-command-query-responsibility-segregation&#34;&gt;CQRS - Command query responsibility segregation&lt;/h2&gt;
+
+&lt;p&gt;Command query read segregation is a principal at the heart of is about separating your reads from your writes. In my opinion you can apply this on several levels. For almost everything I think a on method level applies. But there is also on class level. And then there is system/service level which is actually the proper CQRS.&lt;/p&gt;
+
+&lt;p&gt;On the method level no method that does a read should also be doing a write. But on an class level you no class that does reads should be doing writes.&lt;/p&gt;
+
+&lt;p&gt;But for the proper definition of CQRS, a command is something that does a write. A query is something that does a read. When doing commands to the system you should use a different pathway/service than if you were just querying it.&lt;/p&gt;
+
+&lt;h2 id=&#34;domain-modeling&#34;&gt;Domain modeling&lt;/h2&gt;
+
+&lt;p&gt;In simplest form this is separating the Domain/business logic away from the rest of the code and understanding what is part of the domain and what is actual implementation.&lt;/p&gt;
+
+&lt;h2 id=&#34;domain-driven-design&#34;&gt;Domain Driven Design&lt;/h2&gt;
+
+&lt;p&gt;This is a rather complex topic and this little section will not give it any justice.&lt;/p&gt;
+
+&lt;p&gt;Doing DDD involves a lot more than just domain modeling. It means communicating with the business team to find the correct model for the domain and applying it. In my opinion the key to DDD is ubiquitous language. In which you use the same terminology as the the business people and then use that terminology in the code.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Domain-driven_design&#34;&gt;For more info see&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;hexagonal-architecture&#34;&gt;Hexagonal Architecture&lt;/h2&gt;
+
+&lt;p&gt;Hexagonal Architecture is simply isolating your domain model from your application layer and separating your application layer from third party items.&lt;/p&gt;
+
+&lt;p&gt;So you have your domain model. Which should remain separate from everything and coupled to nothing. Next you have your application layer which is coupled to your domain model. At which point you have your outer layer which uses the application layer and third party items. Such as databases and APIs.&lt;/p&gt;
+
+&lt;p&gt;This allows you to change third party items without having to worry about your domain model or your how your application works.&lt;/p&gt;
+
+&lt;h2 id=&#34;bdd&#34;&gt;BDD&lt;/h2&gt;
+
+&lt;p&gt;Behavior driven development is in it&amp;rsquo;s simplest form talking with the business team in a language they understand to workout what actually needs built.&lt;/p&gt;
+
+&lt;p&gt;This again can get really complex and there are many different ways of doing BDD and many different practices.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://dannorth.net/introducing-bdd/&#34;&gt;For more info see&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;yagni-you-aren-t-gonna-need-it&#34;&gt;YAGNI - You aren&amp;rsquo;t gonna need it&lt;/h2&gt;
+
+&lt;p&gt;YAGNI comes originally from Xtreme Programming and it&amp;rsquo;s a concept of don&amp;rsquo;t build something until you need it. As developers we look at our road map and see that in 6 months we&amp;rsquo;ll be building some feature that is semi related to what we&amp;rsquo;re currently working on. So we decide to implement the stuff that feature will need now while we&amp;rsquo;re in that area anyway. However the thing is roadmaps generally change and in 6 months that feature you have half implemented is no longer required and now you&amp;rsquo;re left with a bunch of useless code floating around your system.&lt;/p&gt;
+
+&lt;p&gt;This while it seems like a simple concept I think this is more about realising that YAGNI which I think can be quite hard to do at times.&lt;/p&gt;
+
+&lt;h2 id=&#34;tier-architecture&#34;&gt;Tier Architecture&lt;/h2&gt;
+
+&lt;p&gt;Tier Architecture is simply splitting out the responsibility of system responsibility on different layers of systems. So you start off with a web system layer which has no access to the database. Any time it needs to fetch something from the database it then makes a request to the database level which has the ability to do reads. Any time it needs to do a write it then makes a request to the write layer which then does writes.&lt;/p&gt;
+
+&lt;h2 id=&#34;service-oriented-architecture&#34;&gt;Service Oriented Architecture&lt;/h2&gt;
+
+&lt;p&gt;This is when you build applications to handle specific jobs. Each service only knows about what it needs to do and is decoupled from other services.&lt;/p&gt;
+
+&lt;p&gt;So for example if your application needs to send communication you could have a communication service that all it did was send communications. It doesn&amp;rsquo;t know about any of the logic about why the communication needs to be sent just that it needs to be send and does the sending. While the application doesn&amp;rsquo;t need to know about how the communication is being sent, just that it will be sent.&lt;/p&gt;
+
+&lt;p&gt;Also if you use queues this can allow for services to go down and come back up while not affecting the speed of the web site. It also allows for you to scale out services as needed, so if you start out small you may only need to send a few communications but as you grow larger the number of communications goes up. This may not grow as much as your web traffic so you don&amp;rsquo;t need to scale it at the same pace.&lt;/p&gt;
+
+&lt;h2 id=&#34;correct-terminology&#34;&gt;Correct Terminology&lt;/h2&gt;
+
+&lt;p&gt;While this may sound a bit snobby we generally have a habit of using the wrong terminology when talking about thinks. While you may think what does it matter what it&amp;rsquo;s called? Well it doesn&amp;rsquo;t but it does matter if you&amp;rsquo;re able to correctly define to others what you&amp;rsquo;re doing or thinking about doing. For example if you say blackbox testing sucks when what you mean is System level testing sucks, it can lead to people like me pointing out that block box testing is very efficient way of testing.&lt;/p&gt;
+
+&lt;p&gt;One way I think of it is, if you don&amp;rsquo;t know what you&amp;rsquo;re doing what are you doing?&lt;/p&gt;
+
+&lt;h1 id=&#34;not-included&#34;&gt;Not included&lt;/h1&gt;
+
+&lt;p&gt;I also think it should be noted things that are not listed here and to understand why I haven&amp;rsquo;t listed them. Personally I think you should probably do them all but I don&amp;rsquo;t think they necessary make you a better developer.&lt;/p&gt;
+
+&lt;h2 id=&#34;programming-outside-of-work-hours&#34;&gt;Programming outside of work hours&lt;/h2&gt;
+
+&lt;p&gt;A lot of people seem to think to be a good developer you must spend all your time Programming. I personally don&amp;rsquo;t think this is the case. One of the reasons is I think your brain needs time to rest. Also spending all your free time playing music doesn&amp;rsquo;t affect the quality of work you do during office hours.&lt;/p&gt;
+
+&lt;h2 id=&#34;contributing-to-open-source&#34;&gt;Contributing to open source&lt;/h2&gt;
+
+&lt;p&gt;While contributing to open source is great and will most likely help your fundamental software development skills. In my opinion it will also teach you some bad such as not fixing bugs because they&amp;rsquo;ve existed for so long people expect it to work like that. While I think that&amp;rsquo;s the correct thing to do with an open source project which other people rely on. Not fixing bugs in a private company because some people may expect it to work the broken way isn&amp;rsquo;t really good. I think all bugs should be fixed.&lt;/p&gt;
+
+&lt;h2 id=&#34;programming-in-more-than-one-language&#34;&gt;Programming in more than one language&lt;/h2&gt;
+
+&lt;p&gt;While I think it&amp;rsquo;s a good idea to play with other programming languages and you will improve your development skills. I don&amp;rsquo;t think being able to code in C and Perl will make you a better PHP developer. Just because you know how to do terrible things in multiple languages doesn&amp;rsquo;t make you a better developer than one who knows how to do good things in only one language.&lt;/p&gt;
+
+&lt;h2 id=&#34;use-of-specific-tools&#34;&gt;Use of specific tools&lt;/h2&gt;
+
+&lt;p&gt;For example I am not going to say to be a good developer you have to use Jenkins, a fully featured IDE, a good debugger tool, etc. While I would say you should use them, not using them doesn&amp;rsquo;t affect your ability to write high quality code. I just think they&amp;rsquo;ll make your life easier.&lt;/p&gt;
+
+&lt;h2 id=&#34;design-patterns&#34;&gt;Design patterns&lt;/h2&gt;
+
+&lt;p&gt;Design patterns are most certainly part of writing good clean high quality code. However I feel to often people ask &amp;ldquo;Do you use design patterns?&amp;rdquo;. Well the answer to that is generally always yes. Knowing the code you write is a design pattern doesn&amp;rsquo;t make you good. What makes you good is that you automatically wrote good code.&lt;/p&gt;
+
+&lt;p&gt;I also think people try to jam design patterns into problems than solving the problem the design pattern solves. We seem to obsessed with design patterns.&lt;/p&gt;
+
+&lt;p&gt;I also don&amp;rsquo;t think your code is any less of if you solve a problem that has a design pattern with another method that is also clean and follows good development guidelines.&lt;/p&gt;
+
+&lt;h2 id=&#34;pair-programming&#34;&gt;Pair Programming&lt;/h2&gt;
+
+&lt;p&gt;I know some people who assume if you don&amp;rsquo;t pair program you&amp;rsquo;re not as good as the people who do. Some people just don&amp;rsquo;t like pair programming (myself included). While I think pair programming is smart and extremely useful in many situations I don&amp;rsquo;t think it should be defined as the only way to go in those situations.&lt;/p&gt;
+
+&lt;h2 id=&#34;code-kata&#34;&gt;Code Kata&lt;/h2&gt;
+
+&lt;p&gt;While I think doing code katas is a lot of fun and a wise move. I just don&amp;rsquo;t think that not doing it removes you understanding and ability to implement any of the best practices in development.&lt;/p&gt;
+
+&lt;h2 id=&#34;continuous-integration&#34;&gt;Continuous Integration&lt;/h2&gt;
+
+&lt;p&gt;Many people think Continuous integration is simply running all your tests after each commit. Or even just using Jenkins before you merge so &amp;ldquo;master&amp;rdquo; is deployable. However Continuous integration is a practice of everyone working on the same branch and all committing to the same branch. So everyones work is integrated continuously. With the minimum of if you&amp;rsquo;re using branches that it&amp;rsquo;s merged into master at the end of the day. This in my opinion makes this a team discipline and not a single developers discipline.&lt;/p&gt;
+
+&lt;h2 id=&#34;agile&#34;&gt;Agile&lt;/h2&gt;
+
+&lt;p&gt;Agile in it&amp;rsquo;s many forms it a method of managing the project. You can be a good developer producing good work without doing Agile.&lt;/p&gt;
+
+&lt;h1 id=&#34;round-up&#34;&gt;Round up&lt;/h1&gt;
+
+&lt;p&gt;So this is where it gets kinda complex and it&amp;rsquo;s mainly just my opinion. However I believe your ability to implement the above techniques, practice, patterns determine how good you actually are.&lt;/p&gt;
+
+&lt;h2 id=&#34;junior&#34;&gt;Junior&lt;/h2&gt;
+
+&lt;p&gt;It&amp;rsquo;s my personal opinion that if you don&amp;rsquo;t implement the basics consistently then you are by definition not a good developer. There is one exception to this and that would be junior developers. Since these are things that you have to learn and get used to doing. But if you&amp;rsquo;ve been developing for any serious amount of time and you&amp;rsquo;re still not doing these things properly then no matter how advance the other techniques you use I still wouldn&amp;rsquo;t class you as a good developer.&lt;/p&gt;
+
+&lt;h2 id=&#34;middleweight&#34;&gt;Middleweight&lt;/h2&gt;
+
+&lt;p&gt;So if you look at the Intermediate skills and if you do say 3 out of the 6 there consistently and well. Then I would rank you as a middleweight developer.&lt;/p&gt;
+
+&lt;p&gt;If you&amp;rsquo;re a junior developer and are doing these things then I would class you as a good developer.&lt;/p&gt;
+
+&lt;p&gt;If you&amp;rsquo;re a senior developer or above and this is where you&amp;rsquo;re at I would consider you a poor developer.&lt;/p&gt;
+
+&lt;h2 id=&#34;senior&#34;&gt;Senior&lt;/h2&gt;
+
+&lt;p&gt;So if you do 5 out of the 6 of the intermediate skills well and consistently then I would consider you as a senior developer.&lt;/p&gt;
+
+&lt;p&gt;If you&amp;rsquo;re a junior developer and you were doing these I would consider you an amazing developer.&lt;/p&gt;
+
+&lt;p&gt;If you&amp;rsquo;re a middleweight developer and you are doing these I would consider you a good developer.&lt;/p&gt;
+
+&lt;p&gt;If you&amp;rsquo;re a team lead or above and you weren&amp;rsquo;t doing these I would consider you poor.&lt;/p&gt;
+
+&lt;h2 id=&#34;team-lead&#34;&gt;Team lead&lt;/h2&gt;
+
+&lt;p&gt;While I understand team leading is a lot to do with soft skills I still think their should be a high level of technical knowledge in the basic technical team lead position. A technical team lead in my opinion should be able to do 6 out of the 7 intermediate skills while doing 1-2 of the advance skills.&lt;/p&gt;
+
+&lt;p&gt;If you&amp;rsquo;re a senior and below and you reach this then I would consider you a good developer.&lt;/p&gt;
+
+&lt;h2 id=&#34;higher&#34;&gt;Higher&lt;/h2&gt;
+
+&lt;p&gt;If you&amp;rsquo;re good at all of the intermediate skills then I would consider you a good developer.&lt;/p&gt;
+
+&lt;p&gt;If you&amp;rsquo;re also good at multiple advance skills then I would consider you a great developer.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>What I learned with a big database</title>
+      <link>http://blog.humblyarrogant.io/post/2017-01-15-what-i-learned-with-a-big-database/</link>
+      <pubDate>Sun, 15 Jan 2017 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2017-01-15-what-i-learned-with-a-big-database/</guid>
+      <description>
+
+&lt;p&gt;So I recently started a new side project that involves data mining. While working on this project I&amp;rsquo;ve learned a little bit about how to manage a larger than usual database. At the point of writing this the database is approximately 50GB and growing daily. So here are a few things I&amp;rsquo;ve learned.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h1 id=&#34;backups&#34;&gt;Backups&lt;/h1&gt;
+
+&lt;p&gt;This is probably the main area where I learned a bunch of stuff. Usually when you&amp;rsquo;re dealing with a database of approximately 1GB in size, backups at midnight are rather routine. You run mysqldump and you&amp;rsquo;re done. However when your database gets larger and is constantly being used this suddenly becomes an actual task.&lt;/p&gt;
+
+&lt;h2 id=&#34;table-locks&#34;&gt;Table locks&lt;/h2&gt;
+
+&lt;p&gt;My original attempts to do mysqldump resulted in all my miners being unable to insert into the database. It turns out by default mysqldump locks all the tables. This becomes an issue when mysqldump takes 1+ hours to run. However you can use the &lt;code&gt;--single-transaction&lt;/code&gt; flag to make the mysqldump to start a transaction and use this for all the reads. That means the writes can continue while you&amp;rsquo;re doing a mysqldump.&lt;/p&gt;
+
+&lt;h2 id=&#34;compression&#34;&gt;Compression&lt;/h2&gt;
+
+&lt;p&gt;When running mysqldump I was creating the SQL file and then after that compressing it before transferring it to S3 for storage. This turns out isn&amp;rsquo;t the best approach as the reading and writing to the same disk can cause a slow down in the speed of the dump. You can reduce this by piping mysqldump&amp;rsquo;s output into a compression application directly. That way you&amp;rsquo;re writing less data to disk so your mysqldump isn&amp;rsquo;t waiting for disk io.&lt;/p&gt;
+
+&lt;p&gt;I also found out that gzip still only uses one core by default. However someone nicely wrote an upgraded version that uses all cores, it&amp;rsquo;s called pigz. You can also use this with tar.&lt;/p&gt;
+
+&lt;h2 id=&#34;xtrabackup&#34;&gt;Xtrabackup&lt;/h2&gt;
+
+&lt;p&gt;After a while I realised that mysqldump wasn&amp;rsquo;t the best choice for a backup when dealing with a 50+GB database. So I started looking into other methods. I ended up using Percona XtraBackup. This works by copying the innodb files instead of creating a sql file. You also need to use it to restore your backups. This performed almost 4 times faster than mysqldump.&lt;/p&gt;
+
+&lt;p&gt;One of the parts of the backup process is applying the innodb logs that haven&amp;rsquo;t been executed yet. By default this took 12+ hours before I killed it. It turns out that it has a &lt;code&gt;--use-memory&lt;/code&gt; flag. By default it only uses very little memory. I&amp;rsquo;ve upped this to 7GB and it flew by in comparison.&lt;/p&gt;
+
+&lt;h1 id=&#34;tuning&#34;&gt;Tuning&lt;/h1&gt;
+
+&lt;p&gt;Considering my database is extremely write heavy at the moment (99% writes 1% reads). It turned out I need to improve the performance of my writes. I did this by tuning the MySQL settings.&lt;/p&gt;
+
+&lt;p&gt;The two main settings I changed were: innodb_buffer_pool_size and innodb_log_file_size. This resulted in skyrocketing my write performance in comparison to what I was getting.&lt;/p&gt;
+
+&lt;h1 id=&#34;replication&#34;&gt;Replication&lt;/h1&gt;
+
+&lt;p&gt;I found out that if I want to do any actual work on the data I&amp;rsquo;ve mined that I would have to create a master-slave replication setup. To avoid locking the tables and slowing down/killing my crawlers.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Symfony Password encoding</title>
+      <link>http://blog.humblyarrogant.io/post/2015-06-01-symfony-password-encoding/</link>
+      <pubDate>Mon, 01 Jun 2015 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2015-06-01-symfony-password-encoding/</guid>
+      <description>
+
+&lt;p&gt;A very simple breakdown of how the password encoding works with Symfony 2.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h2 id=&#34;encoder-factory&#34;&gt;Encoder factory&lt;/h2&gt;
+
+&lt;p&gt;The encoder factory is where you get your password encoders from. You pass in a User entity and it returns an Encoder. Encoders are created from the encoder configs and stored within the factory, there is only a single instance of the encoder unless you clone it outside of the factory. The encoder configs are passed to the factory upon creation. Once a factory is created there is no way of adding new encoders as there is no add method and the internal class variable holding these is private. The encoder config array is generated from the encoders assigned to a user entity. If the encoder is not used by anything then Symfony just doesn&amp;rsquo;t load it. The config array is built using the key defined in the security.yml file as the key for the config array. So if you just define them by entity then your array config will just be class names. Once the encoder has been called that config is overridden by the encoder instance.&lt;/p&gt;
+
+&lt;p&gt;When fetching an encoder you can either pass in a User entity or you can pass in the string of the class you want to find the encoder for. This behavior can be leaveraged so you define encoders with ids that aren&amp;rsquo;t class named and then just pass in the name of the encoder you want.&lt;/p&gt;
+
+&lt;p&gt;{% gist 5300b2a609a80492b657 one.yml %}&lt;/p&gt;
+
+&lt;p&gt;{% gist 5300b2a609a80492b657 two.php %}&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-your-own-password-encoder&#34;&gt;Creating your own Password Encoder&lt;/h2&gt;
+
+&lt;p&gt;To create your own password encoder you have to create your own encoder class implementing &lt;code&gt;Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface&lt;/code&gt; interface. You can extend the &lt;code&gt;Symfony\Component\Security\Core\Encoder\BasePasswordEncoder&lt;/code&gt; class which has several helper functions which you may want to use in your own Encoder.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s an example Encoder class.&lt;/p&gt;
+
+&lt;p&gt;{% gist 5300b2a609a80492b657 three.php %}&lt;/p&gt;
+
+&lt;p&gt;Once you have created the class you have to define it in your services container configuration.&lt;/p&gt;
+
+&lt;p&gt;{% gist 5300b2a609a80492b657 four.xml %}&lt;/p&gt;
+
+&lt;p&gt;Then to have it loaded into the Encoder factory you need to assign it to a user entity in your security.yml file like so.&lt;/p&gt;
+
+&lt;p&gt;{% gist 5300b2a609a80492b657 five.yml %}&lt;/p&gt;
+
+&lt;h2 id=&#34;password-encoder-based-on-the-user-entity&#34;&gt;Password encoder based on the User entity&lt;/h2&gt;
+
+&lt;p&gt;The EncoderAwareInterface allows you to return the key for the encoder you want for that user.&lt;/p&gt;
+
+&lt;p&gt;{% gist 5300b2a609a80492b657 six.php %}&lt;/p&gt;
+
+&lt;p&gt;The key for the encoder is key that was put into your security.yml config. In the below example we have bcrypt available as a key as well as &amp;ldquo;Icambridge\Entity\InsecureUser&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;{% gist 5300b2a609a80492b657 seven.yml %}&lt;/p&gt;
+
+&lt;h2 id=&#34;userpasswordencoder&#34;&gt;UserPasswordEncoder&lt;/h2&gt;
+
+&lt;p&gt;The Symfony\Component\Security\Core\Encoder\UserPasswordEncoder is a class in the encoder namespace which doesn&amp;rsquo;t encode passwords and return them. Instead it takes a user entity and a string and fetches the password encoder for that user entity and then encodes the string using the encoder and sets the password on the user entity. It also has a isPasswordValid functionality to wrap the encoders you pass an User entity and a string and it fetches the encoder and details from the usesr entity and returns if the password given is valid for that user entity.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Hack: Types</title>
+      <link>http://blog.humblyarrogant.io/post/2014-11-23-hack-types/</link>
+      <pubDate>Sun, 23 Nov 2014 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2014-11-23-hack-types/</guid>
+      <description>
+
+&lt;p&gt;Facebook&amp;rsquo;s Hack bring lots of features that a lot of other programming languages get to take advantage of. One of major advantages of Hack over PHP is a typing system. So here&amp;rsquo;s a quick run over of the typing system as I understand it.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h2 id=&#34;annotate&#34;&gt;Annotate&lt;/h2&gt;
+
+&lt;p&gt;Annotating is when you define which type is going to be used. You can type the following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;function arguments&lt;/li&gt;
+&lt;li&gt;function return&lt;/li&gt;
+&lt;li&gt;class variable&lt;/li&gt;
+&lt;li&gt;constants&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For function arguments you just put the type before the variable name for the argument.&lt;/p&gt;
+
+&lt;p&gt;{% gist 26159043a232e7206b40 function.hh %}&lt;/p&gt;
+
+&lt;p&gt;For the return type you just put &lt;code&gt;: type&lt;/code&gt; in between the function definition and the function body.&lt;/p&gt;
+
+&lt;p&gt;{% gist 26159043a232e7206b40 return.hh %}&lt;/p&gt;
+
+&lt;p&gt;For constants you just put the type in between the &lt;code&gt;const&lt;/code&gt; keyword and the constant name.&lt;/p&gt;
+
+&lt;p&gt;{% gist 26159043a232e7206b40 dd.hh %}&lt;/p&gt;
+
+&lt;p&gt;For class variables you just put the type in between the scope keyword and the variable name.&lt;/p&gt;
+
+&lt;p&gt;{% gist 26159043a232e7206b40 class.hh %}&lt;/p&gt;
+
+&lt;h2 id=&#34;list-of-basic-types&#34;&gt;List of basic types&lt;/h2&gt;
+
+&lt;p&gt;Primitive are one most basic types that are used in most programming languages.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;string&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;int&lt;/code&gt; - Integer&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;float&lt;/code&gt; - Floating point&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bool&lt;/code&gt; - Boolean (True or False)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;array&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Primitive Unions are types that can be used to describe other Primitive types that go together.
+* &lt;code&gt;num&lt;/code&gt; - integer or float
+* &lt;code&gt;arraykey&lt;/code&gt; - string or integer&lt;/p&gt;
+
+&lt;p&gt;Arrays while being a primitive type can be expanded to show what type of data they hold. You can also define the array key type. Instead of typing arrays like this you may want to look at using collections.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;array&amp;lt;string&amp;gt;&lt;/code&gt; - An array of strings&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;array&amp;lt;string,int&amp;gt;&lt;/code&gt;  - An array of integers indexed by a string&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Classes and interfaces, if a class or interface exists in the code that&amp;rsquo;s being executed then it&amp;rsquo;s a type that you can use for type annotations.&lt;/p&gt;
+
+&lt;p&gt;Other basic types&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;mixed&lt;/code&gt; - Will take anything&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;void&lt;/code&gt; - Nothing it means there is no type, this is generally used&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;resource&lt;/code&gt; - A resource such as filepointer, curl resources, etc.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;(function(typeOne, typeTwo, ...): returnType)&lt;/code&gt; - closure&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tuple(typeOne, typeTwo)&lt;/code&gt; - tuples&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A full list can be found in &lt;a href=&#34;http://docs.hhvm.com/manual/en/hack.annotations.usingtypes.php&#34;&gt;hack annotations docs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;generics&#34;&gt;Generics&lt;/h2&gt;
+
+&lt;p&gt;Sometimes you want your code to work with any type. In those cases we can use type generics. Generics can be defined on a class or on a method. To define a generic you wrap the name of the generic with less than and greater than in either the class definition or the method definition.&lt;/p&gt;
+
+&lt;p&gt;When naming it you should remember can&amp;rsquo;t use the name of a type that already exists. It&amp;rsquo;s a general rule of thumb that you start your generic type with &lt;code&gt;T&lt;/code&gt; and for real simple use cases &lt;code&gt;T&lt;/code&gt; alone is fine. With collections it&amp;rsquo;s advised to use &lt;code&gt;Tk&lt;/code&gt; for the key and &lt;code&gt;Tv&lt;/code&gt; for the value.&lt;/p&gt;
+
+&lt;p&gt;{% gist 26159043a232e7206b40 generics.hh %}&lt;/p&gt;
+
+&lt;h2 id=&#34;overriding-return-type-signature&#34;&gt;Overriding return type signature&lt;/h2&gt;
+
+&lt;p&gt;When you extend a class you are able to override the return type for methods you override. However the new type must be compatible with the original type. So in other word the type must be a child type of the original type.&lt;/p&gt;
+
+&lt;p&gt;So say you originally typed it &lt;code&gt;Foo&lt;/code&gt; you couldn&amp;rsquo;t then change the type to &lt;code&gt;bool&lt;/code&gt;. As that&amp;rsquo;s not a compatible type of &lt;code&gt;Foo&lt;/code&gt;. However if you created a child class of &lt;code&gt;Foo&lt;/code&gt; called &lt;code&gt;Fooable&lt;/code&gt; you would be able to use that as a type. So your code still actually follows the orignal return signature it&amp;rsquo;s just more detailed.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Don&#39;t return null</title>
+      <link>http://blog.humblyarrogant.io/post/2014-11-01-dont-return-null/</link>
+      <pubDate>Sat, 01 Nov 2014 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2014-11-01-dont-return-null/</guid>
+      <description>&lt;p&gt;If you&amp;rsquo;re programming in an object orientated language that supports exceptions you should never return null in a method that returns an object.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;Most object orientated languages support exceptions. Exceptions give us an extremely expressive way to represent error conditions. We throw an exception and the program bails out of where it is and then goes to the error handling section. We can create custom exceptions to express exactly what sort of error occured. This is how error handling in object orientated programming languages is meant to be done&lt;/p&gt;
+
+&lt;p&gt;Returning null on error comes procedural programming. In procedural programming it makes a lot of sense. In most procedural programming languages there is no other way to represent an error condition. The problem here is the user of the method has to do the error checking and manually handle the error.&lt;/p&gt;
+
+&lt;p&gt;Generally in the method where an error condition has occurred, there has been sort of logic check to see if everything is ok or if it&amp;rsquo;s an error condition. If we&amp;rsquo;re returning null then we have to do this logic again every time we use this method. Where as with an exception there is only the logic check in the method and then all the error handling is handled by try/catch switches.&lt;/p&gt;
+
+&lt;p&gt;When a method is meant to return an object developers naturally want to chain method calls on this. It just feels very natural and generally looks a lot cleaner. When we do this and an exception is flung our code just jumps to the exception handling. If we return null we end up with an error for calling a member method on a non object. In PHP a fatal error.&lt;/p&gt;
+
+&lt;p&gt;Throwing an exception instead of returning null, allows you to keep your code more consistent. You can make sure that methods always return a value of the same type. Removing the need for repeating the same sanity checks all over your code.&lt;/p&gt;
+
+&lt;p&gt;So in overview we have more valid object orientated code, less repeating yourself, more consistent code, more expressive code, and cleaner code. Those all sound like pretty good reasons to stop returning null.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>My Opinion on testing code with 3rd party API calls</title>
+      <link>http://blog.humblyarrogant.io/post/2014-10-09-my-opinion-on-testing-code-with-3rd-party-api-calls/</link>
+      <pubDate>Thu, 09 Oct 2014 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2014-10-09-my-opinion-on-testing-code-with-3rd-party-api-calls/</guid>
+      <description>
+
+&lt;p&gt;I&amp;rsquo;ve recently had a discussion about how I would go about testing code that makes calls to a remote third party API. It seems my way of thinking isn&amp;rsquo;t the same as most others. So I figured I would write out my thoughts and explanation behind why I would go for this route.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h1 id=&#34;others-peoples-approach&#34;&gt;Others peoples approach&lt;/h1&gt;
+
+&lt;p&gt;So first I want to explain other peoples thought patterns seem to be. It goes like:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Write a wrapper around the API requesting code&lt;/li&gt;
+&lt;li&gt;Write unit tests and mock the wrapper&lt;/li&gt;
+&lt;li&gt;Write functional tests that include hitting the API&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The idea behind this is to make sure your code still works with the API such as it hasn&amp;rsquo;t changed with the functional test. While allowing yourself to just test your code on the unit level. Overall it gets the job done, I just think it&amp;rsquo;s slightly flawed.&lt;/p&gt;
+
+&lt;h1 id=&#34;my-approach&#34;&gt;My approach&lt;/h1&gt;
+
+&lt;p&gt;So here is my plan of action:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Write a wrapper around the API requesting code&lt;/li&gt;
+&lt;li&gt;Write unit tests and mock the wrapper&lt;/li&gt;
+&lt;li&gt;Write integration tests that mocks the API&lt;/li&gt;
+&lt;li&gt;Write smoke test the API&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The idea here is again we allow unit testing by wrapping and mocking. Then with the integration tests we ensure all the code within our application, even 3rd party code all integrate together and that everything goes well when the API returns what we expect. Then we smoke test the API to ensure it hasn&amp;rsquo;t changed and all works the way we expect it to.&lt;/p&gt;
+
+&lt;h1 id=&#34;reason-behind-my-approach&#34;&gt;Reason behind my approach&lt;/h1&gt;
+
+&lt;p&gt;Mocking and wrapping the API requesting code seems like a no brainer that everyone agrees with. We want to own the code we&amp;rsquo;re testing on a unit level. While decoupling ourselves to a certain extent from the third party API.&lt;/p&gt;
+
+&lt;p&gt;Mocking the API is where most people think I&amp;rsquo;m being a bit crazy. I think the fact there is extremely good tools out there to do this such as robohyrda say I&amp;rsquo;m not that crazy.&lt;/p&gt;
+
+&lt;p&gt;The reason I would go down this route is you&amp;rsquo;re decoupling your test suite from the third party API. When you couple your test suite a third party I&amp;rsquo;ve found you end up with the following issues.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Failed builds due to timeout issues&lt;/li&gt;
+&lt;li&gt;Failed builds due to API being unreachable completely&lt;/li&gt;
+&lt;li&gt;Other people running their tests at the same time and it creates conflicting states on the API&lt;/li&gt;
+&lt;li&gt;You spend a bunch of money paying for API calls for your tests&lt;/li&gt;
+&lt;li&gt;Your test suite time starts to increase more rapidly&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;So for these reasons I would want to keep away from hitting third party APIs in my test suite. But yes you still want to test the API works the way you expect, which is why you run a smoke test which isn&amp;rsquo;t an isn&amp;rsquo;t build failure. But something you run on a regular basis to say that you&amp;rsquo;re code will still work or if you need to change out the API requesting code.&lt;/p&gt;
+
+&lt;h1 id=&#34;open-to-ideas&#34;&gt;Open to ideas&lt;/h1&gt;
+
+&lt;p&gt;If you&amp;rsquo;ve got another way of thinking I would really interested in hearing it.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>How I use Dependency Injection</title>
+      <link>http://blog.humblyarrogant.io/post/2014-06-05-how-i-use-dependency-injection/</link>
+      <pubDate>Thu, 05 Jun 2014 20:39:14 -0400</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2014-06-05-how-i-use-dependency-injection/</guid>
+      <description>
+
+&lt;p&gt;I&amp;rsquo;ve been thinking about dependency injection a lot recently and the best way to do it in a clean manner. I recently changed how I was injecting some dependencies, at code review I was asked why. So I figured I would write a blog post fully stating my current views on how to implement Dependency Injection.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;There are three main ways of injecting a single dependency, as well as what I would consider two ways of injecting multiple dependencies these are also known as patterns. Each with their own use cases.&lt;/p&gt;
+
+&lt;h1 id=&#34;single-dependency&#34;&gt;Single Dependency&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Constructor&lt;/li&gt;
+&lt;li&gt;Setter&lt;/li&gt;
+&lt;li&gt;Method&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;multiple-dependencies&#34;&gt;Multiple Dependencies&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Service Container&lt;/li&gt;
+&lt;li&gt;Factory&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;constructor&#34;&gt;Constructor&lt;/h1&gt;
+
+&lt;p&gt;The constructor method of injecting dependencies is when you pass the dependency in via the constructor when you&amp;rsquo;re creating the object. This is to be used when the dependency is a required dependency that isn&amp;rsquo;t going to change during the lifecycle of the object.&lt;/p&gt;
+
+&lt;p&gt;So use case, an email sender dependency. It&amp;rsquo;s very unlikely that you&amp;rsquo;re going to want to change how you send emails.&lt;/p&gt;
+
+&lt;p&gt;{% gist fa0cd7160709ac6b6218 Constructor.php %}&lt;/p&gt;
+
+&lt;h1 id=&#34;setter&#34;&gt;Setter&lt;/h1&gt;
+
+&lt;p&gt;The setter method is when you use a setter to set the dependency after the object has been initiated. You would use this if the dependency isn&amp;rsquo;t a required dependency or if it changes during the life cycle of the object.&lt;/p&gt;
+
+&lt;p&gt;Use case for this a dependency on a database connection object in a model. You may want to change databases on a multi tennent application depending on what tennet you&amp;rsquo;re using.&lt;/p&gt;
+
+&lt;p&gt;Another use case for the setter method is if you want to use interfaces to show that the object has that dependency. For example the ContainerAware interface in the Symfony2. This allows you to give a class multiple dependencies.&lt;/p&gt;
+
+&lt;p&gt;{% gist fa0cd7160709ac6b6218 Setter.php %}&lt;/p&gt;
+
+&lt;h1 id=&#34;method&#34;&gt;Method&lt;/h1&gt;
+
+&lt;p&gt;The method injection is when you injected it into the method you want to use it in. You would use this when you only need that dependency for that method.&lt;/p&gt;
+
+&lt;p&gt;Use case for this would be a date object in a calendar object. Where you would want to use the same object for multiple dates.&lt;/p&gt;
+
+&lt;p&gt;{% gist fa0cd7160709ac6b6218 method.php %}&lt;/p&gt;
+
+&lt;h1 id=&#34;service-container&#34;&gt;Service Container&lt;/h1&gt;
+
+&lt;p&gt;Service container is when you store you dependencies in an object and then pass that around. This allows you to make all your dependencies easily available wihtout having to worry about injecting them individually.&lt;/p&gt;
+
+&lt;p&gt;{% gist fa0cd7160709ac6b6218 container.php %}&lt;/p&gt;
+
+&lt;h1 id=&#34;factory&#34;&gt;Factory&lt;/h1&gt;
+
+&lt;p&gt;Factory pattern is an oldie but a goodie. Here you just create the object you require and return it.&lt;/p&gt;
+
+&lt;p&gt;This is good when you need to build up a dependency. For example using an entity with the service container. So you have to clone the entity once it&amp;rsquo;s originally been injected and then you have to clone it each time you want to use it. Using the factory pattern you can hardcode the dependency within that class and then inject the factory.&lt;/p&gt;
+
+&lt;p&gt;Here is a sample of the code without a factory.&lt;/p&gt;
+
+&lt;p&gt;{% gist fa0cd7160709ac6b6218 factory-without.php %}&lt;/p&gt;
+
+&lt;p&gt;With the factory.&lt;/p&gt;
+
+&lt;p&gt;{% gist fa0cd7160709ac6b6218 factory-with.php %}&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;So this is my current opinion on how to implement dependency injection and the different use cases. This will most likely evolve over time as I learn new things.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Revel : How to use Drone.io for testing</title>
+      <link>http://blog.humblyarrogant.io/post/2014-04-26-revel-use-drone-io-for-testing/</link>
+      <pubDate>Sat, 26 Apr 2014 20:39:14 -0400</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2014-04-26-revel-use-drone-io-for-testing/</guid>
+      <description>
+
+&lt;p&gt;Being a lover of testing, continuous intergration, and cloud services. I wanted to be able to get a build of status of a Revel framework app I&amp;rsquo;m working on. Since Revel uses it&amp;rsquo;s own command to run and build applications the standard way of doing a build for Golang are out. I wanted to use &lt;a href=&#34;http://drone.io&#34;&gt;Drone.io&lt;/a&gt; instead of travis so if I wanted to make it private I could without paying a lot. So taking the .travis.yml wasn&amp;rsquo;t an option either. It was shockingly simple to set up. It took 3 lines.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h1 id=&#34;the-3-lines&#34;&gt;The 3 lines&lt;/h1&gt;
+
+&lt;p&gt;A quick breakdown of what is going on. First you install the revel framework, then you install the revel command. Then you call the revel command with the test command using import directory that will be used by go when it grabs your code. So in my case it was &amp;ldquo;&lt;strong&gt;revel test github.com/icambridge/sitrep&lt;/strong&gt;&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;{% gist 11329286 gistfile1.txt %}&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Revel : Force template format</title>
+      <link>http://blog.humblyarrogant.io/post/2014-04-26-revel-force-template-format/</link>
+      <pubDate>Sat, 26 Apr 2014 15:39:14 -0400</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2014-04-26-revel-force-template-format/</guid>
+      <description>&lt;p&gt;So in Revel you can have your template in several different formats: html, json, xml, or txt. This is super awesome. As it allows you to send the same data and display different formats - Obivously. It also determines what template to use based on the http request headers that have been sent. So if your request sends that it accepts application/xml it&amp;rsquo;ll use xml and if you request says application/json it uses json.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;All awesome. But what if I want to debug something that should only ever be json. Or even more interesting what if I sent that I accept html and json but with json second in the list. AngularJS seems to do this by default, took me a while to figure out what was going on. So I need a way of forcing revel to just use one file format no matter what the http headers are. Thankfully it&amp;rsquo;s super simple, one line in your controller action to set the Request member&amp;rsquo;s Format member to the desired format and it&amp;rsquo;ll use that.&lt;/p&gt;
+
+&lt;p&gt;{% gist 11321687 snippet.go %}&lt;/p&gt;
+
+&lt;p&gt;So in full example.&lt;/p&gt;
+
+&lt;p&gt;{% gist 11321687 test.go %}&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Why Revel?</title>
+      <link>http://blog.humblyarrogant.io/post/2014-04-19-why-revel/</link>
+      <pubDate>Sat, 19 Apr 2014 14:40:14 -0400</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2014-04-19-why-revel/</guid>
+      <description>
+
+&lt;p&gt;So lately I&amp;rsquo;ve been working on a project to increase productivity when dealing with Bitbucket and Jenkins. As I am a web developer, it&amp;rsquo;s a web app. So one of the first questions when building an application these days seems to be what framework? This for me has taken a month to really decide. In the end I choose Revel.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h1 id=&#34;at-first&#34;&gt;At first&lt;/h1&gt;
+
+&lt;p&gt;At first I decided to use Gorilla Web Toolkit. Which is a very minimalist framework(ish). It&amp;rsquo;s really just a bunch of components that you can use together to create web applications. I have no complaints about it. It all works very nicely. It just wasn&amp;rsquo;t how I wanted to develop. I&amp;rsquo;m too used to controllers, I like the structure they provide. Gorilla&amp;rsquo;s muxer was pretty much a more powerful version of the default one that comes with Go. Where you either pass a function or you pass a struct that handles the request. It just wasn&amp;rsquo;t what I wanted.&lt;/p&gt;
+
+&lt;h1 id=&#34;my-own-framework&#34;&gt;My own framework&lt;/h1&gt;
+
+&lt;p&gt;Next thing I decided was I would built my own simple framework. It would do exactly what I wanted. I worked on it for two weeks in my spare time. As I am just learning Go, this provided a perfect chance to get to know it better. I learnt about reflection and the basics of how it works. Increased my understanding of structs and inheritance. As well as a bunch of other stuff. However I realised I was spending all my time writing a framework and that&amp;rsquo;s not what I want to build.&lt;/p&gt;
+
+&lt;h1 id=&#34;revel&#34;&gt;Revel&lt;/h1&gt;
+
+&lt;p&gt;I originally didn&amp;rsquo;t want to use Revel because it&amp;rsquo;s pretty bloated, it&amp;rsquo;s a full on framework. Based on Play! which I had played with before in Scala. But I realised it&amp;rsquo;s pretty much the only web framework that provides anywhere near what I am wanting in regards to routing and MVC. It&amp;rsquo;s also got the ability to recompile code on change so you don&amp;rsquo;t have to constant restart the application. So I decided to just rewrite everything over to Revel. Hopefully this will be a good decision.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

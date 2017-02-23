@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Theory on A Humbly Arrogant Blog</title>
+    <link>http://blog.humblyarrogant.io/categories/theory/index.xml</link>
+    <description>Recent content in Theory on A Humbly Arrogant Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <copyright>Iain Cambridge, all rights reserved.</copyright>
+    <atom:link href="http://blog.humblyarrogant.io/categories/theory/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Don&#39;t return null</title>
+      <link>http://blog.humblyarrogant.io/post/2014-11-01-dont-return-null/</link>
+      <pubDate>Sat, 01 Nov 2014 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2014-11-01-dont-return-null/</guid>
+      <description>&lt;p&gt;If you&amp;rsquo;re programming in an object orientated language that supports exceptions you should never return null in a method that returns an object.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;Most object orientated languages support exceptions. Exceptions give us an extremely expressive way to represent error conditions. We throw an exception and the program bails out of where it is and then goes to the error handling section. We can create custom exceptions to express exactly what sort of error occured. This is how error handling in object orientated programming languages is meant to be done&lt;/p&gt;
+
+&lt;p&gt;Returning null on error comes procedural programming. In procedural programming it makes a lot of sense. In most procedural programming languages there is no other way to represent an error condition. The problem here is the user of the method has to do the error checking and manually handle the error.&lt;/p&gt;
+
+&lt;p&gt;Generally in the method where an error condition has occurred, there has been sort of logic check to see if everything is ok or if it&amp;rsquo;s an error condition. If we&amp;rsquo;re returning null then we have to do this logic again every time we use this method. Where as with an exception there is only the logic check in the method and then all the error handling is handled by try/catch switches.&lt;/p&gt;
+
+&lt;p&gt;When a method is meant to return an object developers naturally want to chain method calls on this. It just feels very natural and generally looks a lot cleaner. When we do this and an exception is flung our code just jumps to the exception handling. If we return null we end up with an error for calling a member method on a non object. In PHP a fatal error.&lt;/p&gt;
+
+&lt;p&gt;Throwing an exception instead of returning null, allows you to keep your code more consistent. You can make sure that methods always return a value of the same type. Removing the need for repeating the same sanity checks all over your code.&lt;/p&gt;
+
+&lt;p&gt;So in overview we have more valid object orientated code, less repeating yourself, more consistent code, more expressive code, and cleaner code. Those all sound like pretty good reasons to stop returning null.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>My Opinion on testing code with 3rd party API calls</title>
+      <link>http://blog.humblyarrogant.io/post/2014-10-09-my-opinion-on-testing-code-with-3rd-party-api-calls/</link>
+      <pubDate>Thu, 09 Oct 2014 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2014-10-09-my-opinion-on-testing-code-with-3rd-party-api-calls/</guid>
+      <description>
+
+&lt;p&gt;I&amp;rsquo;ve recently had a discussion about how I would go about testing code that makes calls to a remote third party API. It seems my way of thinking isn&amp;rsquo;t the same as most others. So I figured I would write out my thoughts and explanation behind why I would go for this route.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h1 id=&#34;others-peoples-approach&#34;&gt;Others peoples approach&lt;/h1&gt;
+
+&lt;p&gt;So first I want to explain other peoples thought patterns seem to be. It goes like:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Write a wrapper around the API requesting code&lt;/li&gt;
+&lt;li&gt;Write unit tests and mock the wrapper&lt;/li&gt;
+&lt;li&gt;Write functional tests that include hitting the API&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The idea behind this is to make sure your code still works with the API such as it hasn&amp;rsquo;t changed with the functional test. While allowing yourself to just test your code on the unit level. Overall it gets the job done, I just think it&amp;rsquo;s slightly flawed.&lt;/p&gt;
+
+&lt;h1 id=&#34;my-approach&#34;&gt;My approach&lt;/h1&gt;
+
+&lt;p&gt;So here is my plan of action:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Write a wrapper around the API requesting code&lt;/li&gt;
+&lt;li&gt;Write unit tests and mock the wrapper&lt;/li&gt;
+&lt;li&gt;Write integration tests that mocks the API&lt;/li&gt;
+&lt;li&gt;Write smoke test the API&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The idea here is again we allow unit testing by wrapping and mocking. Then with the integration tests we ensure all the code within our application, even 3rd party code all integrate together and that everything goes well when the API returns what we expect. Then we smoke test the API to ensure it hasn&amp;rsquo;t changed and all works the way we expect it to.&lt;/p&gt;
+
+&lt;h1 id=&#34;reason-behind-my-approach&#34;&gt;Reason behind my approach&lt;/h1&gt;
+
+&lt;p&gt;Mocking and wrapping the API requesting code seems like a no brainer that everyone agrees with. We want to own the code we&amp;rsquo;re testing on a unit level. While decoupling ourselves to a certain extent from the third party API.&lt;/p&gt;
+
+&lt;p&gt;Mocking the API is where most people think I&amp;rsquo;m being a bit crazy. I think the fact there is extremely good tools out there to do this such as robohyrda say I&amp;rsquo;m not that crazy.&lt;/p&gt;
+
+&lt;p&gt;The reason I would go down this route is you&amp;rsquo;re decoupling your test suite from the third party API. When you couple your test suite a third party I&amp;rsquo;ve found you end up with the following issues.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Failed builds due to timeout issues&lt;/li&gt;
+&lt;li&gt;Failed builds due to API being unreachable completely&lt;/li&gt;
+&lt;li&gt;Other people running their tests at the same time and it creates conflicting states on the API&lt;/li&gt;
+&lt;li&gt;You spend a bunch of money paying for API calls for your tests&lt;/li&gt;
+&lt;li&gt;Your test suite time starts to increase more rapidly&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;So for these reasons I would want to keep away from hitting third party APIs in my test suite. But yes you still want to test the API works the way you expect, which is why you run a smoke test which isn&amp;rsquo;t an isn&amp;rsquo;t build failure. But something you run on a regular basis to say that you&amp;rsquo;re code will still work or if you need to change out the API requesting code.&lt;/p&gt;
+
+&lt;h1 id=&#34;open-to-ideas&#34;&gt;Open to ideas&lt;/h1&gt;
+
+&lt;p&gt;If you&amp;rsquo;ve got another way of thinking I would really interested in hearing it.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>How I use Dependency Injection</title>
+      <link>http://blog.humblyarrogant.io/post/2014-06-05-how-i-use-dependency-injection/</link>
+      <pubDate>Thu, 05 Jun 2014 20:39:14 -0400</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2014-06-05-how-i-use-dependency-injection/</guid>
+      <description>
+
+&lt;p&gt;I&amp;rsquo;ve been thinking about dependency injection a lot recently and the best way to do it in a clean manner. I recently changed how I was injecting some dependencies, at code review I was asked why. So I figured I would write a blog post fully stating my current views on how to implement Dependency Injection.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;There are three main ways of injecting a single dependency, as well as what I would consider two ways of injecting multiple dependencies these are also known as patterns. Each with their own use cases.&lt;/p&gt;
+
+&lt;h1 id=&#34;single-dependency&#34;&gt;Single Dependency&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Constructor&lt;/li&gt;
+&lt;li&gt;Setter&lt;/li&gt;
+&lt;li&gt;Method&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;multiple-dependencies&#34;&gt;Multiple Dependencies&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Service Container&lt;/li&gt;
+&lt;li&gt;Factory&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;constructor&#34;&gt;Constructor&lt;/h1&gt;
+
+&lt;p&gt;The constructor method of injecting dependencies is when you pass the dependency in via the constructor when you&amp;rsquo;re creating the object. This is to be used when the dependency is a required dependency that isn&amp;rsquo;t going to change during the lifecycle of the object.&lt;/p&gt;
+
+&lt;p&gt;So use case, an email sender dependency. It&amp;rsquo;s very unlikely that you&amp;rsquo;re going to want to change how you send emails.&lt;/p&gt;
+
+&lt;p&gt;{% gist fa0cd7160709ac6b6218 Constructor.php %}&lt;/p&gt;
+
+&lt;h1 id=&#34;setter&#34;&gt;Setter&lt;/h1&gt;
+
+&lt;p&gt;The setter method is when you use a setter to set the dependency after the object has been initiated. You would use this if the dependency isn&amp;rsquo;t a required dependency or if it changes during the life cycle of the object.&lt;/p&gt;
+
+&lt;p&gt;Use case for this a dependency on a database connection object in a model. You may want to change databases on a multi tennent application depending on what tennet you&amp;rsquo;re using.&lt;/p&gt;
+
+&lt;p&gt;Another use case for the setter method is if you want to use interfaces to show that the object has that dependency. For example the ContainerAware interface in the Symfony2. This allows you to give a class multiple dependencies.&lt;/p&gt;
+
+&lt;p&gt;{% gist fa0cd7160709ac6b6218 Setter.php %}&lt;/p&gt;
+
+&lt;h1 id=&#34;method&#34;&gt;Method&lt;/h1&gt;
+
+&lt;p&gt;The method injection is when you injected it into the method you want to use it in. You would use this when you only need that dependency for that method.&lt;/p&gt;
+
+&lt;p&gt;Use case for this would be a date object in a calendar object. Where you would want to use the same object for multiple dates.&lt;/p&gt;
+
+&lt;p&gt;{% gist fa0cd7160709ac6b6218 method.php %}&lt;/p&gt;
+
+&lt;h1 id=&#34;service-container&#34;&gt;Service Container&lt;/h1&gt;
+
+&lt;p&gt;Service container is when you store you dependencies in an object and then pass that around. This allows you to make all your dependencies easily available wihtout having to worry about injecting them individually.&lt;/p&gt;
+
+&lt;p&gt;{% gist fa0cd7160709ac6b6218 container.php %}&lt;/p&gt;
+
+&lt;h1 id=&#34;factory&#34;&gt;Factory&lt;/h1&gt;
+
+&lt;p&gt;Factory pattern is an oldie but a goodie. Here you just create the object you require and return it.&lt;/p&gt;
+
+&lt;p&gt;This is good when you need to build up a dependency. For example using an entity with the service container. So you have to clone the entity once it&amp;rsquo;s originally been injected and then you have to clone it each time you want to use it. Using the factory pattern you can hardcode the dependency within that class and then inject the factory.&lt;/p&gt;
+
+&lt;p&gt;Here is a sample of the code without a factory.&lt;/p&gt;
+
+&lt;p&gt;{% gist fa0cd7160709ac6b6218 factory-without.php %}&lt;/p&gt;
+
+&lt;p&gt;With the factory.&lt;/p&gt;
+
+&lt;p&gt;{% gist fa0cd7160709ac6b6218 factory-with.php %}&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;So this is my current opinion on how to implement dependency injection and the different use cases. This will most likely evolve over time as I learn new things.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Why Revel?</title>
+      <link>http://blog.humblyarrogant.io/post/2014-04-19-why-revel/</link>
+      <pubDate>Sat, 19 Apr 2014 14:40:14 -0400</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2014-04-19-why-revel/</guid>
+      <description>
+
+&lt;p&gt;So lately I&amp;rsquo;ve been working on a project to increase productivity when dealing with Bitbucket and Jenkins. As I am a web developer, it&amp;rsquo;s a web app. So one of the first questions when building an application these days seems to be what framework? This for me has taken a month to really decide. In the end I choose Revel.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h1 id=&#34;at-first&#34;&gt;At first&lt;/h1&gt;
+
+&lt;p&gt;At first I decided to use Gorilla Web Toolkit. Which is a very minimalist framework(ish). It&amp;rsquo;s really just a bunch of components that you can use together to create web applications. I have no complaints about it. It all works very nicely. It just wasn&amp;rsquo;t how I wanted to develop. I&amp;rsquo;m too used to controllers, I like the structure they provide. Gorilla&amp;rsquo;s muxer was pretty much a more powerful version of the default one that comes with Go. Where you either pass a function or you pass a struct that handles the request. It just wasn&amp;rsquo;t what I wanted.&lt;/p&gt;
+
+&lt;h1 id=&#34;my-own-framework&#34;&gt;My own framework&lt;/h1&gt;
+
+&lt;p&gt;Next thing I decided was I would built my own simple framework. It would do exactly what I wanted. I worked on it for two weeks in my spare time. As I am just learning Go, this provided a perfect chance to get to know it better. I learnt about reflection and the basics of how it works. Increased my understanding of structs and inheritance. As well as a bunch of other stuff. However I realised I was spending all my time writing a framework and that&amp;rsquo;s not what I want to build.&lt;/p&gt;
+
+&lt;h1 id=&#34;revel&#34;&gt;Revel&lt;/h1&gt;
+
+&lt;p&gt;I originally didn&amp;rsquo;t want to use Revel because it&amp;rsquo;s pretty bloated, it&amp;rsquo;s a full on framework. Based on Play! which I had played with before in Scala. But I realised it&amp;rsquo;s pretty much the only web framework that provides anywhere near what I am wanting in regards to routing and MVC. It&amp;rsquo;s also got the ability to recompile code on change so you don&amp;rsquo;t have to constant restart the application. So I decided to just rewrite everything over to Revel. Hopefully this will be a good decision.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Social Engineering defence</title>
+      <link>http://blog.humblyarrogant.io/post/2014-04-13-social-engineering-defence/</link>
+      <pubDate>Sun, 13 Apr 2014 19:40:14 -0400</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2014-04-13-social-engineering-defence/</guid>
+      <description>&lt;p&gt;So a while back I read a blog post by &lt;a href=&#34;http://www.chunkhost.com/blog/15/huge_security_hole_in_sendgrid&#34;&gt;ChunkHost&lt;/a&gt; about a &amp;ldquo;Huge security hole in Sendgrid&amp;rdquo;. And instantly I thought why isn&amp;rsquo;t there a protection against something which is so obviously dodgy. After a few seconds I thought of an easy protection against such an attack, I&amp;rsquo;ve now found time to write about it so here it is.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;#The attack&lt;/p&gt;
+
+&lt;p&gt;The attack was simple, someone phoned up Sendgrid&amp;rsquo;s customer support and talked them into changing the email for the ChunkHost account from support@chunkhost.com to support@chunkhost.info. Once they did that they then did a forgotten password request. Once they had access they then add their email as a BCC to all emails going out. At this point they then targeted chunkhost customers with forgotten password requests. The attack on the end targets failed as they used two factor authentication.&lt;/p&gt;
+
+&lt;p&gt;#Review&lt;/p&gt;
+
+&lt;p&gt;First major &amp;ldquo;WHAT?&amp;rdquo; is that Sendgrid allowed the email to be changed over the phone, but hey that&amp;rsquo;s what this attack is about tricking someone into doing something for you. So lets get on two the other things. One of the things I would consider blatantly off, is changing an email from a .com to a .info for your login. I can see this happening in the sending of emails but why would anyone move from the arguably best TLD to one that is one of the least favourable? I can&amp;rsquo;t see that happening that often. Next is that straight after the email is changed there is a forgotten password request. That to me would ring alarm bells. Then there is the fact you can BCC transactions email in the first place.&lt;/p&gt;
+
+&lt;p&gt;#Conclusion&lt;/p&gt;
+
+&lt;p&gt;It seems to me all of this could be easily stopped by preventing people from doing forgot password requests within 24 hours of changing their email. While this may be really annoying from a UX point of view, in 99% of cases people can wait 24 hours to log in to something. Also when they do a forgot password within 24 hours of changing their email, send an email to the old email account that there is a forgot password request and ask them to contact customer support. That would allow people a change to quickly react if there is an attack on their accounts.&lt;/p&gt;
+
+&lt;p&gt;Also obviously using two factor authentication on your logins will also prevent social engineering attacks like this. Since even if they can do a forgot password request and get the login details they won&amp;rsquo;t get the other authentication factor. This one wins out overall. But if you&amp;rsquo;re unable or unwilling to implement two factor authentication you can at least apply the 24 hour delay on password changes with ease.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;TL;DR Stop people from doing forgot password for 24 hours after changing emails. Or just use two factor authentication.&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The git-flow branch model is waterfall?</title>
+      <link>http://blog.humblyarrogant.io/post/2014-03-20-gitflow-is-waterfall-slash/</link>
+      <pubDate>Thu, 20 Mar 2014 15:23:04 -0400</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2014-03-20-gitflow-is-waterfall-slash/</guid>
+      <description>
+
+&lt;p&gt;For those not in the know, git-flow is technically a tool for git which allows for the easy use of a specific branch model. Which is most commonly referred to as git-flow.  This blog post isn&amp;rsquo;t about that tool which is super useful. But is about the branch model. Which is also super useful in my opinion if you&amp;rsquo;re implementing the waterfall development process.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Disclaimer&lt;/strong&gt;: &lt;em&gt;This isn&amp;rsquo;t meant to be a criticism of either the branching model or the waterfall process. It&amp;rsquo;s more me pointing out that it doesn&amp;rsquo;t really fit in with what I consider to be an agile development process if used fully as described. Not to say that implementing some of it can&amp;rsquo;t fit in with an agile development process. Basically I&amp;rsquo;m trying not to be offensive to anyone. (Also it should be noted that listening to me may result in you looking stupid. You have been warned.)&lt;/em&gt;&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h2 id=&#34;git-flow-summary&#34;&gt;Git flow summary&lt;/h2&gt;
+
+&lt;p&gt;So a quick run through of the branch model if you haven&amp;rsquo;t read &lt;a href=&#34;http://nvie.com/posts/a-successful-git-branching-model/&#34;&gt;the blog post about it&lt;/a&gt;. You basically branch each feature off into it&amp;rsquo;s own &lt;strong&gt;feature branch&lt;/strong&gt; and develop that separately from other features. When a feature is finished you then merge it into the &lt;strong&gt;develop&lt;/strong&gt; branch. Once you feel you have enough features in &lt;strong&gt;develop&lt;/strong&gt; you then merge it in to a &lt;strong&gt;release branch&lt;/strong&gt;. At which point you only test and apply bug fixes to that branch and once you&amp;rsquo;re ready to deploy it you then merge it to &lt;strong&gt;master&lt;/strong&gt;. Which is to be an exact copy of production. You then tag it once it goes into &lt;strong&gt;master&lt;/strong&gt;. Once it&amp;rsquo;s in &lt;strong&gt;master&lt;/strong&gt;, and you need to fix some urgent bug in production you would create a &lt;strong&gt;hotfix branch&lt;/strong&gt;. Any non urgent bug would be fixed in a &lt;strong&gt;bug branch&lt;/strong&gt; that is branched off from &lt;strong&gt;develop&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;So over all you have:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;feature branch&lt;/strong&gt; - Features get developed in these. In isolation so that you can release only fully finished features. Branch name example feature/comments&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;develop&lt;/strong&gt; - The main development branch, where all completed features are merged into and feature and bug branches are branched off from.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;release branch&lt;/strong&gt; - A branch that is suggested to go to production at which point you test and then bug fix before going live. Branch name example release/0.1&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;master&lt;/strong&gt; - A carbon copy of production, that tags are created from.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;hotfix branch&lt;/strong&gt; - An urgent bug fix branch, that is branched off from &lt;strong&gt;master&lt;/strong&gt;.  Branch name example hotfix/dataleakage&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;bug branch&lt;/strong&gt; - A non urgent bug fix, that is branched off from &lt;strong&gt;develop&lt;/strong&gt;. Branch name example bug/invalid-email&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;things-i-like-about-this-branch-model&#34;&gt;Things I like about this branch model&lt;/h2&gt;
+
+&lt;p&gt;That you develop features off in their own branch. This makes it super simple to keep unready features away from production. Bugs are developed in their own branch allows you to change stuff that may break other things and have the safety you&amp;rsquo;re not breaking everyone else&amp;rsquo;s working environment.&lt;/p&gt;
+
+&lt;p&gt;The fact that branches are named so you know the purpose of the branch, if it&amp;rsquo;s a bug, a feature, or the development mainline.&lt;/p&gt;
+
+&lt;h2 id=&#34;what-i-don-t-like-about-this-branch-model&#34;&gt;What I don&amp;rsquo;t like about this branch model&lt;/h2&gt;
+
+&lt;p&gt;The &lt;strong&gt;release branch&lt;/strong&gt;. Its whole purpose is to implement the testing &amp;amp; bug fixing phase of waterfall. For anyone who has worked on a largish project using waterfall, will know this phase sucks. It just feels like a constant battle. You spend ages testing everywhere by hand, then fix everything you find, then spend more time testing everything by hand. By the end of it,  it feels like you&amp;rsquo;ve tested a section 100 times. You get that feeling deep down that you never want to see that section again. This in my opinion is the main problem, if you&amp;rsquo;re like me and get bored silly testing something by hand 100 times you&amp;rsquo;ll want to make it go as quickly as possible. This results in poor testing, which results in a product with more bugs. Since you&amp;rsquo;re holding up all your features on testing in one go, you end up with more spending what seems like more time testing, get bored quicker, and get sloppier. I just can&amp;rsquo;t see an upside to this method of testing by hand.&lt;/p&gt;
+
+&lt;p&gt;Also another downside of the release branch and its waterfall feel is that you&amp;rsquo;re not getting feedback quick enough. Say for example you have a financial statement and you only have a single column showing the amount of the transaction. Yet it doesn&amp;rsquo;t tell you if it&amp;rsquo;s crediting the account or debiting the account to the extent the product owner would like. Then say you&amp;rsquo;ve then added onto the statement UI to make it load in via AJAX. You then have to change the UI and the AJAX endpoint to return the new data. If you were told when the UI was developed you wouldn&amp;rsquo;t have to go back and change the AJAX endpoint.&lt;/p&gt;
+
+&lt;p&gt;Tagging on &lt;strong&gt;master&lt;/strong&gt; every time you merge to it. It just seems like you&amp;rsquo;re not very trusting of the whole version control system. I agree that if you&amp;rsquo;re deploying to production you should creating a release a tag should be created, but if every time you commit to &lt;strong&gt;master&lt;/strong&gt; seems a bit much. I just feel it&amp;rsquo;s a bit much. Also I think that you should keep your development mainline so stable that it can be deployed at any point without any issue.&lt;/p&gt;
+
+&lt;h2 id=&#34;how-i-feel-this-branch-model-should-be-used&#34;&gt;How I feel this branch model should be used&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Feature branches&lt;/strong&gt; are used to develop features independently of one another. When the feature is finished the feature is then tested and one agreed to the level of stability that it can be deployed. At which point it is then merged into &lt;strong&gt;develop&lt;/strong&gt;. This allows it to be tested and accepted quickly and allow for changes to be made as soon as possible and not result in cascading changes due to requirement changes. It also keeps your development mainline stable enough that you can deploy at any point.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;While I don&amp;rsquo;t think my suggested branch model is anywhere near perfect. It doesn&amp;rsquo;t have that waterfall feel to it. I feel code should be tested as soon as it&amp;rsquo;s written and finished and in small chunks. Yes there should be automated tests, however these don&amp;rsquo;t replace an actual user testing it nor do they replace the product owner looking at it and agreeing that&amp;rsquo;s what they want. The git flow branch model is clearly a successful one since so many people implement it, I just feel it&amp;rsquo;s not for me.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

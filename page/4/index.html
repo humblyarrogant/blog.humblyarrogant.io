@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>A Humbly Arrogant Blog</title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.19-DEV" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="shortcut icon" href="http://blog.humblyarrogant.io/img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/styles.css">
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/sp-minimal.css">
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+</head>
+
+<body><div class="wrapper">
+
+<header class="text-center">
+   <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
+
+  
+    <h1 class="border-bottom add-padding-bottom"><a href="http://blog.humblyarrogant.io/">A Humbly Arrogant Blog</a></h1>
+  
+	
+  
+    <h2 class="text-right add-padding-right">Posts about software development</h2>
+  
+
+  
+</header>
+
+
+
+
+
+  <section>
+    
+
+  <p class="remove-margin-bottom"><small>
+    <time datetime="13 April 2014">13 April 2014</time>
+  </small></p>
+
+  <h2><a href="http://blog.humblyarrogant.io/post/2014-04-13-social-engineering-defence/">Social Engineering defence</a></h2>
+
+  <p>
+    
+      So a while back I read a blog post by ChunkHost about a &ldquo;Huge security hole in Sendgrid&rdquo;. And instantly I thought why isn&rsquo;t there a protection against something which is so obviously dodgy. After a few seconds I thought of an easy protection against such an attack, I&rsquo;ve now found time to write about it so here it is.
+#The attack
+The attack was simple, someone phoned up Sendgrid&rsquo;s customer support and talked them into changing the email for the ChunkHost account from support@chunkhost.
+      
+      ...
+      <a href="http://blog.humblyarrogant.io/post/2014-04-13-social-engineering-defence/" style="height:28px">
+      Read more <i class="fa fa-angle-double-right"></i></a>
+      
+    
+  </p>
+
+  <p class="remove-margin-bottom"><small>
+    <time datetime="31 March 2014">31 March 2014</time>
+  </small></p>
+
+  <h2><a href="http://blog.humblyarrogant.io/post/2014-03-31-quick-rundown-on-bcaas/">Quick rundown on BCAAs</a></h2>
+
+  <p>
+    
+      I&rsquo;ve been advised to start taking BCAAs, so I decided I should fully understand BCAAs so I could decide if taking them is truly a good idea or not. I&rsquo;ve been reading various things all saying various things. So this blog post is to so I take fully process everything and have something to come back to if I ever wonder about them at a later date.
+What are BCAAs?
+      
+      ...
+      <a href="http://blog.humblyarrogant.io/post/2014-03-31-quick-rundown-on-bcaas/" style="height:28px">
+      Read more <i class="fa fa-angle-double-right"></i></a>
+      
+    
+  </p>
+
+  <p class="remove-margin-bottom"><small>
+    <time datetime="28 March 2014">28 March 2014</time>
+  </small></p>
+
+  <h2><a href="http://blog.humblyarrogant.io/post/2014-03-28-xvfb-run-wont-run-in-jenkins-apache/">xvfb-run and wkhtmltopdf won&#39;t run in Jenkins/Apache</a></h2>
+
+  <p>
+    
+      I recently came across a rather unsual error with our testing suite while running on Jenkins. The test would pass on our development environment, not exactly odd in itself. Sadly they aren&rsquo;t exact copies, patch level out and what not. However the test would pass on the Jenkins server if ran via command line. So it wasn&rsquo;t that a minor release had a bug fix that was causing the issue. Since after all my googling on the subject turned up nothing I thought I would write up how I found out what it was and what the cause and solution was.
+      
+      ...
+      <a href="http://blog.humblyarrogant.io/post/2014-03-28-xvfb-run-wont-run-in-jenkins-apache/" style="height:28px">
+      Read more <i class="fa fa-angle-double-right"></i></a>
+      
+    
+  </p>
+
+  <p class="remove-margin-bottom"><small>
+    <time datetime="22 March 2014">22 March 2014</time>
+  </small></p>
+
+  <h2><a href="http://blog.humblyarrogant.io/post/2014-03-22-observer-pattern-in-golang/">Observer pattern in golang</a></h2>
+
+  <p>
+    
+      For some reason at some point, I thought it would be hard to implement the observer pattern in Go. Then I made an issue for me to blog about it. Well it&rsquo;s not hard. It&rsquo;s as easy as it is in every other language.
+Observers First part of the observer pattern is you need the actual observers. The logic that you want executed whenever something happens. Here I&rsquo;ve just put a simple log print statement that will print out the name of the hook to the log.
+      
+      ...
+      <a href="http://blog.humblyarrogant.io/post/2014-03-22-observer-pattern-in-golang/" style="height:28px">
+      Read more <i class="fa fa-angle-double-right"></i></a>
+      
+    
+  </p>
+
+  <p class="remove-margin-bottom"><small>
+    <time datetime="21 March 2014">21 March 2014</time>
+  </small></p>
+
+  <h2><a href="http://blog.humblyarrogant.io/post/2014-03-22-why-hacking-on-production-code-during-an-interview-is-a-good-thing/">Why hacking on production code during an interview is a good thing</a></h2>
+
+  <p>
+    
+      Wrote this ages ago and just found it and figured I should post it.
+A while back I saw a blog post (link) saying that he would never hack on a production code base during the interview. Since he was not getting paid for it. Well I strongly disagree with that, both from an interviewee and an interviewer point of view.
+Interviewer While working at my last job I was in charge of the technical test for developers.
+      
+      ...
+      <a href="http://blog.humblyarrogant.io/post/2014-03-22-why-hacking-on-production-code-during-an-interview-is-a-good-thing/" style="height:28px">
+      Read more <i class="fa fa-angle-double-right"></i></a>
+      
+    
+  </p>
+
+
+
+
+    <div class="pagination"> 
+    
+    <ul class="pagination">
+        
+        <li>
+            <a href="/" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
+        </li>
+        
+        <li
+        >
+        <a href="/page/3/" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+        </li>
+        
+        <li
+        ><a href="/">1</a></li>
+        
+        <li
+        ><a href="/page/2/">2</a></li>
+        
+        <li
+        ><a href="/page/3/">3</a></li>
+        
+        <li
+        class="active"><a href="/page/4/">4</a></li>
+        
+        <li
+        ><a href="/page/5/">5</a></li>
+        
+        <li
+        >
+        <a href="/page/5/" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+        </li>
+        
+        <li>
+            <a href="/page/5/" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        </li>
+        
+    </ul>
+     </div>
+  </section>
+
+
+<footer>
+  <p class="remove-margin-bottom add-padding-right">
+    &copy; 2017 
+    <a href="http://blog.humblyarrogant.io/"></a>
+  </p>
+
+  <p class="remove-margin-bottom add-padding-right"><small>
+    <a href="https://github.com/eueung/hugo-sp-minimal">Hugo SP-Minimal</a> Theme | 
+    Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
+  </small></p>    
+</footer>
+
+
+</div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body></html>

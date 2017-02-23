@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hacklang on A Humbly Arrogant Blog</title>
+    <link>http://blog.humblyarrogant.io/categories/hacklang/index.xml</link>
+    <description>Recent content in Hacklang on A Humbly Arrogant Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <copyright>Iain Cambridge, all rights reserved.</copyright>
+    <atom:link href="http://blog.humblyarrogant.io/categories/hacklang/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Hack: Types</title>
+      <link>http://blog.humblyarrogant.io/post/2014-11-23-hack-types/</link>
+      <pubDate>Sun, 23 Nov 2014 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2014-11-23-hack-types/</guid>
+      <description>
+
+&lt;p&gt;Facebook&amp;rsquo;s Hack bring lots of features that a lot of other programming languages get to take advantage of. One of major advantages of Hack over PHP is a typing system. So here&amp;rsquo;s a quick run over of the typing system as I understand it.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;h2 id=&#34;annotate&#34;&gt;Annotate&lt;/h2&gt;
+
+&lt;p&gt;Annotating is when you define which type is going to be used. You can type the following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;function arguments&lt;/li&gt;
+&lt;li&gt;function return&lt;/li&gt;
+&lt;li&gt;class variable&lt;/li&gt;
+&lt;li&gt;constants&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For function arguments you just put the type before the variable name for the argument.&lt;/p&gt;
+
+&lt;p&gt;{% gist 26159043a232e7206b40 function.hh %}&lt;/p&gt;
+
+&lt;p&gt;For the return type you just put &lt;code&gt;: type&lt;/code&gt; in between the function definition and the function body.&lt;/p&gt;
+
+&lt;p&gt;{% gist 26159043a232e7206b40 return.hh %}&lt;/p&gt;
+
+&lt;p&gt;For constants you just put the type in between the &lt;code&gt;const&lt;/code&gt; keyword and the constant name.&lt;/p&gt;
+
+&lt;p&gt;{% gist 26159043a232e7206b40 dd.hh %}&lt;/p&gt;
+
+&lt;p&gt;For class variables you just put the type in between the scope keyword and the variable name.&lt;/p&gt;
+
+&lt;p&gt;{% gist 26159043a232e7206b40 class.hh %}&lt;/p&gt;
+
+&lt;h2 id=&#34;list-of-basic-types&#34;&gt;List of basic types&lt;/h2&gt;
+
+&lt;p&gt;Primitive are one most basic types that are used in most programming languages.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;string&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;int&lt;/code&gt; - Integer&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;float&lt;/code&gt; - Floating point&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bool&lt;/code&gt; - Boolean (True or False)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;array&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Primitive Unions are types that can be used to describe other Primitive types that go together.
+* &lt;code&gt;num&lt;/code&gt; - integer or float
+* &lt;code&gt;arraykey&lt;/code&gt; - string or integer&lt;/p&gt;
+
+&lt;p&gt;Arrays while being a primitive type can be expanded to show what type of data they hold. You can also define the array key type. Instead of typing arrays like this you may want to look at using collections.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;array&amp;lt;string&amp;gt;&lt;/code&gt; - An array of strings&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;array&amp;lt;string,int&amp;gt;&lt;/code&gt;  - An array of integers indexed by a string&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Classes and interfaces, if a class or interface exists in the code that&amp;rsquo;s being executed then it&amp;rsquo;s a type that you can use for type annotations.&lt;/p&gt;
+
+&lt;p&gt;Other basic types&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;mixed&lt;/code&gt; - Will take anything&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;void&lt;/code&gt; - Nothing it means there is no type, this is generally used&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;resource&lt;/code&gt; - A resource such as filepointer, curl resources, etc.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;(function(typeOne, typeTwo, ...): returnType)&lt;/code&gt; - closure&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tuple(typeOne, typeTwo)&lt;/code&gt; - tuples&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A full list can be found in &lt;a href=&#34;http://docs.hhvm.com/manual/en/hack.annotations.usingtypes.php&#34;&gt;hack annotations docs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;generics&#34;&gt;Generics&lt;/h2&gt;
+
+&lt;p&gt;Sometimes you want your code to work with any type. In those cases we can use type generics. Generics can be defined on a class or on a method. To define a generic you wrap the name of the generic with less than and greater than in either the class definition or the method definition.&lt;/p&gt;
+
+&lt;p&gt;When naming it you should remember can&amp;rsquo;t use the name of a type that already exists. It&amp;rsquo;s a general rule of thumb that you start your generic type with &lt;code&gt;T&lt;/code&gt; and for real simple use cases &lt;code&gt;T&lt;/code&gt; alone is fine. With collections it&amp;rsquo;s advised to use &lt;code&gt;Tk&lt;/code&gt; for the key and &lt;code&gt;Tv&lt;/code&gt; for the value.&lt;/p&gt;
+
+&lt;p&gt;{% gist 26159043a232e7206b40 generics.hh %}&lt;/p&gt;
+
+&lt;h2 id=&#34;overriding-return-type-signature&#34;&gt;Overriding return type signature&lt;/h2&gt;
+
+&lt;p&gt;When you extend a class you are able to override the return type for methods you override. However the new type must be compatible with the original type. So in other word the type must be a child type of the original type.&lt;/p&gt;
+
+&lt;p&gt;So say you originally typed it &lt;code&gt;Foo&lt;/code&gt; you couldn&amp;rsquo;t then change the type to &lt;code&gt;bool&lt;/code&gt;. As that&amp;rsquo;s not a compatible type of &lt;code&gt;Foo&lt;/code&gt;. However if you created a child class of &lt;code&gt;Foo&lt;/code&gt; called &lt;code&gt;Fooable&lt;/code&gt; you would be able to use that as a type. So your code still actually follows the orignal return signature it&amp;rsquo;s just more detailed.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

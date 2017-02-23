@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubernetes on A Humbly Arrogant Blog</title>
+    <link>http://blog.humblyarrogant.io/categories/kubernetes/index.xml</link>
+    <description>Recent content in Kubernetes on A Humbly Arrogant Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <copyright>Iain Cambridge, all rights reserved.</copyright>
+    <atom:link href="http://blog.humblyarrogant.io/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Increase docker device size on Ubuntu</title>
+      <link>http://blog.humblyarrogant.io/post/2017-01-31-Increase-docker-device-size/</link>
+      <pubDate>Tue, 31 Jan 2017 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2017-01-31-Increase-docker-device-size/</guid>
+      <description>&lt;p&gt;So I&amp;rsquo;ve got an application that I&amp;rsquo;m running via  and Docker. That requires a certain amount of disk space and would run out of space very quickly with the default 10G limit that Docker comes with.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;I figured the easiest way to move forward with this would be too look into if I was able to increase the size of device. It turns out you can. You can pass an option when you&amp;rsquo;re starting docker. The flag is &lt;code&gt;--storage-opt dm.basesize=15G&lt;/code&gt;. So to run it it would be the below command.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;/usr/bin/docker daemon --storage-opt dm.basesize=15G&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;However I wanted to be able to do this while still using the Ubuntu daemon management. To do this I had to edit &lt;code&gt;/etc/default/docker&lt;/code&gt; and add the line &lt;code&gt;DOCKER_OPTS=&amp;quot;--storage-opt dm.basesize=15G&amp;quot;&lt;/code&gt; and then restart my docker daemon.&lt;/p&gt;
+
+&lt;p&gt;Once I did this I noticed new containers weren&amp;rsquo;t being started with the new device size. It turned out that to get docker to use the new device base size I had to delete all my containers and images and pull the images again.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
