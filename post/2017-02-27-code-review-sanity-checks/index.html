@@ -1,0 +1,138 @@
+
+  <!DOCTYPE html>
+<html lang="en-gb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>A Humbly Arrogant Blog</title>
+    <meta name="author" content="Iain Cambridge">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.19-DEV" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="shortcut icon" href="http://blog.humblyarrogant.io/img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/styles.css">
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/sp-minimal.css">
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+</head>
+
+
+  <body><div class="wrapper">
+  <header class="text-center">
+   <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
+
+  
+    <h1 class="border-bottom add-padding-bottom"><a href="http://blog.humblyarrogant.io/">A Humbly Arrogant Blog</a></h1>
+  
+	
+  
+    <h2 class="text-right add-padding-right">Posts about software development</h2>
+  
+
+  
+</header>
+
+
+
+
+  <section>
+    <p class="remove-margin-bottom">
+      <time datetime="28 February 2017">28 February 2017</time>
+    </p>
+
+    <h1>Code Review: Sanity Checks</h1>
+    
+
+<p>For the most part, sanity checks are put into the code to ensure there are no bugs. For this reason, guaranteeing sanity checks are done correctly becomes necessary. If you do not check to see if the data is valid, and it is invalid, then you&rsquo;re going to allow invalid data to proceed. Here, I&rsquo;m going to discuss how I think we should do sanity checking in PHP.</p>
+
+<h2 id="asserting-valid-data">Asserting Valid Data</h2>
+
+<p>What I&rsquo;ve seen a lot is people are asserting for invalid data when they&rsquo;re doing their sanity check. While this makes logical sense, if it&rsquo;s data you know to be invalid, then obliviously you want to stop your application at this point.</p>
+
+<p>However, I feel that what we should be doing, instead, is checking whether or not the data is valid instead of invalid. The number of ways data can become invalid through the lifecycle of a project can be numerous; however, the ways the data can be valid remains the same until the code is changed.</p>
+
+<h2 id="type-strict-checking">Type Strict Checking</h2>
+
+<p>One of the issues with this approach is that it&rsquo;s checking to see if the value is null; however, in weakly-typed languages, it&rsquo;s possible for the return value to be a range of values, which aren&rsquo;t null, but not the correct value we&rsquo;re wanting. This occurs, especially in PHP, where developers have a habit of returning false in error cases. So, it can be quite common that, at some point, this method could return false but still not be the value we want.</p>
+
+<h3 id="here-is-some-example-code-with-this-problem">Here is some example code with this problem:</h3>
+
+<div><script src='https://gist.github.com/1f894e6e1bd7c1054c83998a20f3d768.js?file=one.php'></script></div>
+
+<h3 id="here-is-how-i-think-it-should-be-done-instead">Here is how I think it should be done instead:</h3>
+
+<div><script src='https://gist.github.com/1f894e6e1bd7c1054c83998a20f3d768.js?file=two.php'></script></div>
+
+<p>For the second snippet, I check to see if it&rsquo;s not numerical. So, instead of starting with a value that I don&rsquo;t want, I declare the type of data I do want and only fail if I don&rsquo;t get that type. By doing this, I now have a more versatile codebase since a small error of returning false in a method that a developer was expecting null doesn&rsquo;t break the application.</p>
+
+<h2 id="object-checking">Object checking</h2>
+
+<p>So, another issue I&rsquo;ve seen is where people do checks to see if a non-true value has been returned when they want to see if they have a valid object to use. However, this doesn&rsquo;t check if they have a value object, and it could be a case that they have a true value or a completely different object that doesn&rsquo;t uphold the contract they want to use.</p>
+
+<h3 id="here-is-some-example-code-with-this-problem-1">Here is some example code with this problem:</h3>
+
+<div><script src='https://gist.github.com/1f894e6e1bd7c1054c83998a20f3d768.js?file=three.php'></script></div>
+
+<h3 id="here-is-how-i-think-it-should-be-done-instead-1">Here is how I think it should be done instead:</h3>
+
+<div><script src='https://gist.github.com/1f894e6e1bd7c1054c83998a20f3d768.js?file=four.php'></script></div>
+
+<p>So, instead of checking to see if I had an object or a true value, I checked to see if I had the type of object I wanted to use. This means if someone returns a different object type that doesn&rsquo;t have the contract, I then want to use the code fails as we expect it to.</p>
+
+<h2 id="other-solutions">Other Solutions</h2>
+
+<p>These issues could be solved by using strict typing and correctly analysing the code so that your build fails if you inject a string into a method that expects an integer. For many teams and projects, using these tools aren&rsquo;t immediately available or even possible, so if you use PHP 7, have strict typing enabled, and run Etsy&rsquo;s Phan on strict, then you&rsquo;ll discover a lot of these issues automatically.</p>
+
+<p>You will still have issues where the type is correct, but the value isn&rsquo;t correct. So in cases where you&rsquo;re checking a string value, is one of the expected string values, then you would need to check that the value is still the sort you want and that it&rsquo;s not just an empty string.</p>
+
+<h2 id="open-source-projects">Open Source Projects</h2>
+
+<p>Also, some may wonder why other projects like Symfony don&rsquo;t do it this way. Well, it&rsquo;s simple: they code review the other way, and they make sure their contracts are all valid and that they never break a contract. Since all their contracts are very strictly documented and very heavily reviewed, they&rsquo;re able to be more confident that the code they&rsquo;re using won&rsquo;t change.</p>
+
+<p>You also need to remember how long an average pull request takes to get merged and how many people review them. A pull request to an open source project can take weeks to be merged and be reviewed by dozens of developers. Whereas, generally, within companies, pull requests last hours or days and are reviewed by one or two developers. In my opinion, this increases the need for such defensive programming measures.</p>
+
+<p>There is also the point that, with projects like Symfony, if a contract isn&rsquo;t being upheld it&rsquo;s a bug in the method returning the incorrect type, and that&rsquo;s where it must be fixed. However, for in-house applications, you don&rsquo;t care so much where the bug is; you care more that you don&rsquo;t have bugs in the first place.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Hopefully this explains some of the ways we can do sanity checking wrong. It&rsquo;s important to note that these sanity checks aren&rsquo;t just for checking return values, but also set values on class variables and other sorts of places that sanity checks need to be done.</p>
+
+
+    
+
+    
+  </section> 
+
+  <footer>
+  <p class="remove-margin-bottom add-padding-right">
+    &copy; 2017 
+    <a href="http://blog.humblyarrogant.io/">Iain Cambridge</a>
+  </p>
+
+  <p class="remove-margin-bottom add-padding-right"><small>
+    <a href="https://github.com/eueung/hugo-sp-minimal">Hugo SP-Minimal</a> Theme | 
+    Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
+  </small></p>    
+</footer>
+
+
+  </div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+  <!-- Google Analytics -->
+  <script>
+    var _gaq=[['_setAccount','UA-49011138-2'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>
+
+</body></html>
+

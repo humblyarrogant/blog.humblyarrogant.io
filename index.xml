@@ -7,8 +7,72 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <copyright>Iain Cambridge, all rights reserved.</copyright>
-    <lastBuildDate>Tue, 21 Feb 2017 15:12:23 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 28 Feb 2017 12:03:53 +0100</lastBuildDate>
     <atom:link href="http://blog.humblyarrogant.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Code Review: Sanity Checks</title>
+      <link>http://blog.humblyarrogant.io/post/2017-02-27-code-review-sanity-checks/</link>
+      <pubDate>Tue, 28 Feb 2017 12:03:53 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2017-02-27-code-review-sanity-checks/</guid>
+      <description>
+
+&lt;p&gt;For the most part, sanity checks are put into the code to ensure there are no bugs. For this reason, guaranteeing sanity checks are done correctly becomes necessary. If you do not check to see if the data is valid, and it is invalid, then you&amp;rsquo;re going to allow invalid data to proceed. Here, I&amp;rsquo;m going to discuss how I think we should do sanity checking in PHP.&lt;/p&gt;
+
+&lt;h2 id=&#34;asserting-valid-data&#34;&gt;Asserting Valid Data&lt;/h2&gt;
+
+&lt;p&gt;What I&amp;rsquo;ve seen a lot is people are asserting for invalid data when they&amp;rsquo;re doing their sanity check. While this makes logical sense, if it&amp;rsquo;s data you know to be invalid, then obliviously you want to stop your application at this point.&lt;/p&gt;
+
+&lt;p&gt;However, I feel that what we should be doing, instead, is checking whether or not the data is valid instead of invalid. The number of ways data can become invalid through the lifecycle of a project can be numerous; however, the ways the data can be valid remains the same until the code is changed.&lt;/p&gt;
+
+&lt;h2 id=&#34;type-strict-checking&#34;&gt;Type Strict Checking&lt;/h2&gt;
+
+&lt;p&gt;One of the issues with this approach is that it&amp;rsquo;s checking to see if the value is null; however, in weakly-typed languages, it&amp;rsquo;s possible for the return value to be a range of values, which aren&amp;rsquo;t null, but not the correct value we&amp;rsquo;re wanting. This occurs, especially in PHP, where developers have a habit of returning false in error cases. So, it can be quite common that, at some point, this method could return false but still not be the value we want.&lt;/p&gt;
+
+&lt;h3 id=&#34;here-is-some-example-code-with-this-problem&#34;&gt;Here is some example code with this problem:&lt;/h3&gt;
+
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/1f894e6e1bd7c1054c83998a20f3d768.js?file=one.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
+
+&lt;h3 id=&#34;here-is-how-i-think-it-should-be-done-instead&#34;&gt;Here is how I think it should be done instead:&lt;/h3&gt;
+
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/1f894e6e1bd7c1054c83998a20f3d768.js?file=two.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
+
+&lt;p&gt;For the second snippet, I check to see if it&amp;rsquo;s not numerical. So, instead of starting with a value that I don&amp;rsquo;t want, I declare the type of data I do want and only fail if I don&amp;rsquo;t get that type. By doing this, I now have a more versatile codebase since a small error of returning false in a method that a developer was expecting null doesn&amp;rsquo;t break the application.&lt;/p&gt;
+
+&lt;h2 id=&#34;object-checking&#34;&gt;Object checking&lt;/h2&gt;
+
+&lt;p&gt;So, another issue I&amp;rsquo;ve seen is where people do checks to see if a non-true value has been returned when they want to see if they have a valid object to use. However, this doesn&amp;rsquo;t check if they have a value object, and it could be a case that they have a true value or a completely different object that doesn&amp;rsquo;t uphold the contract they want to use.&lt;/p&gt;
+
+&lt;h3 id=&#34;here-is-some-example-code-with-this-problem-1&#34;&gt;Here is some example code with this problem:&lt;/h3&gt;
+
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/1f894e6e1bd7c1054c83998a20f3d768.js?file=three.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
+
+&lt;h3 id=&#34;here-is-how-i-think-it-should-be-done-instead-1&#34;&gt;Here is how I think it should be done instead:&lt;/h3&gt;
+
+&lt;div&gt;&lt;script src=&#39;https://gist.github.com/1f894e6e1bd7c1054c83998a20f3d768.js?file=four.php&#39;&gt;&lt;/script&gt;&lt;/div&gt;
+
+&lt;p&gt;So, instead of checking to see if I had an object or a true value, I checked to see if I had the type of object I wanted to use. This means if someone returns a different object type that doesn&amp;rsquo;t have the contract, I then want to use the code fails as we expect it to.&lt;/p&gt;
+
+&lt;h2 id=&#34;other-solutions&#34;&gt;Other Solutions&lt;/h2&gt;
+
+&lt;p&gt;These issues could be solved by using strict typing and correctly analysing the code so that your build fails if you inject a string into a method that expects an integer. For many teams and projects, using these tools aren&amp;rsquo;t immediately available or even possible, so if you use PHP 7, have strict typing enabled, and run Etsy&amp;rsquo;s Phan on strict, then you&amp;rsquo;ll discover a lot of these issues automatically.&lt;/p&gt;
+
+&lt;p&gt;You will still have issues where the type is correct, but the value isn&amp;rsquo;t correct. So in cases where you&amp;rsquo;re checking a string value, is one of the expected string values, then you would need to check that the value is still the sort you want and that it&amp;rsquo;s not just an empty string.&lt;/p&gt;
+
+&lt;h2 id=&#34;open-source-projects&#34;&gt;Open Source Projects&lt;/h2&gt;
+
+&lt;p&gt;Also, some may wonder why other projects like Symfony don&amp;rsquo;t do it this way. Well, it&amp;rsquo;s simple: they code review the other way, and they make sure their contracts are all valid and that they never break a contract. Since all their contracts are very strictly documented and very heavily reviewed, they&amp;rsquo;re able to be more confident that the code they&amp;rsquo;re using won&amp;rsquo;t change.&lt;/p&gt;
+
+&lt;p&gt;You also need to remember how long an average pull request takes to get merged and how many people review them. A pull request to an open source project can take weeks to be merged and be reviewed by dozens of developers. Whereas, generally, within companies, pull requests last hours or days and are reviewed by one or two developers. In my opinion, this increases the need for such defensive programming measures.&lt;/p&gt;
+
+&lt;p&gt;There is also the point that, with projects like Symfony, if a contract isn&amp;rsquo;t being upheld it&amp;rsquo;s a bug in the method returning the incorrect type, and that&amp;rsquo;s where it must be fixed. However, for in-house applications, you don&amp;rsquo;t care so much where the bug is; you care more that you don&amp;rsquo;t have bugs in the first place.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Hopefully this explains some of the ways we can do sanity checking wrong. It&amp;rsquo;s important to note that these sanity checks aren&amp;rsquo;t just for checking return values, but also set values on class variables and other sorts of places that sanity checks need to be done.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Code Review: Single Responsibility Principle</title>
@@ -812,32 +876,6 @@ The solution is upgrade linux kernel.
 &lt;p&gt;So in full example.&lt;/p&gt;
 
 &lt;div&gt;&lt;script src=&#39;https://gist.github.com/11321687.js?file=test.go&#39;&gt;&lt;/script&gt;&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Why Revel?</title>
-      <link>http://blog.humblyarrogant.io/post/2014-04-19-why-revel/</link>
-      <pubDate>Sat, 19 Apr 2014 14:40:14 -0400</pubDate>
-      
-      <guid>http://blog.humblyarrogant.io/post/2014-04-19-why-revel/</guid>
-      <description>
-
-&lt;p&gt;So lately I&amp;rsquo;ve been working on a project to increase productivity when dealing with Bitbucket and Jenkins. As I am a web developer, it&amp;rsquo;s a web app. So one of the first questions when building an application these days seems to be what framework? This for me has taken a month to really decide. In the end I choose Revel.&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;h1 id=&#34;at-first&#34;&gt;At first&lt;/h1&gt;
-
-&lt;p&gt;At first I decided to use Gorilla Web Toolkit. Which is a very minimalist framework(ish). It&amp;rsquo;s really just a bunch of components that you can use together to create web applications. I have no complaints about it. It all works very nicely. It just wasn&amp;rsquo;t how I wanted to develop. I&amp;rsquo;m too used to controllers, I like the structure they provide. Gorilla&amp;rsquo;s muxer was pretty much a more powerful version of the default one that comes with Go. Where you either pass a function or you pass a struct that handles the request. It just wasn&amp;rsquo;t what I wanted.&lt;/p&gt;
-
-&lt;h1 id=&#34;my-own-framework&#34;&gt;My own framework&lt;/h1&gt;
-
-&lt;p&gt;Next thing I decided was I would built my own simple framework. It would do exactly what I wanted. I worked on it for two weeks in my spare time. As I am just learning Go, this provided a perfect chance to get to know it better. I learnt about reflection and the basics of how it works. Increased my understanding of structs and inheritance. As well as a bunch of other stuff. However I realised I was spending all my time writing a framework and that&amp;rsquo;s not what I want to build.&lt;/p&gt;
-
-&lt;h1 id=&#34;revel&#34;&gt;Revel&lt;/h1&gt;
-
-&lt;p&gt;I originally didn&amp;rsquo;t want to use Revel because it&amp;rsquo;s pretty bloated, it&amp;rsquo;s a full on framework. Based on Play! which I had played with before in Scala. But I realised it&amp;rsquo;s pretty much the only web framework that provides anywhere near what I am wanting in regards to routing and MVC. It&amp;rsquo;s also got the ability to recompile code on change so you don&amp;rsquo;t have to constant restart the application. So I decided to just rewrite everything over to Revel. Hopefully this will be a good decision.&lt;/p&gt;
 </description>
     </item>
     
