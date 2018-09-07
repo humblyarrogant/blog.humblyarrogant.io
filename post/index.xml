@@ -6,20 +6,10 @@
     <description>Recent content in Posts on A Humbly Arrogant Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Tue, 07 Aug 2018 23:03:53 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 28 Feb 2017 12:03:53 +0100</lastBuildDate>
     
 	<atom:link href="http://blog.humblyarrogant.io/post/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Ticket Types</title>
-      <link>http://blog.humblyarrogant.io/post/2018-09-07-ticket-types/</link>
-      <pubDate>Tue, 07 Aug 2018 23:03:53 +0100</pubDate>
-      
-      <guid>http://blog.humblyarrogant.io/post/2018-09-07-ticket-types/</guid>
-      <description>Over the years of leading teams and working in various IT environments I&amp;rsquo;ve discovered, there are generally three types of tickets within the small to medium size companies.
-An Idea An Idea Request is where someone has an idea, and it would be nice to try it out and see if it works or not. An idea is not a request that is based on current business needs but on the possibility to improve something that is already working.</description>
-    </item>
     
     <item>
       <title>Code Review: Sanity Checks</title>

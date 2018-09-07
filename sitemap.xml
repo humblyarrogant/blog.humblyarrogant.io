@@ -3,11 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://blog.humblyarrogant.io/post/2018-09-07-ticket-types/</loc>
-    <lastmod>2018-08-07T23:03:53+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>http://blog.humblyarrogant.io/post/2017-02-27-code-review-sanity-checks/</loc>
     <lastmod>2017-02-28T12:03:53+01:00</lastmod>
   </url>
@@ -123,7 +118,7 @@
   
   <url>
     <loc>http://blog.humblyarrogant.io/</loc>
-    <lastmod>2018-08-07T23:03:53+01:00</lastmod>
+    <lastmod>2017-02-28T12:03:53+01:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -200,7 +195,7 @@
   
   <url>
     <loc>http://blog.humblyarrogant.io/post/</loc>
-    <lastmod>2018-08-07T23:03:53+01:00</lastmod>
+    <lastmod>2017-02-28T12:03:53+01:00</lastmod>
     <priority>0</priority>
   </url>
   
