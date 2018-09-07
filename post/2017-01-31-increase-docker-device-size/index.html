@@ -1,0 +1,93 @@
+
+  <!DOCTYPE html>
+<html lang="en-gb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>A Humbly Arrogant Blog</title>
+    <meta name="author" content="Iain Cambridge">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.40.1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="shortcut icon" href="http://blog.humblyarrogant.io/img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/styles.css">
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/sp-minimal.css">
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+</head>
+
+
+  <body><div class="wrapper">
+  <header class="text-center">
+   <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
+
+  
+    <h1 class="border-bottom add-padding-bottom"><a href="http://blog.humblyarrogant.io/">A Humbly Arrogant Blog</a></h1>
+  
+	
+  
+    <h2 class="text-right add-padding-right">Posts about software development</h2>
+  
+
+  
+</header>
+
+
+
+
+  <section>
+    <p class="remove-margin-bottom">
+      <time datetime="31 January 2017">31 January 2017</time>
+    </p>
+
+    <h1>Increase docker device size on Ubuntu</h1>
+    <p>So I&rsquo;ve got an application that I&rsquo;m running via  and Docker. That requires a certain amount of disk space and would run out of space very quickly with the default 10G limit that Docker comes with.</p>
+
+<p></p>
+
+<p>I figured the easiest way to move forward with this would be too look into if I was able to increase the size of device. It turns out you can. You can pass an option when you&rsquo;re starting docker. The flag is <code>--storage-opt dm.basesize=15G</code>. So to run it it would be the below command.</p>
+
+<p><code>/usr/bin/docker daemon --storage-opt dm.basesize=15G</code></p>
+
+<p>However I wanted to be able to do this while still using the Ubuntu daemon management. To do this I had to edit <code>/etc/default/docker</code> and add the line <code>DOCKER_OPTS=&quot;--storage-opt dm.basesize=15G&quot;</code> and then restart my docker daemon.</p>
+
+<p>Once I did this I noticed new containers weren&rsquo;t being started with the new device size. It turned out that to get docker to use the new device base size I had to delete all my containers and images and pull the images again.</p>
+
+    
+
+    
+  </section> 
+
+  <footer>
+  <p class="remove-margin-bottom add-padding-right">
+    &copy; 2018 
+    <a href="http://blog.humblyarrogant.io/">Iain Cambridge</a>
+  </p>
+
+  <p class="remove-margin-bottom add-padding-right"><small>
+    <a href="https://github.com/eueung/hugo-sp-minimal">Hugo SP-Minimal</a> Theme | 
+    Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
+  </small></p>    
+</footer>
+
+
+  </div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+  <!-- Google Analytics -->
+  <script>
+    var _gaq=[['_setAccount','UA-49011138-2'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>
+
+</body></html>
+

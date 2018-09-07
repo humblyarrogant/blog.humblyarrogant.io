@@ -1,0 +1,203 @@
+
+  <!DOCTYPE html>
+<html lang="en-gb">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>A Humbly Arrogant Blog</title>
+    <meta name="author" content="Iain Cambridge">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.19-DEV" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="shortcut icon" href="http://blog.humblyarrogant.io/img/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/styles.css">
+    <link rel="stylesheet" href="http://blog.humblyarrogant.io/css/sp-minimal.css">
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+</head>
+
+
+  <body><div class="wrapper">
+  <header class="text-center">
+   <img src="http://blog.humblyarrogant.io/img/logo.png" class="img-circle s200"> 
+
+  
+    <h1 class="border-bottom add-padding-bottom"><a href="http://blog.humblyarrogant.io/">A Humbly Arrogant Blog</a></h1>
+  
+	
+  
+    <h2 class="text-right add-padding-right">Posts about software development</h2>
+  
+
+  
+</header>
+
+
+
+
+  <section>
+    <p class="remove-margin-bottom">
+      <time datetime="06 December 2017">06 December 2017</time>
+    </p>
+
+    <h1>Is your IT Department harming your Company?</h1>
+    <p>The point of the blog post is to try and help non-technical business owners to understand if there is a problem with their IT Department.
+After several years working within the Software Development industry, I have seen fantastic departments who delivered and helped companies strived, and I have seen departments who played a significant part in the company&rsquo;s downfall. I will give a few examples of cases and then will describe how a non-technical business person can look for signs and find out if there is an issue.</p>
+
+<p>Product Team</p>
+
+<p>The Product Team is there to decide which features are to built first and how the features are to work. They are one of the most crucial parts of the development processes since they choose the path for the project and help make sure that the project brings the most business value as possible. However, problems can occur when the technical part of the development process never says no.</p>
+
+<p>In this example, there was a company whose core business was e-commerce they operated in several countries around the world.  They, however, had severe technical issues, to the point where the CTO managed to convince the COO and CEO that they needed to stop all feature development and just focus on the technical problems they had. A freeze on feature development is for the most part unheard of since for the most part; new features increase revenue. However, since the technical problems they were encountering resulted in frequent downtime it was clear, uptime is the main priority. So there was a feature freeze until it was clear we had solved the downtime issue and increased engineering quality. The feature freeze lasted two months or so.</p>
+
+<p>On the day of the unfreeze when we were to start work on feature work. One of the Product Managers was instantly pressuring one of the developers to rush out a feature that day. That feature was rushed out, with the developer who did it telling them it was not a good idea.</p>
+
+<p>That feature was rushed out cost the company an estimated 750,000 euros in hosting fees. Coincidentally, when the feature freeze was over the downtime issue reappeared.</p>
+
+<p>Application Rewrites</p>
+
+<p>Rewrites, some love the idea, others think it is a bad idea. However, they do happen, and sometimes they can be perfect for your company, others times not. However, it sometimes can be clear a rewrite will not solve the issues it is trying to solve.</p>
+
+<p>The company was building an in-house admin and customer support application. The main problem people had with it was it was slow and was extremely time-consuming to use.</p>
+
+<p>The rewrite that was taking over six months to do didn&rsquo;t solve either of these issues. In fact, pretty much all this rewrite did was change the application from using on JS Framework to using another JS Framework and replace the server technologies as well. The design was nearly the same, small differences here and there. However, the usability and functionality were the same. The performance issues they had with the old system were still present.</p>
+
+<p>The cost of this rebuild could be estimated at between 100,000 and 200,000 euros just on the salary costs. This number does not reflect that they are still going to want to solve the actual issues, and they did not add any functionality.</p>
+
+<p>Technical Debt</p>
+
+<p>Technical debt happens at every IT department; it is part of doing business in an IT world. Just like normal debt, when incurred and efficiently repaid it can be very beneficial to the company. The problem arises when technical debt is not repaid and is merely accrued. Techincal debt can kill companies if it handled correctly.</p>
+
+<p>Over the years I have noticed that there is one thing that companies that are drowning in technical debt have; that is a poor development environment.</p>
+
+<p>For whatever reason, their development environment either breaks a lot, is slow, or takes 6 hours to several days to set up. Sometimes all three at the same time. Just on salary costs of a developer, the amount of time they have to spend maintaining their development environment can be costly; if someone has to spend 1 and a half hours a week maintaining their development environment,  that is roughly 6 hours a month you are paying each developer to maintain their development environment. Then you think about it on development time, that is 6 hours a month, almost an entire workday day worth of time, that a developer is not adding value to your company. I would also like to point out that companies are spending thousands of euros on the best computers for their developers however they are still struggling to work because of the development environment. That is just the developer cost of a poor development environment. There is normally a correlation between a poor development environment and server costs. If it takes a lot of power and time to run the software locally for one person, then you can reasonably suspect it is also going to take a lot of power and time to run that software at scale. More power and time required more servers are required, instead of a server handling 100 requests per second it can only handle 20 requests per second, this would increase your server costs massively.</p>
+
+<p>The company I saw that had the biggest issue with a poor development environment, had issues that resulted in full days in a row being wasted with developers sitting around because everyone&rsquo;s development environment was broken. It was also so slow that it was faster to deploy it to a QA server than run it locally. The cost to the company would have been 4-5 days of developer time a month for about 20-25 developers and 2-3 days of developer time a month for another 30-40 developers.</p>
+
+<p>Warning Signs</p>
+
+<p>I&rsquo;ll try and give a few things that a non-technical person should be able to do to be able to see they have any underlying issues in their IT department.</p>
+
+<p>Staff Turnover</p>
+
+<p>This one works for every department and company. If you&rsquo;re going through staff every few months, you have a severe problem. It means it&rsquo;s so bad there, that people don&rsquo;t want to work for you anymore. The reasons for this can vary, but typical examples are poor recognition, poor management, or poor quality of work. People want to be recognised for what they&rsquo;ve done, they want to be treated fairly and managed well, and they also want to be able to do what they consider a good job.</p>
+
+<p>With IT professionals, there is a rather long ramp up time. Some estimate it to be about 6 months to be able to learn how to appropriately deal with a single application. If you have people maintaining multiple, it can be longer. Companies like Google, Amazon, and Facebook all expect new hires not to be up to speed for about a year or so. So if you&rsquo;re going through a developer every 6-12 months, you can reasonably assume you just spent money on them to get to know your system while adding minimum value.</p>
+
+<p>How to know if you have this problem:</p>
+
+<p>Ask HR for the duration of all former employees of the department and current employees. If all or a large majority your current employees have only been with your company a few months, you have a problem.</p>
+
+<p>Targets</p>
+
+<p>Again, this one works for every department. If targets are never getting hit, there is most likely a problem with whoever is managing that team.</p>
+
+<p>If a team is consistently late with projects, this affects the team members morale. To be constantly late, constantly feel like you&rsquo;re failing, is not a nice feeling. The effect of this can be that the team isn&rsquo;t as productive or they just leave.</p>
+
+<p>The effect to the company is that they cannot reliably plan the future of the company; since they cannot rely on things being done when they were told.</p>
+
+<p>How to know if you have a problem:</p>
+
+<p>Ask for information from stakeholders on the original delivery times given to them, and the actual time it took to deliver the projects. It is also possible with many project management tools to see which tasks/projects overran.</p>
+
+<p>Code Review</p>
+
+<p>Code Review, is important for a variety of reasons. It can reduce bugs, technical debt, and performance issues as well as increase developer knowledge of the system if done correctly. Sometimes, however, it is merely something they know they should do it but don&rsquo;t actually do it.</p>
+
+<p>How to know if you have a problem:</p>
+
+<p>If you look at the closed pull requests or code review and you see the majority of them with 1-3 comments. You have a problem, with people not reviewing code properly.</p>
+
+<p>You look through several pull requests and look at the comments. Not to look at the technical details of the comment, but to look to see if they are being responded to, either by changing the code or explaining something. If you notice a lot of request changes just being ignored and questions not being answered, you have a problem. That problem is that developers are not implying the changes to get the benefits of code review and it is merely for show.</p>
+
+<p>If you have a rule on how long code review can take. If you have a rule such as code review can only take 24 hours and then is automatically merged, then it means developers may not have enough time to properly review code, review the changes or worse developers know they can just ignore issues and the code will be merged.</p>
+
+<p>If you do not have any code review in place, you have a problem. Your team is not even pretending to follow best practices, which isn&rsquo;t good.</p>
+
+<p>Open Pull Requests</p>
+
+<p>This check only applies if you have Pull Requests in the development process, which is generally the case if you have code review.</p>
+
+<p>How to know if you have a problem:</p>
+
+<p>If you look at the number of open Pull Requests and it&rsquo;s more than twice the number of developers you have in your department/team. This problem can be caused by two reasons. One is, pull requests are not getting merged due to the code review taking a long time which means people are working on other tasks while waiting and they have built multiple pull requests in code review. This problem shows an issue in the development flow and usually is caused by people not code reviewing or merging. Another one is, old Pull Requests that aren&rsquo;t being worked on, this is generally because of poor project management, where the priorities are constantly changing. This clearly means you are paying developers to write code that is never used.</p>
+
+<p>If you look at the closed Pull Requests and you notice a lot of them are closed but not merged. This problem is the same as old open Pull Requests that are not being worked on.</p>
+
+<p>Development Environment</p>
+
+<p>As explained in the Techincal Debt example case, the development environment is important.</p>
+
+<p>How to know if you have a problem:</p>
+
+<p>Ask for the development team to set up a development environment on your computer and ask to watch to see how it&rsquo;s done. While this seems like it can get technical, you can spot problems without knowing anything technical.</p>
+
+<p>How long does it take? Is it 5-10 minute job or is a serious task which a developer has to spend hours with you. If it&rsquo;s a serious task, it means it&rsquo;s complicated and will take new hires a very long time to do.</p>
+
+<p>Do they need to ask other people questions to get things done? If so this means the process is rather complex and will take new hires a very long time to do.</p>
+
+<p>Ask if you make changes to your version of the application if it is possible to break anyone else&rsquo;s. If you can, it means they are sharing resources which means one problem can shut down your development team.</p>
+
+<p>Use the application like you would the live one for 2-3 minutes and see how long it takes to work. Usually, a development environment is slower than the live one. However, you shouldn&rsquo;t be sitting for more than 1-3 seconds for a response, and that is being generous. A good development environment will respond within milliseconds; a slow good development environment can take up to 3 seconds. By slow good development environment I mean there are technical issues with the software being used for development mode that make it much slower.</p>
+
+<p>Deployment</p>
+
+<p>The deployment process is a massively crucial part of the development process. Many times when things go wrong, they go wrong at deployment or shortly after. So a good deployment process is something you definitely want to have.</p>
+
+<p>How to know if you have a problem:</p>
+
+<p>Ask if you can watch a deployment in action.</p>
+
+<p>Things you want to look for:</p>
+
+<p>How long does it take? Is it 5-10 minutes or several hours. The longer it takes means if something does go wrong it is going to take a long time to fix even if they have a fix.</p>
+
+<p>How many things do they need to do, to deploy? Is it a single click or 20 minutes of typing and clicking?</p>
+
+<p>Ask if there are times they cannot deploy? This means their deployment process isn&rsquo;t very stable. It also means if something goes wrong during those time, they are going to have a tough time fixing it.</p>
+
+<p>Are they using any tools or are they simply transferring files to servers? If they are simply transferring files themselves, it means the deployment process is extremely basic and won&rsquo;t work on any real scale.</p>
+
+<p>Task/Project Tickets</p>
+
+<p>Monitoring</p>
+
+
+    
+
+    
+  </section> 
+
+  <footer>
+  <p class="remove-margin-bottom add-padding-right">
+    &copy; 2018 
+    <a href="http://blog.humblyarrogant.io/">Iain Cambridge</a>
+  </p>
+
+  <p class="remove-margin-bottom add-padding-right"><small>
+    <a href="https://github.com/eueung/hugo-sp-minimal">Hugo SP-Minimal</a> Theme | 
+    Based on <a href="https://github.com/orderedlist/minimal">Minimal</a>
+  </small></p>    
+</footer>
+
+
+  </div><script src="http://blog.humblyarrogant.io/js/scale.fix.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+  <!-- Google Analytics -->
+  <script>
+    var _gaq=[['_setAccount','UA-49011138-2'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>
+
+</body></html>
+

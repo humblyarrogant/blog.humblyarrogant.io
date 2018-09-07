@@ -2,12 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Testing on A Humbly Arrogant Blog</title>
-    <link>http://blog.humblyarrogant.io/categories/testing/index.xml</link>
+    <link>http://blog.humblyarrogant.io/categories/testing/</link>
     <description>Recent content in Testing on A Humbly Arrogant Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <copyright>Iain Cambridge, all rights reserved.</copyright>
-    <atom:link href="http://blog.humblyarrogant.io/categories/testing/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 26 Apr 2014 20:39:14 -0400</lastBuildDate>
+    
+	<atom:link href="http://blog.humblyarrogant.io/categories/testing/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Revel : How to use Drone.io for testing</title>
@@ -15,18 +17,7 @@
       <pubDate>Sat, 26 Apr 2014 20:39:14 -0400</pubDate>
       
       <guid>http://blog.humblyarrogant.io/post/2014-04-26-revel-use-drone-io-for-testing/</guid>
-      <description>
-
-&lt;p&gt;Being a lover of testing, continuous intergration, and cloud services. I wanted to be able to get a build of status of a Revel framework app I&amp;rsquo;m working on. Since Revel uses it&amp;rsquo;s own command to run and build applications the standard way of doing a build for Golang are out. I wanted to use &lt;a href=&#34;http://drone.io&#34;&gt;Drone.io&lt;/a&gt; instead of travis so if I wanted to make it private I could without paying a lot. So taking the .travis.yml wasn&amp;rsquo;t an option either. It was shockingly simple to set up. It took 3 lines.&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;h1 id=&#34;the-3-lines&#34;&gt;The 3 lines&lt;/h1&gt;
-
-&lt;p&gt;A quick breakdown of what is going on. First you install the revel framework, then you install the revel command. Then you call the revel command with the test command using import directory that will be used by go when it grabs your code. So in my case it was &amp;ldquo;&lt;strong&gt;revel test github.com/icambridge/sitrep&lt;/strong&gt;&amp;rdquo;.&lt;/p&gt;
-
-&lt;div&gt;&lt;script src=&#39;https://gist.github.com/11329286.js?file=gistfile1.txt&#39;&gt;&lt;/script&gt;&lt;/div&gt;
-</description>
+      <description>Being a lover of testing, continuous intergration, and cloud services. I wanted to be able to get a build of status of a Revel framework app I&amp;rsquo;m working on. Since Revel uses it&amp;rsquo;s own command to run and build applications the standard way of doing a build for Golang are out. I wanted to use Drone.io instead of travis so if I wanted to make it private I could without paying a lot.</description>
     </item>
     
     <item>
@@ -35,24 +26,7 @@
       <pubDate>Fri, 28 Mar 2014 22:26:14 -0400</pubDate>
       
       <guid>http://blog.humblyarrogant.io/post/2014-03-28-xvfb-run-wont-run-in-jenkins-apache/</guid>
-      <description>&lt;p&gt;I recently came across a rather unsual error with our testing suite while running on Jenkins. The test would pass on our development environment, not exactly odd in itself. Sadly they aren&amp;rsquo;t exact copies, patch level out and what not. However the test would pass on the Jenkins server if ran via command line. So it wasn&amp;rsquo;t that a minor release had a bug fix that was causing the issue. Since after all my googling on the subject turned up nothing I thought I would write up how I found out what it was and what the cause and solution was.&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;p&gt;&lt;strong&gt;TL;DR: It was caused by SE Linux, disabled it and everything started working fine. It also fixed an issue where wkhtmltopdf would return an error 1299 wouldn&amp;rsquo;t work when called via Apache.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;So the code that we were testing was a functional test controller, it would generate a pdf and force the download. All the test had to do was check and see if a file was downloaded. This constantly failed on the Jenkins server. The tools we use to generate pdfs is &lt;a href=&#34;https://code.google.com/p/wkhtmltopdf/&#34;&gt;wkhtmltopdf&lt;/a&gt; and &lt;a href=&#34;http://www.x.org/archive/X11R7.7/doc/man/man1/Xvfb.1.xhtml&#34;&gt;xvfb&lt;/a&gt; to allow for it to run without a GUI system. So I started trying to debug the command.&lt;/p&gt;
-
-&lt;p&gt;Example command&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;xvfb-run &amp;ndash;server-args=&amp;ldquo;-screen 0, 1280x1024x24&amp;rdquo; /var/lib/jenkins/jobs/xx/workspace/app/../bin/wkhtmltopdf-amd64 &amp;ndash;use-xserver &amp;ldquo;&lt;a href=&#34;https://localhost/xxx&amp;quot;&#34;&gt;https://localhost/xxx&amp;quot;&lt;/a&gt; /tmp/will-this-work.pdf&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;xvfb-run has an error log file parameter. When I added it, the error file was empty When I ran xvfb-run by itself via Jenkins it gave me the help message, when I called wkhtmltopdf by itself via Jenkins it gave me. So I then added a exec call to the Phing build file to see if just the command would work and if it was a PHP issue. This returned an error code of 1. Which isn&amp;rsquo;t really helpful since the error code just means had problems starting up. I then tried the xvfb plugin for Jenkins, that was pointless as that plugin is for a completely different use. I then installed the terminal plugin, tried the command there and it did the same. However I also ran &lt;code&gt;id&lt;/code&gt; command to see if it was indeed running as the Jenkins user I tried in CLI. As it turned out I got an extra line (which sadly I didn&amp;rsquo;t keep a copy of) after googling that every result was about SE Linux. I then made the jump to disabling SE Linux. Once I did that via the test started to pass via Jenkins.&lt;/p&gt;
-
-&lt;p&gt;Hopefully I&amp;rsquo;ve put enough information in this post that if other people Google with this issue they&amp;rsquo;ll find this.&lt;/p&gt;
-</description>
+      <description>I recently came across a rather unsual error with our testing suite while running on Jenkins. The test would pass on our development environment, not exactly odd in itself. Sadly they aren&amp;rsquo;t exact copies, patch level out and what not. However the test would pass on the Jenkins server if ran via command line. So it wasn&amp;rsquo;t that a minor release had a bug fix that was causing the issue. Since after all my googling on the subject turned up nothing I thought I would write up how I found out what it was and what the cause and solution was.</description>
     </item>
     
   </channel>

@@ -2,12 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Security on A Humbly Arrogant Blog</title>
-    <link>http://blog.humblyarrogant.io/categories/security/index.xml</link>
+    <link>http://blog.humblyarrogant.io/categories/security/</link>
     <description>Recent content in Security on A Humbly Arrogant Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <copyright>Iain Cambridge, all rights reserved.</copyright>
-    <atom:link href="http://blog.humblyarrogant.io/categories/security/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 13 Apr 2014 19:40:14 -0400</lastBuildDate>
+    
+	<atom:link href="http://blog.humblyarrogant.io/categories/security/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Social Engineering defence</title>
@@ -15,26 +17,9 @@
       <pubDate>Sun, 13 Apr 2014 19:40:14 -0400</pubDate>
       
       <guid>http://blog.humblyarrogant.io/post/2014-04-13-social-engineering-defence/</guid>
-      <description>&lt;p&gt;So a while back I read a blog post by &lt;a href=&#34;http://www.chunkhost.com/blog/15/huge_security_hole_in_sendgrid&#34;&gt;ChunkHost&lt;/a&gt; about a &amp;ldquo;Huge security hole in Sendgrid&amp;rdquo;. And instantly I thought why isn&amp;rsquo;t there a protection against something which is so obviously dodgy. After a few seconds I thought of an easy protection against such an attack, I&amp;rsquo;ve now found time to write about it so here it is.&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;p&gt;#The attack&lt;/p&gt;
-
-&lt;p&gt;The attack was simple, someone phoned up Sendgrid&amp;rsquo;s customer support and talked them into changing the email for the ChunkHost account from support@chunkhost.com to support@chunkhost.info. Once they did that they then did a forgotten password request. Once they had access they then add their email as a BCC to all emails going out. At this point they then targeted chunkhost customers with forgotten password requests. The attack on the end targets failed as they used two factor authentication.&lt;/p&gt;
-
-&lt;p&gt;#Review&lt;/p&gt;
-
-&lt;p&gt;First major &amp;ldquo;WHAT?&amp;rdquo; is that Sendgrid allowed the email to be changed over the phone, but hey that&amp;rsquo;s what this attack is about tricking someone into doing something for you. So lets get on two the other things. One of the things I would consider blatantly off, is changing an email from a .com to a .info for your login. I can see this happening in the sending of emails but why would anyone move from the arguably best TLD to one that is one of the least favourable? I can&amp;rsquo;t see that happening that often. Next is that straight after the email is changed there is a forgotten password request. That to me would ring alarm bells. Then there is the fact you can BCC transactions email in the first place.&lt;/p&gt;
-
-&lt;p&gt;#Conclusion&lt;/p&gt;
-
-&lt;p&gt;It seems to me all of this could be easily stopped by preventing people from doing forgot password requests within 24 hours of changing their email. While this may be really annoying from a UX point of view, in 99% of cases people can wait 24 hours to log in to something. Also when they do a forgot password within 24 hours of changing their email, send an email to the old email account that there is a forgot password request and ask them to contact customer support. That would allow people a change to quickly react if there is an attack on their accounts.&lt;/p&gt;
-
-&lt;p&gt;Also obviously using two factor authentication on your logins will also prevent social engineering attacks like this. Since even if they can do a forgot password request and get the login details they won&amp;rsquo;t get the other authentication factor. This one wins out overall. But if you&amp;rsquo;re unable or unwilling to implement two factor authentication you can at least apply the 24 hour delay on password changes with ease.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;TL;DR Stop people from doing forgot password for 24 hours after changing emails. Or just use two factor authentication.&lt;/em&gt;&lt;/p&gt;
-</description>
+      <description>So a while back I read a blog post by ChunkHost about a &amp;ldquo;Huge security hole in Sendgrid&amp;rdquo;. And instantly I thought why isn&amp;rsquo;t there a protection against something which is so obviously dodgy. After a few seconds I thought of an easy protection against such an attack, I&amp;rsquo;ve now found time to write about it so here it is.
+#The attack
+The attack was simple, someone phoned up Sendgrid&amp;rsquo;s customer support and talked them into changing the email for the ChunkHost account from support@chunkhost.</description>
     </item>
     
   </channel>

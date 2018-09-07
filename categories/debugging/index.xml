@@ -2,12 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debugging on A Humbly Arrogant Blog</title>
-    <link>http://blog.humblyarrogant.io/categories/debugging/index.xml</link>
+    <link>http://blog.humblyarrogant.io/categories/debugging/</link>
     <description>Recent content in Debugging on A Humbly Arrogant Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <copyright>Iain Cambridge, all rights reserved.</copyright>
-    <atom:link href="http://blog.humblyarrogant.io/categories/debugging/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 28 Mar 2014 22:26:14 -0400</lastBuildDate>
+    
+	<atom:link href="http://blog.humblyarrogant.io/categories/debugging/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>xvfb-run and wkhtmltopdf won&#39;t run in Jenkins/Apache</title>
@@ -15,24 +17,7 @@
       <pubDate>Fri, 28 Mar 2014 22:26:14 -0400</pubDate>
       
       <guid>http://blog.humblyarrogant.io/post/2014-03-28-xvfb-run-wont-run-in-jenkins-apache/</guid>
-      <description>&lt;p&gt;I recently came across a rather unsual error with our testing suite while running on Jenkins. The test would pass on our development environment, not exactly odd in itself. Sadly they aren&amp;rsquo;t exact copies, patch level out and what not. However the test would pass on the Jenkins server if ran via command line. So it wasn&amp;rsquo;t that a minor release had a bug fix that was causing the issue. Since after all my googling on the subject turned up nothing I thought I would write up how I found out what it was and what the cause and solution was.&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;p&gt;&lt;strong&gt;TL;DR: It was caused by SE Linux, disabled it and everything started working fine. It also fixed an issue where wkhtmltopdf would return an error 1299 wouldn&amp;rsquo;t work when called via Apache.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;So the code that we were testing was a functional test controller, it would generate a pdf and force the download. All the test had to do was check and see if a file was downloaded. This constantly failed on the Jenkins server. The tools we use to generate pdfs is &lt;a href=&#34;https://code.google.com/p/wkhtmltopdf/&#34;&gt;wkhtmltopdf&lt;/a&gt; and &lt;a href=&#34;http://www.x.org/archive/X11R7.7/doc/man/man1/Xvfb.1.xhtml&#34;&gt;xvfb&lt;/a&gt; to allow for it to run without a GUI system. So I started trying to debug the command.&lt;/p&gt;
-
-&lt;p&gt;Example command&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;xvfb-run &amp;ndash;server-args=&amp;ldquo;-screen 0, 1280x1024x24&amp;rdquo; /var/lib/jenkins/jobs/xx/workspace/app/../bin/wkhtmltopdf-amd64 &amp;ndash;use-xserver &amp;ldquo;&lt;a href=&#34;https://localhost/xxx&amp;quot;&#34;&gt;https://localhost/xxx&amp;quot;&lt;/a&gt; /tmp/will-this-work.pdf&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;xvfb-run has an error log file parameter. When I added it, the error file was empty When I ran xvfb-run by itself via Jenkins it gave me the help message, when I called wkhtmltopdf by itself via Jenkins it gave me. So I then added a exec call to the Phing build file to see if just the command would work and if it was a PHP issue. This returned an error code of 1. Which isn&amp;rsquo;t really helpful since the error code just means had problems starting up. I then tried the xvfb plugin for Jenkins, that was pointless as that plugin is for a completely different use. I then installed the terminal plugin, tried the command there and it did the same. However I also ran &lt;code&gt;id&lt;/code&gt; command to see if it was indeed running as the Jenkins user I tried in CLI. As it turned out I got an extra line (which sadly I didn&amp;rsquo;t keep a copy of) after googling that every result was about SE Linux. I then made the jump to disabling SE Linux. Once I did that via the test started to pass via Jenkins.&lt;/p&gt;
-
-&lt;p&gt;Hopefully I&amp;rsquo;ve put enough information in this post that if other people Google with this issue they&amp;rsquo;ll find this.&lt;/p&gt;
-</description>
+      <description>I recently came across a rather unsual error with our testing suite while running on Jenkins. The test would pass on our development environment, not exactly odd in itself. Sadly they aren&amp;rsquo;t exact copies, patch level out and what not. However the test would pass on the Jenkins server if ran via command line. So it wasn&amp;rsquo;t that a minor release had a bug fix that was causing the issue. Since after all my googling on the subject turned up nothing I thought I would write up how I found out what it was and what the cause and solution was.</description>
     </item>
     
   </channel>

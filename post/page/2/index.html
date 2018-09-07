@@ -8,7 +8,7 @@
     <title>A Humbly Arrogant Blog</title>
     <meta name="author" content="Iain Cambridge">
     <meta name="description" content="">
-    <meta name="generator" content="Hugo 0.19-DEV" />
+    <meta name="generator" content="Hugo 0.40.1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
     <link rel="shortcut icon" href="http://blog.humblyarrogant.io/img/favicon.ico">
@@ -44,10 +44,29 @@
   
 
   <p class="remove-margin-bottom"><small>
+    <time datetime="01 February 2017">01 February 2017</time>
+  </small></p>
+
+  <h2><a href="http://blog.humblyarrogant.io/post/2017-02-01-rabbitmq-multiple-consumers/">RabbitMQ One consumer blocking others</a></h2>
+
+  <p>
+    
+      I&rsquo;ve been working on a distributed application that requires multiple workers to process items from a queue. I decided to use RabbitMQ as the queue. However I noticed that there was a 10 minute pause or whenever the consumer started up. After looking into it further I noticed that it appeared that only one consumer could run at any given time.
+
+
+      
+      ...
+      <a href="http://blog.humblyarrogant.io/post/2017-02-01-rabbitmq-multiple-consumers/" style="height:28px">
+      Read more <i class="fa fa-angle-double-right"></i></a>
+      
+    
+  </p>
+
+  <p class="remove-margin-bottom"><small>
     <time datetime="31 January 2017">31 January 2017</time>
   </small></p>
 
-  <h2><a href="http://blog.humblyarrogant.io/post/2017-01-31-Increase-docker-device-size/">Increase docker device size on Ubuntu</a></h2>
+  <h2><a href="http://blog.humblyarrogant.io/post/2017-01-31-increase-docker-device-size/">Increase docker device size on Ubuntu</a></h2>
 
   <p>
     
@@ -56,7 +75,7 @@
 
       
       ...
-      <a href="http://blog.humblyarrogant.io/post/2017-01-31-Increase-docker-device-size/" style="height:28px">
+      <a href="http://blog.humblyarrogant.io/post/2017-01-31-increase-docker-device-size/" style="height:28px">
       Read more <i class="fa fa-angle-double-right"></i></a>
       
     
@@ -115,72 +134,98 @@ Encoder factory The encoder factory is where you get your password encoders from
     
   </p>
 
-  <p class="remove-margin-bottom"><small>
-    <time datetime="23 November 2014">23 November 2014</time>
-  </small></p>
-
-  <h2><a href="http://blog.humblyarrogant.io/post/2014-11-23-hack-types/">Hack: Types</a></h2>
-
-  <p>
-    
-      Facebook&rsquo;s Hack bring lots of features that a lot of other programming languages get to take advantage of. One of major advantages of Hack over PHP is a typing system. So here&rsquo;s a quick run over of the typing system as I understand it.
-Annotate Annotating is when you define which type is going to be used. You can type the following:
- function arguments function return class variable constants  For function arguments you just put the type before the variable name for the argument.
-      
-      ...
-      <a href="http://blog.humblyarrogant.io/post/2014-11-23-hack-types/" style="height:28px">
-      Read more <i class="fa fa-angle-double-right"></i></a>
-      
-    
-  </p>
-
 
 
 
     <div class="pagination"> 
+
+<ul class="pagination">
     
-    <ul class="pagination">
+    <li>
+        <a href="/post/" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
+    </li>
+    
+    <li
+    >
+    <a href="/post/" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+    </li>
+    
+    
+    
+    
+    
+    
         
-        <li>
-            <a href="/post/" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
-        </li>
         
-        <li
-        >
-        <a href="/post/" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-        </li>
+    
+    
+    <li
+    ><a href="/post/">1</a></li>
+    
+    
+    
+    
+    
+    
         
-        <li
-        ><a href="/post/">1</a></li>
         
-        <li
-        class="active"><a href="/post/page/2/">2</a></li>
+    
+    
+    <li
+    class="active"><a href="/post/page/2/">2</a></li>
+    
+    
+    
+    
+    
+    
         
-        <li
-        ><a href="/post/page/3/">3</a></li>
         
-        <li
-        ><a href="/post/page/4/">4</a></li>
+    
+    
+    <li
+    ><a href="/post/page/3/">3</a></li>
+    
+    
+    
+    
+    
+    
         
-        <li
-        ><a href="/post/page/5/">5</a></li>
         
-        <li
-        >
-        <a href="/post/page/3/" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-        </li>
+    
+    
+    <li class="disabled"><span aria-hidden="true">&hellip;</span></li>
+    
+    
+    
+    
+    
+    
         
-        <li>
-            <a href="/post/page/5/" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
-        </li>
         
-    </ul>
-     </div>
+    
+    
+    <li
+    ><a href="/post/page/5/">5</a></li>
+    
+    
+    <li
+    >
+    <a href="/post/page/3/" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+    </li>
+    
+    <li>
+        <a href="/post/page/5/" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+    </li>
+    
+</ul>
+ </div>
   </section>
 
   <footer>
   <p class="remove-margin-bottom add-padding-right">
-    &copy; 2017 
+    &copy; 2018 
     <a href="http://blog.humblyarrogant.io/">Iain Cambridge</a>
   </p>
 

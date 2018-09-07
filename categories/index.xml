@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on A Humbly Arrogant Blog</title>
+    <link>http://blog.humblyarrogant.io/categories/</link>
+    <description>Recent content in Categories on A Humbly Arrogant Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    
+	<atom:link href="http://blog.humblyarrogant.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Code</title>
+      <link>http://blog.humblyarrogant.io/categories/code/</link>
+      <pubDate>Sat, 26 Apr 2014 15:39:14 -0400</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/categories/code/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Debugging</title>
+      <link>http://blog.humblyarrogant.io/categories/debugging/</link>
+      <pubDate>Fri, 28 Mar 2014 22:26:14 -0400</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/categories/debugging/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Development</title>
+      <link>http://blog.humblyarrogant.io/categories/development/</link>
+      <pubDate>Mon, 16 Jan 2017 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/categories/development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Devops</title>
+      <link>http://blog.humblyarrogant.io/categories/devops/</link>
+      <pubDate>Mon, 06 Feb 2017 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/categories/devops/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Docker</title>
+      <link>http://blog.humblyarrogant.io/categories/docker/</link>
+      <pubDate>Mon, 06 Feb 2017 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/categories/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Godep</title>
+      <link>http://blog.humblyarrogant.io/categories/godep/</link>
+      <pubDate>Sat, 04 Feb 2017 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/categories/godep/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Golang</title>
+      <link>http://blog.humblyarrogant.io/categories/golang/</link>
+      <pubDate>Sat, 04 Feb 2017 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/categories/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hack</title>
+      <link>http://blog.humblyarrogant.io/categories/hack/</link>
+      <pubDate>Sun, 23 Nov 2014 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/categories/hack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hacklang</title>
+      <link>http://blog.humblyarrogant.io/categories/hacklang/</link>
+      <pubDate>Sun, 23 Nov 2014 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/categories/hacklang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Jenkins</title>
+      <link>http://blog.humblyarrogant.io/categories/jenkins/</link>
+      <pubDate>Fri, 28 Mar 2014 22:26:14 -0400</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/categories/jenkins/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kubernetes</title>
+      <link>http://blog.humblyarrogant.io/categories/kubernetes/</link>
+      <pubDate>Tue, 31 Jan 2017 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/categories/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rabbitmq</title>
+      <link>http://blog.humblyarrogant.io/categories/rabbitmq/</link>
+      <pubDate>Wed, 01 Feb 2017 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/categories/rabbitmq/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Random</title>
+      <link>http://blog.humblyarrogant.io/categories/random/</link>
+      <pubDate>Fri, 21 Mar 2014 18:53:00 +0000</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/categories/random/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Revel</title>
+      <link>http://blog.humblyarrogant.io/categories/revel/</link>
+      <pubDate>Sat, 26 Apr 2014 20:39:14 -0400</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/categories/revel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Security</title>
+      <link>http://blog.humblyarrogant.io/categories/security/</link>
+      <pubDate>Sun, 13 Apr 2014 19:40:14 -0400</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/categories/security/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Testing</title>
+      <link>http://blog.humblyarrogant.io/categories/testing/</link>
+      <pubDate>Sat, 26 Apr 2014 20:39:14 -0400</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/categories/testing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Theory</title>
+      <link>http://blog.humblyarrogant.io/categories/theory/</link>
+      <pubDate>Sat, 01 Nov 2014 15:12:23 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/categories/theory/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

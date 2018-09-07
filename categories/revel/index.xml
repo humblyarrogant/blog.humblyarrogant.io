@@ -2,12 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Revel on A Humbly Arrogant Blog</title>
-    <link>http://blog.humblyarrogant.io/categories/revel/index.xml</link>
+    <link>http://blog.humblyarrogant.io/categories/revel/</link>
     <description>Recent content in Revel on A Humbly Arrogant Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <copyright>Iain Cambridge, all rights reserved.</copyright>
-    <atom:link href="http://blog.humblyarrogant.io/categories/revel/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 26 Apr 2014 20:39:14 -0400</lastBuildDate>
+    
+	<atom:link href="http://blog.humblyarrogant.io/categories/revel/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Revel : How to use Drone.io for testing</title>
@@ -15,18 +17,7 @@
       <pubDate>Sat, 26 Apr 2014 20:39:14 -0400</pubDate>
       
       <guid>http://blog.humblyarrogant.io/post/2014-04-26-revel-use-drone-io-for-testing/</guid>
-      <description>
-
-&lt;p&gt;Being a lover of testing, continuous intergration, and cloud services. I wanted to be able to get a build of status of a Revel framework app I&amp;rsquo;m working on. Since Revel uses it&amp;rsquo;s own command to run and build applications the standard way of doing a build for Golang are out. I wanted to use &lt;a href=&#34;http://drone.io&#34;&gt;Drone.io&lt;/a&gt; instead of travis so if I wanted to make it private I could without paying a lot. So taking the .travis.yml wasn&amp;rsquo;t an option either. It was shockingly simple to set up. It took 3 lines.&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;h1 id=&#34;the-3-lines&#34;&gt;The 3 lines&lt;/h1&gt;
-
-&lt;p&gt;A quick breakdown of what is going on. First you install the revel framework, then you install the revel command. Then you call the revel command with the test command using import directory that will be used by go when it grabs your code. So in my case it was &amp;ldquo;&lt;strong&gt;revel test github.com/icambridge/sitrep&lt;/strong&gt;&amp;rdquo;.&lt;/p&gt;
-
-&lt;div&gt;&lt;script src=&#39;https://gist.github.com/11329286.js?file=gistfile1.txt&#39;&gt;&lt;/script&gt;&lt;/div&gt;
-</description>
+      <description>Being a lover of testing, continuous intergration, and cloud services. I wanted to be able to get a build of status of a Revel framework app I&amp;rsquo;m working on. Since Revel uses it&amp;rsquo;s own command to run and build applications the standard way of doing a build for Golang are out. I wanted to use Drone.io instead of travis so if I wanted to make it private I could without paying a lot.</description>
     </item>
     
     <item>
@@ -35,18 +26,7 @@
       <pubDate>Sat, 26 Apr 2014 15:39:14 -0400</pubDate>
       
       <guid>http://blog.humblyarrogant.io/post/2014-04-26-revel-force-template-format/</guid>
-      <description>&lt;p&gt;So in Revel you can have your template in several different formats: html, json, xml, or txt. This is super awesome. As it allows you to send the same data and display different formats - Obivously. It also determines what template to use based on the http request headers that have been sent. So if your request sends that it accepts application/xml it&amp;rsquo;ll use xml and if you request says application/json it uses json.&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;p&gt;All awesome. But what if I want to debug something that should only ever be json. Or even more interesting what if I sent that I accept html and json but with json second in the list. AngularJS seems to do this by default, took me a while to figure out what was going on. So I need a way of forcing revel to just use one file format no matter what the http headers are. Thankfully it&amp;rsquo;s super simple, one line in your controller action to set the Request member&amp;rsquo;s Format member to the desired format and it&amp;rsquo;ll use that.&lt;/p&gt;
-
-&lt;div&gt;&lt;script src=&#39;https://gist.github.com/11321687.js?file=snippet.go&#39;&gt;&lt;/script&gt;&lt;/div&gt;
-
-&lt;p&gt;So in full example.&lt;/p&gt;
-
-&lt;div&gt;&lt;script src=&#39;https://gist.github.com/11321687.js?file=test.go&#39;&gt;&lt;/script&gt;&lt;/div&gt;
-</description>
+      <description>So in Revel you can have your template in several different formats: html, json, xml, or txt. This is super awesome. As it allows you to send the same data and display different formats - Obivously. It also determines what template to use based on the http request headers that have been sent. So if your request sends that it accepts application/xml it&amp;rsquo;ll use xml and if you request says application/json it uses json.</description>
     </item>
     
   </channel>

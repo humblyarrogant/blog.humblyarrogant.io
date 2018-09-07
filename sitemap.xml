@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>http://blog.humblyarrogant.io/post/2018-09-07-ticket-types/</loc>
+    <lastmod>2018-08-07T23:03:53+01:00</lastmod>
+  </url>
   
   <url>
     <loc>http://blog.humblyarrogant.io/post/2017-02-27-code-review-sanity-checks/</loc>
@@ -17,17 +23,17 @@
   </url>
   
   <url>
-    <loc>http://blog.humblyarrogant.io/post/2017-02-04-Go-dep-in-docker/</loc>
+    <loc>http://blog.humblyarrogant.io/post/2017-02-04-go-dep-in-docker/</loc>
     <lastmod>2017-02-04T15:12:23+01:00</lastmod>
   </url>
   
   <url>
-    <loc>http://blog.humblyarrogant.io/post/2017-02-01-RabbitMQ-multiple-consumers/</loc>
+    <loc>http://blog.humblyarrogant.io/post/2017-02-01-rabbitmq-multiple-consumers/</loc>
     <lastmod>2017-02-01T15:12:23+01:00</lastmod>
   </url>
   
   <url>
-    <loc>http://blog.humblyarrogant.io/post/2017-01-31-Increase-docker-device-size/</loc>
+    <loc>http://blog.humblyarrogant.io/post/2017-01-31-increase-docker-device-size/</loc>
     <lastmod>2017-01-31T15:12:23+01:00</lastmod>
   </url>
   
@@ -117,7 +123,7 @@
   
   <url>
     <loc>http://blog.humblyarrogant.io/</loc>
-    <lastmod>2017-02-28T12:03:53+01:00</lastmod>
+    <lastmod>2018-08-07T23:03:53+01:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -194,7 +200,7 @@
   
   <url>
     <loc>http://blog.humblyarrogant.io/post/</loc>
-    <lastmod>2017-02-28T12:03:53+01:00</lastmod>
+    <lastmod>2018-08-07T23:03:53+01:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -219,6 +225,11 @@
   <url>
     <loc>http://blog.humblyarrogant.io/categories/security/</loc>
     <lastmod>2014-04-13T19:40:14-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.humblyarrogant.io/tags/</loc>
     <priority>0</priority>
   </url>
   
