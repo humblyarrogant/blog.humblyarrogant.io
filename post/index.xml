@@ -6,10 +6,20 @@
     <description>Recent content in Posts on A Humbly Arrogant Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Fri, 07 Sep 2018 22:03:53 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 10 Sep 2018 20:03:53 +0100</lastBuildDate>
     
 	<atom:link href="http://blog.humblyarrogant.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Is Your It Harmful?: Product Team</title>
+      <link>http://blog.humblyarrogant.io/post/2018-09-10-is-it-harming-your-company-product-team/</link>
+      <pubDate>Mon, 10 Sep 2018 20:03:53 +0100</pubDate>
+      
+      <guid>http://blog.humblyarrogant.io/post/2018-09-10-is-it-harming-your-company-product-team/</guid>
+      <description>Here I try to explain in nontechnical ways things that happen in IT departments which in my opinion are generally harmful to the company. The aim of this series is to help company founders who aren&amp;rsquo;t experienced in IT be able to judge the health of their IT department.
+The Product Team is there to decide which features are to built first and how the features are to work. They are one of the most crucial parts of the development processes since they choose the path for the project and help make sure that the project brings the most business value as possible.</description>
+    </item>
     
     <item>
       <title>Ticket Types</title>

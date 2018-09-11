@@ -7,7 +7,7 @@
     <title>A Humbly Arrogant Blog</title>
     <meta name="author" content="Iain Cambridge">
     <meta name="description" content="">
-    <meta name="generator" content="Hugo 0.40.1" />
+    <meta name="generator" content="Hugo 0.48" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
     <link rel="shortcut icon" href="http://blog.humblyarrogant.io/img/favicon.ico">
@@ -41,6 +41,23 @@
 
   <section>
     
+
+  <p class="remove-margin-bottom"><small>
+    <time datetime="26 April 2014">26 April 2014</time>
+  </small></p>
+
+  <h2><a href="http://blog.humblyarrogant.io/post/2014-04-26-revel-use-drone-io-for-testing/">Revel : How to use Drone.io for testing</a></h2>
+
+  <p>
+    
+      Being a lover of testing, continuous intergration, and cloud services. I wanted to be able to get a build of status of a Revel framework app I&rsquo;m working on. Since Revel uses it&rsquo;s own command to run and build applications the standard way of doing a build for Golang are out. I wanted to use Drone.io instead of travis so if I wanted to make it private I could without paying a lot.
+      
+      ...
+      <a href="http://blog.humblyarrogant.io/post/2014-04-26-revel-use-drone-io-for-testing/" style="height:28px">
+      Read more <i class="fa fa-angle-double-right"></i></a>
+      
+    
+  </p>
 
   <p class="remove-margin-bottom"><small>
     <time datetime="26 April 2014">26 April 2014</time>
@@ -113,24 +130,6 @@ The attack was simple, someone phoned up Sendgrid&rsquo;s customer support and t
     
   </p>
 
-  <p class="remove-margin-bottom"><small>
-    <time datetime="22 March 2014">22 March 2014</time>
-  </small></p>
-
-  <h2><a href="http://blog.humblyarrogant.io/post/2014-03-22-observer-pattern-in-golang/">Observer pattern in golang</a></h2>
-
-  <p>
-    
-      For some reason at some point, I thought it would be hard to implement the observer pattern in Go. Then I made an issue for me to blog about it. Well it&rsquo;s not hard. It&rsquo;s as easy as it is in every other language.
-Observers First part of the observer pattern is you need the actual observers. The logic that you want executed whenever something happens. Here I&rsquo;ve just put a simple log print statement that will print out the name of the hook to the log.
-      
-      ...
-      <a href="http://blog.humblyarrogant.io/post/2014-03-22-observer-pattern-in-golang/" style="height:28px">
-      Read more <i class="fa fa-angle-double-right"></i></a>
-      
-    
-  </p>
-
 
 
 
@@ -138,13 +137,12 @@ Observers First part of the observer pattern is you need the actual observers. T
 
 <ul class="pagination">
     
-    <li>
-        <a href="/" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
+    <li class="page-item">
+        <a href="/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
     </li>
     
-    <li
-    >
-    <a href="/page/3/" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+    <li class="page-item">
+    <a href="/page/3/" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
     </li>
     
     
@@ -156,8 +154,7 @@ Observers First part of the observer pattern is you need the actual observers. T
         
     
     
-    <li
-    ><a href="/">1</a></li>
+    <li class="page-item"><a class="page-link" href="/">1</a></li>
     
     
     
@@ -168,8 +165,7 @@ Observers First part of the observer pattern is you need the actual observers. T
         
     
     
-    <li
-    ><a href="/page/2/">2</a></li>
+    <li class="page-item"><a class="page-link" href="/page/2/">2</a></li>
     
     
     
@@ -180,8 +176,7 @@ Observers First part of the observer pattern is you need the actual observers. T
         
     
     
-    <li
-    ><a href="/page/3/">3</a></li>
+    <li class="page-item"><a class="page-link" href="/page/3/">3</a></li>
     
     
     
@@ -192,8 +187,7 @@ Observers First part of the observer pattern is you need the actual observers. T
         
     
     
-    <li
-    class="active"><a href="/page/4/">4</a></li>
+    <li class="page-item active"><a class="page-link" href="/page/4/">4</a></li>
     
     
     
@@ -204,17 +198,15 @@ Observers First part of the observer pattern is you need the actual observers. T
         
     
     
-    <li
-    ><a href="/page/5/">5</a></li>
+    <li class="page-item"><a class="page-link" href="/page/5/">5</a></li>
     
     
-    <li
-    >
-    <a href="/page/5/" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+    <li class="page-item">
+    <a href="/page/5/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
     </li>
     
-    <li>
-        <a href="/page/5/" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+    <li class="page-item">
+        <a href="/page/5/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
     </li>
     
 </ul>
